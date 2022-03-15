@@ -2,6 +2,8 @@ package com.groupa15.common.lang;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.io.Serializable;
 
@@ -18,17 +20,17 @@ public class Response implements Serializable {
     private String msg;
     private Object data;
 
-    public static Response succ(int code, String msg, Object data) {
+    public static Response succ(HttpStatus code, String msg, Object data) {
         return response(code, msg, data);
     }
 
-    public static Response fail(int code, String msg, Object data) {
+    public static Response fail(HttpStatus code, String msg, Object data) {
         return response(code, msg, data);
     }
 
-    public static Response response(int code, String msg, Object data) {
+    public static Response response(HttpStatus code, String msg, Object data) {
         return new Response()
-                .setCode(code)
+                .setCode(code.value())
                 .setMsg(msg)
                 .setData(data);
     }

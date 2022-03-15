@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Integer userId;
 
     @NotBlank(message = "The username cannot be empty")
     private String username;
@@ -43,5 +43,4 @@ public class User{
 //    private LocalDateTime created;
 //
 //    private LocalDateTime lastLogin;
-
 }

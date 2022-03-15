@@ -7,6 +7,7 @@ import com.groupa15.entity.User;
  * @date 2022/3/15
  */
 public interface UserService {
+    User getUserByUserId(int userId);
     User getUserByUsername(String username);
     void registerUser(String username, String password);
     User loginUser(String username, String password);
