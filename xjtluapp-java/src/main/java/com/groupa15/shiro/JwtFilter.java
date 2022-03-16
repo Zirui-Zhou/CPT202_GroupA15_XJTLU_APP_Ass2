@@ -47,7 +47,11 @@ public class JwtFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
+        return false;
+    }
 
+    @Override
+    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String jwt = request.getHeader(jwtUtils.getHeader());
         if(!StringUtils.hasLength(jwt)) {
@@ -59,7 +63,15 @@ public class JwtFilter extends AuthenticatingFilter {
                 throw new ExpiredCredentialsException();
             }
 
-            return executeLogin(servletRequest, servletResponse);
+
+            try {
+                return executeLogin(servletRequest, servletResponse);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+
         }
     }
 
@@ -86,7 +98,7 @@ public class JwtFilter extends AuthenticatingFilter {
 
         HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
-        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", httpServletRequest.getHeader("Origin"));
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
         httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
         // 跨域时会首先发送一个OPTIONS请求，这里我们给OPTIONS请求直接返回正常状态

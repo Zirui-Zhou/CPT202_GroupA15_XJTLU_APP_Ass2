@@ -5,7 +5,10 @@ import com.groupa15.common.lang.Response;
 import com.groupa15.entity.User;
 import com.groupa15.service.UserService;
 import com.groupa15.utils.JwtUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +40,7 @@ public class AccountController {
         // TODO(Zirui): Figure out the breaking point of the global exception handler.
         String jwt = jwtUtils.generateToken(user.getUserId());
         response.setHeader(jwtUtils.getHeader(), jwt);
-        response.setHeader("Access-control-Expose-Headers", jwtUtils.getHeader());
+        response.setHeader("Access-Control-Expose-Headers", jwtUtils.getHeader());
 
         return Response.succ(HttpStatus.OK, user.getUsername(), null);
     }
@@ -52,4 +55,15 @@ public class AccountController {
     public String hello() {
         return "hello";
     }
+
+    @GetMapping("/helloagain")
+    @RequiresAuthentication
+    public String helloagain() {
+        Subject subject = SecurityUtils.getSubject();
+        return Boolean.toString(subject.isAuthenticated());
+//        return "hello again";
+    }
+
+
+
 }

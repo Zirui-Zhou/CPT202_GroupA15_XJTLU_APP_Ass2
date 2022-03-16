@@ -1,6 +1,7 @@
 package com.groupa15.shiro;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -10,11 +11,12 @@ import java.io.Serializable;
  */
 
 @Data
+@Accessors(chain = true)
 public class AccountProfile implements Serializable {
 
-    private Integer id;
+    private Integer userId;
     private String username;
-    private String avatar;
-    private String email;
+//    private String avatar;
+//    private String email;
 
 }

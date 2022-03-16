@@ -2,6 +2,8 @@ package com.groupa15.entity;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Proxy;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +24,8 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @RequiredArgsConstructor
 @Entity
+@Proxy(lazy = false)
+//@Proxy(lazy = false)
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

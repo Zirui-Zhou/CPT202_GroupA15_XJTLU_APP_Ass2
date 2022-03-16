@@ -27,6 +27,11 @@ public class AccountRealm extends AuthorizingRealm {
     UserService userService;
 
     @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof BearerToken;
+    }
+
+    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         return null;
     }
@@ -37,6 +42,7 @@ public class AccountRealm extends AuthorizingRealm {
         BearerToken jwtToken = (BearerToken) token;
 
         String userId = jwtUtils.getClaimByToken((String) jwtToken.getPrincipal()).getSubject();
+
 
         User user = userService.getUserByUserId(Integer.parseInt(userId));
 
@@ -49,7 +55,9 @@ public class AccountRealm extends AuthorizingRealm {
 //        }
 
         AccountProfile profile = new AccountProfile();
-        BeanUtils.copyProperties(user, profile);
+//        BeanUtils.copyProperties(user, profile);
+        profile.setUserId(user.getUserId())
+                .setUsername(user.getUsername());
 
         return new SimpleAuthenticationInfo(profile, jwtToken.getCredentials(), this.getName());
     }
