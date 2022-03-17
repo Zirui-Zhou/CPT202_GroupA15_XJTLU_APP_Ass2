@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -34,7 +35,6 @@ public class AccountController {
     JwtUtils jwtUtils;
 
     @PostMapping("/login")
-    // Response
     public Response login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
         User user = userService.loginUser(loginDto.getUsername(), loginDto.getPassword());
         // TODO(Zirui): Figure out the breaking point of the global exception handler.
@@ -42,13 +42,20 @@ public class AccountController {
         response.setHeader(jwtUtils.getHeader(), jwt);
         response.setHeader("Access-Control-Expose-Headers", jwtUtils.getHeader());
 
-        return Response.succ(HttpStatus.OK, user.getUsername(), null);
+        return Response.success(HttpStatus.OK, user.getUsername());
+    }
+
+    @GetMapping("/logout")
+    @RequiresAuthentication
+    public Response logout(HttpServletRequest httpServletRequest) {
+        SecurityUtils.getSubject().logout();
+        return Response.success(HttpStatus.OK, SecurityUtils.getSubject().toString());
     }
 
     @PostMapping("/register")
     public Response register(@Validated @RequestBody LoginDto loginDto, HttpServletResponse httpServletResponse) {
         userService.registerUser(loginDto.getUsername(), loginDto.getPassword());
-        return Response.succ(HttpStatus.OK, loginDto.getUsername(), null);
+        return Response.success(HttpStatus.OK, loginDto.getUsername());
     }
 
     @GetMapping("/hello")
@@ -59,11 +66,7 @@ public class AccountController {
     @GetMapping("/helloagain")
     @RequiresAuthentication
     public String helloagain() {
-        Subject subject = SecurityUtils.getSubject();
-        return Boolean.toString(subject.isAuthenticated());
-//        return "hello again";
+        return "hello again";
     }
-
-
 
 }

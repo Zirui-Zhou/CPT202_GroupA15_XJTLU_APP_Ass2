@@ -1,6 +1,7 @@
 package com.groupa15.utils;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Data;
@@ -23,12 +24,15 @@ public class JwtUtils {
     private long expire;
     private String header;
 
+    // TODO(Zirui): Add dynamic secret(salt) for user.
+
     public String generateToken(long userId) {
         Date nowDate = new Date();
         Date expireDate = new Date(nowDate.getTime() + expire * 1000);
+
         // TODO(Zirui): Define `iss`, `exp`, and `aud`.
         return Jwts.builder()
-                 .setHeaderParam("typ", "JWT")
+                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                  .setSubject(Long.toString(userId))
                  .setIssuedAt(nowDate)
                  .setExpiration(expireDate)

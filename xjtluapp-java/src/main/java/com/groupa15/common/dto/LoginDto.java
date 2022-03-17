@@ -13,10 +13,10 @@ import java.io.Serializable;
 @Data
 public class LoginDto implements Serializable {
 
-    @NotBlank(message = "The dto username cannot be empty")
+    @NotBlank(message = "The username cannot be empty")
     private String username;
 
-    @NotBlank(message = "The dto password cannot be empty")
+    @NotBlank(message = "The password cannot be empty")
     private String password;
 
 }

@@ -3,6 +3,7 @@ package com.groupa15.service.impl;
 import com.groupa15.entity.User;
 import com.groupa15.repo.UserRepo;
 import com.groupa15.service.UserService;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +18,21 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepo userRepo;
 
     @Override
     public User getUserByUserId(int userId) {
-        return userRepo.getById(userId);
+        Optional<User> user = userRepo.findById(userId);
+        if(user.isEmpty()) {
+            throw new UnknownAccountException();
+        }
+        return user.get();
     }
 
     @Override
-    public User getUserByUsername(String username) {
-//        User queryUser = new User();
-//        queryUser.setUsername(username);
-//        Optional<User> user = userRepo.findOne(Example.of(queryUser));
-//        return user.orElse(null);
+    public User getUserByUsername(String username){
         User user = userRepo.findOneByUsername(username);
         if(user == null) {
             throw new UnknownAccountException();
@@ -53,11 +55,9 @@ public class UserServiceImpl implements UserService {
     public User loginUser(String username, String password) {
         User user = getUserByUsername(username);
         Md5Hash md5Hash = new Md5Hash(password);
-        System.out.println("============================");
-        System.out.println(user.getPassword());
-        System.out.println(md5Hash.toHex());
-        System.out.println("============================");
-        return user.getPassword().equals(md5Hash.toHex()) ? user : null;
-        //return user.getPassword().equals(password) ? user : null;
+        if(!user.getPassword().equals(md5Hash.toHex())) {
+            throw new IncorrectCredentialsException();
+        }
+        return user;
     }
 }

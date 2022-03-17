@@ -3,11 +3,13 @@ package com.groupa15.shiro;
 import com.groupa15.entity.User;
 import com.groupa15.service.UserService;
 import com.groupa15.utils.JwtUtils;
+import io.jsonwebtoken.Claims;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.BeanUtils;
@@ -28,7 +30,7 @@ public class AccountRealm extends AuthorizingRealm {
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof BearerToken;
+        return token instanceof JwtToken;
     }
 
     @Override
@@ -39,26 +41,36 @@ public class AccountRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
-        BearerToken jwtToken = (BearerToken) token;
+        JwtToken jwtToken = (JwtToken) token;
 
-        String userId = jwtUtils.getClaimByToken((String) jwtToken.getPrincipal()).getSubject();
+//        String userId = jwtUtils.getClaimByToken((String) jwtToken.getPrincipal()).getSubject();
+        Claims claim = jwtUtils.getClaimByToken(jwtToken.getToken());
 
+        if(claim == null) {
+            throw new AuthenticationException();
+        }
 
-        User user = userService.getUserByUserId(Integer.parseInt(userId));
+        if(jwtUtils.isTokenExpired(claim.getExpiration())) {
+            throw new ExpiredCredentialsException();
+        }
 
-//        if (user == null) {
-//            throw new UnknownAccountException();
-//        }
+        int userId = Integer.parseInt(claim.getSubject());
+
+        User user = userService.getUserByUserId(userId);
+
 //        // TODO(Zirui): Decide an enum class to define the status of the account status.
 //        if (user.getStatus() == -1) {
 //            throw new LockedAccountException();
 //        }
 
-        AccountProfile profile = new AccountProfile();
-//        BeanUtils.copyProperties(user, profile);
-        profile.setUserId(user.getUserId())
-                .setUsername(user.getUsername());
 
-        return new SimpleAuthenticationInfo(profile, jwtToken.getCredentials(), this.getName());
+//        AccountProfile profile = new AccountProfile();
+////        BeanUtils.copyProperties(user, profile);
+//        profile.setUserId(user.getUserId())
+//                .setUsername(user.getUsername());
+
+        // This Info will be a param CredentialMatch(). The result keeps `true` which can be simply ignored.
+
+        return new SimpleAuthenticationInfo(jwtToken.getPrincipal(), jwtToken.getCredentials(), this.getName());
     }
 }

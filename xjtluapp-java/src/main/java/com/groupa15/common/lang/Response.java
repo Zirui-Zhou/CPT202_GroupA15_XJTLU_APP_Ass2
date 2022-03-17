@@ -20,12 +20,20 @@ public class Response implements Serializable {
     private String msg;
     private Object data;
 
-    public static Response succ(HttpStatus code, String msg, Object data) {
+    public static Response success(HttpStatus code, String msg, Object data) {
         return response(code, msg, data);
+    }
+
+    public static Response success(HttpStatus code, String msg) {
+        return response(code, msg, null);
     }
 
     public static Response fail(HttpStatus code, String msg, Object data) {
         return response(code, msg, data);
+    }
+
+    public static Response fail(HttpStatus code, String msg) {
+        return response(code, msg, null);
     }
 
     public static Response response(HttpStatus code, String msg, Object data) {
