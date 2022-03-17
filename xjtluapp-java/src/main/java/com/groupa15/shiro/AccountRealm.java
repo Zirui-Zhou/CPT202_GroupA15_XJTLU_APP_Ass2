@@ -4,6 +4,7 @@ import com.groupa15.entity.User;
 import com.groupa15.service.UserService;
 import com.groupa15.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -47,8 +48,11 @@ public class AccountRealm extends AuthorizingRealm {
         Claims claim = jwtUtils.getClaimByToken(jwtToken.getToken());
 
         if(claim == null) {
-            throw new AuthenticationException();
+            System.out.println("now throw authentication exception");
+            throw new AuthenticationException("Authentication Exception Information");
         }
+
+        System.out.println("now go no");
 
         if(jwtUtils.isTokenExpired(claim.getExpiration())) {
             throw new ExpiredCredentialsException();
@@ -57,6 +61,7 @@ public class AccountRealm extends AuthorizingRealm {
         int userId = Integer.parseInt(claim.getSubject());
 
         User user = userService.getUserByUserId(userId);
+
 
 //        // TODO(Zirui): Decide an enum class to define the status of the account status.
 //        if (user.getStatus() == -1) {

@@ -52,13 +52,21 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     }
 
     // TODO(Zirui): Implement a more reasonable method to throw exceptions.
-    @SneakyThrows
+//    @SneakyThrows
+//    @Override
+//    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue) {
+//        return executeLogin(servletRequest, servletResponse);
+//    }
+
     @Override
-    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue) {
-        return executeLogin(servletRequest, servletResponse);
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+        return executeLogin(request, response);
     }
 
-
+    @Override
+    protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
+        throw e;
+    }
 
 //    @Override
 //    protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
