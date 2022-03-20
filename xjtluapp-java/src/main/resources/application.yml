@@ -11,9 +11,17 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: update
-    show-sql: true
+#     show-sql: true
+
+shiro:
+  jwtFilterName: "jwtFilter"
+  filterList: ["/helloagain", "/logout"]
 
 jwt:
   secret: f4e2e52034348f86b67cde581c0f9eb5
   expire: 604800
   header: Authorization
+
+secure:
+  saltLength: 32
+  hashIterations: 1024

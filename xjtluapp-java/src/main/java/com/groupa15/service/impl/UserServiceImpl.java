@@ -1,14 +1,16 @@
 package com.groupa15.service.impl;
 
+import com.groupa15.common.dto.LoginDto;
 import com.groupa15.entity.User;
 import com.groupa15.repo.UserRepo;
 import com.groupa15.service.UserService;
+import com.groupa15.utils.SecureUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
@@ -21,6 +23,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private SecureUtils secureUtils;
+
+    /*
+        TODO(Zirui): Attempt to dismiss the dependency of shiro, i.e. shiroException.
+     */
 
     @Override
     public User getUserByUserId(int userId) {
@@ -40,22 +49,26 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    // TODO(Zirui): Check the account Conflicts
+    /*
+        TODO(Zirui): Check the account conflicts
+     */
+
     @Override
     public void registerUser(String username, String password) {
+        String salt = secureUtils.getSalt();
+        String hashedPassword = secureUtils.getHashedPassword(password, salt);
         User user = new User()
                 .setUsername(username)
-                .setPassword(password);
-        Md5Hash md5Hash = new Md5Hash(user.getPassword());
-        user.setPassword(md5Hash.toHex());
+                .setPassword(hashedPassword)
+                .setSalt(salt);
         userRepo.save(user);
     }
 
     @Override
-    public User loginUser(String username, String password) {
-        User user = getUserByUsername(username);
-        Md5Hash md5Hash = new Md5Hash(password);
-        if(!user.getPassword().equals(md5Hash.toHex())) {
+    public User loginUser(LoginDto loginDto) {
+        User user = getUserByUsername(loginDto.getUsername());
+        String hashedPassword = secureUtils.getHashedPassword(loginDto.getPassword(), user.getSalt());
+        if(!user.getPassword().equals(hashedPassword)) {
             throw new IncorrectCredentialsException();
         }
         return user;

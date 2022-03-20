@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Entity
 @Proxy(lazy = false)
-//@Proxy(lazy = false)
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +40,8 @@ public class User{
 //    private String email;
 
     private String password;
+
+    private String salt;
 
 //    private Integer status;
 //

@@ -1,8 +1,6 @@
-package com.groupa15.config;
+package com.groupa15.shiro;
 
-import com.groupa15.shiro.AccountRealm;
-import com.groupa15.shiro.JwtFilter;
-import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
+import lombok.Data;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
@@ -13,21 +11,27 @@ import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Zirui Zhou
  * @date 2022/3/15
  */
 
+@Data
 @Configuration
+@ConfigurationProperties(value = "shiro")
 public class ShiroConfig {
+
+    String jwtFilterName = "jwtFilter";
+    List<String> filterList = new ArrayList<>();
 
     @Autowired
     JwtFilter jwtFilter;
@@ -63,12 +67,8 @@ public class ShiroConfig {
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
 
-        Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/logout", "jwt");
-        filterMap.put("/helloagain", "jwt");
+        Map<String, String> filterMap = filterList.stream().collect(Collectors.toMap(Function.identity(), e->jwtFilterName));
         chainDefinition.addPathDefinitions(filterMap);
-
-//        chainDefinition.addPathDefinition("/**", "jwt");
 
         return chainDefinition;
     }
@@ -80,7 +80,7 @@ public class ShiroConfig {
         shiroFilter.setSecurityManager(securityManager);
 
         Map<String, Filter> filters = new HashMap<>();
-        filters.put("jwt", jwtFilter);
+        filters.put(jwtFilterName, jwtFilter);
         shiroFilter.setFilters(filters);
 
         Map<String, String> filterMap = shiroFilterChainDefinition.getFilterChainMap();
@@ -89,9 +89,9 @@ public class ShiroConfig {
         return shiroFilter;
     }
 
-//    /**
-//     * 下面的代码是添加注解支持
-//     */
+    /**
+     * 下面的代码是添加注解支持
+     */
     @Bean
     public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();

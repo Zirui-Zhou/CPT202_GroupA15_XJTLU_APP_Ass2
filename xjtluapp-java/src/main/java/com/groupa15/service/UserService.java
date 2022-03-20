@@ -1,5 +1,6 @@
 package com.groupa15.service;
 
+import com.groupa15.common.dto.LoginDto;
 import com.groupa15.entity.User;
 
 /**
@@ -11,5 +12,5 @@ public interface UserService {
     User getUserByUserId(int userId);
     User getUserByUsername(String username);
     void registerUser(String username, String password);
-    User loginUser(String username, String password);
+    User loginUser(LoginDto loginDto);
 }

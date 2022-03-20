@@ -41,41 +41,33 @@ public class AccountRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-
         JwtToken jwtToken = (JwtToken) token;
+        Claims claim;
 
-//        String userId = jwtUtils.getClaimByToken((String) jwtToken.getPrincipal()).getSubject();
-        Claims claim = jwtUtils.getClaimByToken(jwtToken.getToken());
-
-        if(claim == null) {
-            System.out.println("now throw authentication exception");
-            throw new AuthenticationException("Authentication Exception Information");
+        try {
+            claim = jwtUtils.getClaimByToken(jwtToken.getToken());
+        } catch (JwtException e) {
+            throw new AuthenticationException("Jwt wrong format");
+        } catch (IllegalArgumentException e) {
+            throw new AuthenticationException("With no Jwt");
         }
 
-        System.out.println("now go no");
-
         if(jwtUtils.isTokenExpired(claim.getExpiration())) {
-            throw new ExpiredCredentialsException();
+            throw new ExpiredCredentialsException("Jwt expire");
         }
 
         int userId = Integer.parseInt(claim.getSubject());
-
         User user = userService.getUserByUserId(userId);
 
+        /*
+            TODO(Zirui): Decide an enum class to define the status of the account status.
+         */
 
-//        // TODO(Zirui): Decide an enum class to define the status of the account status.
 //        if (user.getStatus() == -1) {
 //            throw new LockedAccountException();
 //        }
 
-
-//        AccountProfile profile = new AccountProfile();
-////        BeanUtils.copyProperties(user, profile);
-//        profile.setUserId(user.getUserId())
-//                .setUsername(user.getUsername());
-
         // This Info will be a param CredentialMatch(). The result keeps `true` which can be simply ignored.
-
         return new SimpleAuthenticationInfo(jwtToken.getPrincipal(), jwtToken.getCredentials(), this.getName());
     }
 }

@@ -36,12 +36,10 @@ public class AccountController {
 
     @PostMapping("/login")
     public Response login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
-        User user = userService.loginUser(loginDto.getUsername(), loginDto.getPassword());
-        // TODO(Zirui): Figure out the breaking point of the global exception handler.
+        User user = userService.loginUser(loginDto);
         String jwt = jwtUtils.generateToken(user.getUserId());
         response.setHeader(jwtUtils.getHeader(), jwt);
         response.setHeader("Access-Control-Expose-Headers", jwtUtils.getHeader());
-
         return Response.success(HttpStatus.OK, user.getUsername());
     }
 

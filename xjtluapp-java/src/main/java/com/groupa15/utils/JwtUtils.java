@@ -2,6 +2,7 @@ package com.groupa15.utils;
 
 import io.jsonwebtoken.*;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +22,13 @@ public class JwtUtils {
     private long expire;
     private String header;
 
-    // TODO(Zirui): Add dynamic secret(salt) for user.
-
     public String generateToken(long userId) {
         Date nowDate = new Date();
         Date expireDate = new Date(nowDate.getTime() + expire * 1000);
 
-        // TODO(Zirui): Define `iss`, `exp`, and `aud`.
+        /*
+            TODO(Zirui): Define `iss`, `exp`, and `aud`.
+         */
         return Jwts.builder()
                  .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                  .setSubject(Long.toString(userId))
@@ -37,7 +38,7 @@ public class JwtUtils {
                  .compact();
     }
 
-    public Claims getClaimByToken(String token) {
+    public Claims getClaimByToken(String token) throws JwtException{
         return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)

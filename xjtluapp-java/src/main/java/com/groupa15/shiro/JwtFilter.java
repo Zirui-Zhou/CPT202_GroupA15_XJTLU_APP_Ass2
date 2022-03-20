@@ -1,9 +1,11 @@
 package com.groupa15.shiro;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.groupa15.common.lang.Response;
 import com.groupa15.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import lombok.SneakyThrows;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -14,6 +16,8 @@ import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.ObjectToStringHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,28 +39,20 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     @Autowired
     JwtUtils jwtUtils;
 
-    /* TODO(Zirui): From source code, the `isAccessAllowed` simply checks the status `isauthenticated`, which means the
-        subject should be login manually each time when receiving a request. This conclusion should be checked again. */
+    /*
+        TODO(Zirui): From source code, the `isAccessAllowed` simply checks the status `isauthenticated`, which means the
+         subject should be login manually each time when receiving a request. This conclusion should be checked again.
+     */
 
     @Override
-    protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) {
-        AuthenticationToken result = null;
-
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String jwt = request.getHeader(jwtUtils.getHeader());
-        if (StringUtils.hasLength(jwt)) {
-            result = new JwtToken(jwt);
-        }
-
-        return result;
+    protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
+        String jwt = ((HttpServletRequest) request).getHeader(jwtUtils.getHeader());
+        return new JwtToken(jwt);
     }
 
-    // TODO(Zirui): Implement a more reasonable method to throw exceptions.
-//    @SneakyThrows
-//    @Override
-//    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue) {
-//        return executeLogin(servletRequest, servletResponse);
-//    }
+    /*
+        TODO(Zirui): Implement a more reasonable method to throw exceptions.
+     */
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
@@ -65,55 +61,14 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-        throw e;
+        try {
+            response.getWriter().print(JSONObject.toJSONString(Response.fail(HttpStatus.BAD_REQUEST, e.getMessage())));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return false;
     }
 
-//    @Override
-//    protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-//        return false;
-//    }
-//
-//    @Override
-//    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object mappedValue) {
-//        HttpServletRequest request = (HttpServletRequest) servletRequest;
-//        String jwt = request.getHeader(jwtUtils.getHeader());
-//        if(!StringUtils.hasLength(jwt)) {
-//            return true;
-//        } else {
-//
-//            Claims claim = jwtUtils.getClaimByToken(jwt);
-//            if(claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
-//                throw new ExpiredCredentialsException();
-//            }
-//
-//
-//            try {
-//                return executeLogin(servletRequest, servletResponse);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            return false;
-//
-//        }
-//    }
-//
-//    @Override
-//    protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-//
-//        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//
-//        Throwable throwable = e.getCause() == null ? e : e.getCause();
-//        Response result = Response.fail(HttpStatus.BAD_REQUEST, throwable.getMessage(), null);
-//        String json = JSON.toJSONString(result);
-//
-//        try {
-//            httpServletResponse.getWriter().print(json);
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//        return false;
-//    }
 //
 //    @Override
 //    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
