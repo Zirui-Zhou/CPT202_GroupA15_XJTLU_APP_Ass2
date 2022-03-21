@@ -10,7 +10,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserId(int userId) {
         Optional<User> user = userRepo.findById(userId);
         if(user.isEmpty()) {
-            throw new UnknownAccountException();
+            throw new UnknownAccountException("The account does not exist.");
         }
         return user.get();
     }
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByUsername(String username){
         User user = userRepo.findOneByUsername(username);
         if(user == null) {
-            throw new UnknownAccountException();
+            throw new UnknownAccountException("The account does not exist.");
         }
         return user;
     }
@@ -69,7 +68,7 @@ public class UserServiceImpl implements UserService {
         User user = getUserByUsername(loginDto.getUsername());
         String hashedPassword = secureUtils.getHashedPassword(loginDto.getPassword(), user.getSalt());
         if(!user.getPassword().equals(hashedPassword)) {
-            throw new IncorrectCredentialsException();
+            throw new IncorrectCredentialsException("Password is not correct.");
         }
         return user;
     }

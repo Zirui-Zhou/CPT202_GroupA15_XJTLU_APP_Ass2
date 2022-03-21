@@ -2,7 +2,6 @@ package com.groupa15.utils;
 
 import io.jsonwebtoken.*;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

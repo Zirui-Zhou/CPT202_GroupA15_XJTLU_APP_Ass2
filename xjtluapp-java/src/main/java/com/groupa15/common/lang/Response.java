@@ -3,7 +3,6 @@ package com.groupa15.common.lang;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpStatusCodeException;
 
 import java.io.Serializable;
 

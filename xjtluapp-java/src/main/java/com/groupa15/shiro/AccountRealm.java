@@ -7,13 +7,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.BeanUtils;
 
 /**
  * @author Zirui Zhou
@@ -47,13 +44,13 @@ public class AccountRealm extends AuthorizingRealm {
         try {
             claim = jwtUtils.getClaimByToken(jwtToken.getToken());
         } catch (JwtException e) {
-            throw new AuthenticationException("Jwt wrong format");
+            throw new AuthenticationException("Json web token is in wrong format.");
         } catch (IllegalArgumentException e) {
-            throw new AuthenticationException("With no Jwt");
+            throw new AuthenticationException("Must login first.");
         }
 
         if(jwtUtils.isTokenExpired(claim.getExpiration())) {
-            throw new ExpiredCredentialsException("Jwt expire");
+            throw new ExpiredCredentialsException("The login credential expired.");
         }
 
         int userId = Integer.parseInt(claim.getSubject());

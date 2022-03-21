@@ -1,7 +1,6 @@
 package com.groupa15.controller;
 
 import com.groupa15.common.lang.Response;
-import io.jsonwebtoken.JwtException;
 import org.apache.shiro.authc.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,7 +16,7 @@ import java.util.Objects;
  */
 
 /*
-    TODO(Zirui): Some conclusion: According to https://stackoverflow.com/questions/48584175/controlleradvice-doesnt-handle-exceptions,
+    TODO(Zirui): According to https://stackoverflow.com/questions/48584175/controlleradvice-doesnt-handle-exceptions,
      the ControllerAdvice cannot catch the exceptions on the servlet level. One possible solution is to override the advice
      filter in the low level which can cause fatal problem. Another is to prehandle the response in the shiro class to get
      formatted response.
