@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-import BlogDetail from '../views/BlogDetail.vue'
-import BlogEdit from '../views/BlogEdit.vue'
 
 
 const routes = [
@@ -22,21 +20,7 @@ const routes = [
     // 懒加载
     component: () => import('../views/Register.vue')
   },
-  {
-    path: '/blog/add', // 注意放在 path: '/blog/:blogId'之前
-    name: 'BlogAdd',
-    component: BlogEdit
-  },
-  {
-    path: '/blog/:blogId',
-    name: 'BlogDetail',
-    component: BlogDetail
-  },
-  {
-    path: '/blog/:blogId/edit',
-    name: 'BlogEdit',
-    component: BlogEdit
-  }
+
 ]
 
 const router = createRouter({
