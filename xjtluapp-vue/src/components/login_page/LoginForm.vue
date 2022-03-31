@@ -9,19 +9,31 @@
     <el-main class="light-color center">
       <el-form style="width: 80%" :rules="rules" :model="ruleForm" ref="ruleFormDom">
         <el-form-item prop="username">
-          <el-input :prefix-icon="Avatar" size="large" v-model="ruleForm.username" placeholder="Username"/>
+          <el-input
+              :prefix-icon="Avatar"
+              size="large"
+              v-model="ruleForm.username"
+              placeholder="Username"
+              maxlength="16"
+          />
         </el-form-item>
 
         <el-form-item prop="password">
-          <el-input :prefix-icon="Key" size="large" v-model="ruleForm.password" placeholder="Password" show-password/>
+          <el-input
+              :prefix-icon="Key"
+              size="large"
+              v-model="ruleForm.password"
+              placeholder="Password"
+              show-password
+          />
         </el-form-item>
 
-        <el-form-item>
-          <div style="margin-left: auto; margin-right: 0;">
-            <el-switch  v-model="ruleForm.isRemember"/>
-            <span style="margin-left: 10px">Remember Me?</span>
-          </div>
-        </el-form-item>
+<!--        <el-form-item>-->
+<!--          <div style="margin-left: auto; margin-right: 0;">-->
+<!--            <el-switch  v-model="ruleForm.isRemember"/>-->
+<!--            <span style="margin-left: 10px">Remember Me?</span>-->
+<!--          </div>-->
+<!--        </el-form-item>-->
 
         <el-form-item>
           <el-button size="large" class="button" type="primary" @click="submitForm()">Login</el-button>
@@ -92,7 +104,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 
   .deep-color{
     background-color: rgba(255,255,255,0.8);
