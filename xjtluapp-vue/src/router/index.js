@@ -1,30 +1,54 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   {
     path: '/',
-    name: 'Index',
-    redirect: { name: "Login" }
+    name: 'MainPage',
+    component: () => import("../views/MainPage"),
+    children: [
+      {
+        path: 'guide',
+        name: 'Guide',
+        component: () => import('../components/main_page/GuidePage')
+      },
+      {
+        path: 'home',
+        name: 'Home',
+        component: () => import('../components/main_page/HomePage')
+      },
+      {
+        path: 'module',
+        name: 'Module',
+        component: () => import('../components/main_page/ModulePage')
+      },
+      {
+        path: 'student',
+        name: 'Student',
+        component: () => import('../components/main_page/StudentPage')
+      },
+    ]
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
+    path: '/user',
+    name: 'User',
+    component: () => import("../views/LoginPage"),
+    children: [
+      {
+        path: 'login',
+        name: 'Login',
+        component: () => import("../components/login_page/LoginForm")
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        component: () => import("../components/login_page/RegisterForm")
+      },
+    ]
   },
-  {
-    path: '/register',
-    name: 'Register',
-    // 懒加载
-    component: () => import('../views/Register.vue')
-  },
-
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes
 })
 
