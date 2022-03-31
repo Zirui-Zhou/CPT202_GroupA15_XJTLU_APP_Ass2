@@ -29,13 +29,11 @@ public class AccountController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @CrossOrigin("*")
     @PostMapping("/login")
     public Response login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
         User user = userService.loginUser(loginDto);
         String jwt = jwtUtils.generateToken(user.getUserId());
         response.setHeader(jwtUtils.getHeader(), jwt);
-        response.setHeader("Access-Control-Expose-Headers", jwtUtils.getHeader());
         return Response.success(HttpStatus.OK, user.getUsername());
     }
 
