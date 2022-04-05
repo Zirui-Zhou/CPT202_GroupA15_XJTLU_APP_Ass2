@@ -50,15 +50,4 @@ public class AccountController {
         return Response.success(HttpStatus.OK, loginDto.getUsername());
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
-    }
-
-    @GetMapping("/helloagain")
-    @RequiresAuthentication
-    public String helloagain() {
-        return "hello again";
-    }
-
 }
