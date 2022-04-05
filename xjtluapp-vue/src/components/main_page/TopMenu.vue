@@ -1,6 +1,6 @@
 <template>
   <el-menu
-      :default-active="$route.path"
+      :default-active="router.path"
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
@@ -30,7 +30,7 @@
       <el-avatar
           class="align-right"
           :size="50"
-          @click="$router.push('/user/login')"
+          @click="router.push('/user/login')"
           src="https://pic1.zhimg.com/v2-bf0480b6b8fbcada9095412e3de0a7c3_is.jpg?source=32738c0c"
       />
     </el-row>
@@ -47,6 +47,9 @@
 
 <script setup>
 import {Search} from "@element-plus/icons-vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath)

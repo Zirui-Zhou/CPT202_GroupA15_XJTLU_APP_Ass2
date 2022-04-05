@@ -4,13 +4,13 @@
     <TopMenu/>
     <br/>
     <ArticleReader/>
-    <ArticleEditor/>
+<!--    <ArticleEditor/>-->
   </div>
 </template>
 
 <script>
 export default {
-  name: "ActiclePage"
+  name: "ArticlePage"
 }
 </script>
 

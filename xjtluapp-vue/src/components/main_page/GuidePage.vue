@@ -1,8 +1,8 @@
 <template>
 
   <el-carousel height="330px">
-    <el-carousel-item v-for="item in imgList" :key="item.id">
-      <img :src="item.idView" style="width: 100%; height: 100%;" class="image">
+    <el-carousel-item v-for="item in articleList" :key="item.articleId" @click="clickCard(item.articleId)">
+      <img :src="item.articleImage" style="width: 100%; height: 100%;" class="image">
     </el-carousel-item>
   </el-carousel>
 
@@ -15,15 +15,7 @@
     <el-tab-pane label="Academic" name="fourth"></el-tab-pane>
   </el-tabs>
 
-  <div v-for="item in 4" :key="item">
-    <br/>
-    <el-card>
-      <el-avatar :size="50" src="https://pic1.zhimg.com/v2-bf0480b6b8fbcada9095412e3de0a7c3_is.jpg?source=32738c0c" />
-      <img src="../../assets/xjtlu_icon.png" alt="xjtlu"/>
-      <h4>index {{item}}</h4>
-      <p>Tom committed 2018/4/12 20:46</p>
-    </el-card>
-  </div>
+  <CardGroup/>
 
 </template>
 
@@ -34,16 +26,47 @@ export default {
 </script>
 
 <script setup>
-import { ref } from 'vue'
+import {reactive, ref, onMounted} from 'vue'
+import {useRouter} from "vue-router";
+import CardGroup from "@/components/main_page/CardList";
+import axios from "axios";
+import {ElMessage} from "element-plus";
+
+const router = useRouter()
 
 const activeName = ref('first')
+const articleList = reactive([])
 
-const imgList = [
-  {id:1, idView:require('@/assets/carousel/carousel1.png')},
-  {id:2, idView:require('@/assets/carousel/carousel2.png')},
-  {id:3, idView:require('@/assets/carousel/carousel3.png')},
-  {id:4, idView:require('@/assets/carousel/carousel4.png')}
-]
+const clickCard = (id) => {
+  router.push({path: '/article',
+    query:{id: id}
+  })
+}
+
+const getArticleList = (from, to) => {
+  axios.post("http://localhost:8081/articlelist", {fromIndex: from, articleNum: to}).then(res => {
+    const article = res.data.data
+    articleList.push(...article)
+    ElMessage({
+      message: 'Get the articles',
+      type: 'success',
+    })
+  }).catch(error => {
+    ElMessage({
+      message: error.response.data.msg,
+      type: 'error',
+    })
+  })
+}
+
+onMounted(() => getArticleList(1, 4))
+
+// const imgList = [
+//   {id:1, idView:require('@/assets/carousel/carousel1.png')},
+//   {id:2, idView:require('@/assets/carousel/carousel2.png')},
+//   {id:3, idView:require('@/assets/carousel/carousel3.png')},
+//   {id:4, idView:require('@/assets/carousel/carousel4.png')}
+// ]
 
 </script>
 
@@ -75,4 +98,5 @@ const imgList = [
   .demo-tabs{
     background-color: white;
   }
+
 </style>
