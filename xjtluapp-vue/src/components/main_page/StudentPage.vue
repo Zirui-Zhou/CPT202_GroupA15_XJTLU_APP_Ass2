@@ -8,12 +8,7 @@
     <el-container>
       <el-main>
         <el-row class="demo-avatar demo-basic">
-          <el-avatar
-              class="align-right"
-              style="margin: auto"
-              :size="70"
-              src="https://pic1.zhimg.com/v2-bf0480b6b8fbcada9095412e3de0a7c3_is.jpg?source=32738c0c"
-          />
+          <UploadImage/>
           <el-descriptions
               class="margin-top"
               :column="2"
@@ -70,6 +65,10 @@ export default {
   name: "StudentPage",
 
 }
+</script>
+
+<script setup>
+import UploadImage from "@/components/main_page/UploadImage"
 </script>
 
 <style scoped>

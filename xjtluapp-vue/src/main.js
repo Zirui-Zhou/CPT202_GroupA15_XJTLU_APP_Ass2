@@ -24,8 +24,6 @@ VMdPreview.use(githubTheme, {
     hljs: hljs,
 });
 
-app.use(VMdEditor);
-
 app.use(ElementPlus)
     .use(router)
     .use(store)

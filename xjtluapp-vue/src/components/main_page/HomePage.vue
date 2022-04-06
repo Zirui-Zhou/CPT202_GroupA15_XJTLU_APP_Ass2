@@ -4,8 +4,9 @@
 
       <el-card class="box-card" style="display: block; margin: 10px">
         <template #header>
-          <div class="card-header"
-               style="height:5px"
+          <div
+              class="card-header"
+              style="height:5px"
           >
             {{i.name}}
           </div>
