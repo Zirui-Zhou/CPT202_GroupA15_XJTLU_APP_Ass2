@@ -40,7 +40,7 @@ public class ArticleController {
         return Response.success(HttpStatus.OK, article.getArticleTitle());
     }
 
-    @PostMapping("/articlelist")
+    @PostMapping("/article/list")
     public Response getArticleList(@RequestBody ArticleListDto articleListDto, HttpServletRequest httpServletRequest) {
         List<Article> articleList = articleService.getArticleListById(articleListDto);
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
