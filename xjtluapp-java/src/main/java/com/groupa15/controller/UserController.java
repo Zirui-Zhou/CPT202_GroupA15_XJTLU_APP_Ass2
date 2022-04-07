@@ -1,9 +1,8 @@
-package com.qi.controller;
+package com.groupa15.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.qi.entity.User;
-import com.qi.mapper.UserMapper;
-import com.qi.service.UserService;
+import com.groupa15.entity.User;
+import com.groupa15.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-//add the prefix to this interface
 public class UserController {
-
-    @Autowired //import other class
-    private UserMapper userMapper;
 
     @Autowired
     private UserService userService;

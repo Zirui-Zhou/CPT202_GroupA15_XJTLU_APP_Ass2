@@ -22,6 +22,7 @@
     <el-row class="align-right">
       <el-input
           placeholder="Please input"
+          v-model="input"
           style="width: 200px"
           class="align-right"
           :suffix-icon="Search"
@@ -55,10 +56,12 @@
 </script>
 
 <script setup>
+import {ref} from "vue"
 import {Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
 
 const router = useRouter()
+const input = ref("")
 
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath)

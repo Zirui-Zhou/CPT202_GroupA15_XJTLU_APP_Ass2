@@ -113,11 +113,12 @@ const handleLinkClick = (item) => {
   text-align: left;
   display: flex;
   flex-flow: row wrap;
+  margin: 5px auto;
 }
 
 .customLinkTitle {
   flex: 0 0 15%;
-  margin: 5px;
+  margin: auto 10px;
   font-size: 15px;
 }
 

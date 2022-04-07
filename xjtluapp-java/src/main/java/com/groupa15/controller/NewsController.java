@@ -1,9 +1,8 @@
-package com.qi.controller;
+package com.groupa15.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.qi.entity.News;
-import com.qi.entity.User;
-import com.qi.service.NewsService;
+import com.groupa15.entity.News;
+import com.groupa15.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

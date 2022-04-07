@@ -1,12 +1,11 @@
-package com.qi.service;
+package com.groupa15.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qi.entity.News;
-import com.qi.entity.User;
-import com.qi.mapper.NewsMapper;
+import com.groupa15.entity.News;
+import com.groupa15.mapper.NewsMapper;
 import org.springframework.stereotype.Service;
 
 @Service

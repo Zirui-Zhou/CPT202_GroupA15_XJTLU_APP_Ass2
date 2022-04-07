@@ -1,30 +1,41 @@
-package com.qi.service;
+package com.groupa15.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qi.entity.User;
-import com.qi.mapper.UserMapper;
+import com.groupa15.common.dto.LoginDto;
+import com.groupa15.entity.User;
+import com.groupa15.mapper.UserMapper;
+import com.groupa15.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class UserService extends ServiceImpl<UserMapper, User> {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-//    @Autowired
-//    private UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-//    public int save(User user){
-//        if(user.getId() == null){
-//            return userMapper.insert(user);
-//        }
-//        else{
-//            return userMapper.update(user);
-//        }
-//    }
+    @Override
+    public User getUserByUserId(int userId) {
+        return null;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public void registerUser(String username, String password) {
+
+    }
+
+    @Override
+    public User loginUser(LoginDto loginDto) {
+        return null;
+    }
 
     //mybatis-plus 实现
     public boolean saveUser(User user){

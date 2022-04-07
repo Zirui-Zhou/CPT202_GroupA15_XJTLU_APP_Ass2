@@ -23,7 +23,7 @@ export default {
 
 <script setup>
 import {ref} from 'vue'
-import CardGroup from "@/components/main_page/conmponents/ColumnCardList";
+import CardGroup from "@/components/main_page/conmponents/SingleColumnCardList";
 import CarouselList from "@/components/main_page/conmponents/CarouselList";
 
 const activeName = ref('first')

@@ -12,7 +12,7 @@ export default {
 
 <script setup>
 import TypeList from "@/components/main_page/conmponents/TypeList";
-import RowCardList from "@/components/main_page/conmponents/RowCardList";
+import RowCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
 </script>
 
 <style scoped>

@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 /**
  * @author Zirui Zhou
@@ -39,4 +40,6 @@ public class Article {
         private String userName;
 
         private String userAvatar;
+
+//        private LocalDateTime createTime;
 }

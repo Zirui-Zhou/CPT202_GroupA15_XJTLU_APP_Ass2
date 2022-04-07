@@ -34,7 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getArticleListById(ArticleListDto articleListDto) {
         int from = articleListDto.getFromIndex();
-        int to = from + articleListDto.getArticleNum();
+        int to = from + articleListDto.getArticleNum() - 1;
         return articleRepo.findByArticleIdBetween(from, to);
     }
 
