@@ -2,12 +2,20 @@ server:
   port: 9090
 
 
+prop:
+  upload-folder: E:/test/
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/student?serverTimezone=GMT%2b8
-    username: root
-    password: root
+    url: jdbc:mysql://121.5.190.117:3306/student?serverTimezone=GMT%2b8
+    username: student
+    password: p5ZPWjd8Yjf8pnzE
+  # 配置SpringMVC文件上传限制，默认1M。注意MB要大写，不然报错。SpringBoot版本不同，配置项不同
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml #扫描所有mybatis的xml文件
@@ -15,3 +23,8 @@ mybatis:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+
+

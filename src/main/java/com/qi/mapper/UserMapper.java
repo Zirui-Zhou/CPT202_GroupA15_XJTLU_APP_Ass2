@@ -1,13 +1,14 @@
-package com.example.demo.mapper;
+package com.qi.mapper;
 
-import com.example.demo.entity.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qi.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 //@Mapper
 //database mapper label
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     @Select("Select * from user")
     List<User> findAll();
@@ -21,7 +22,7 @@ public interface UserMapper {
     @Delete("Delete from user where id = #{id}")
     int deleteById(@Param("id") Integer id);
 
-    @Select("Select * from user limit #{pageNum}, #{pageSize}")
-    List<User> selectPage(Integer pageNum, Integer pageSize);
+    @Select("Select * from user where username like #{username} limit #{pageNum}, #{pageSize} ")
+    List<User> findPage(Integer pageNum, Integer pageSize, String username);
 
 }

@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.qi.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@MapperScan("com.example.demo.mapper") //扫描所有的mapper
+@MapperScan("com.qi.mapper") //扫描所有的mapper
 public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
