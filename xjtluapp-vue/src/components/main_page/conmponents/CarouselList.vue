@@ -6,7 +6,7 @@
         @click="clickCard(item.articleId)"
         onmouseover="" style="cursor: pointer;"
     >
-      <img :src="item.articleImage" style="width: 100%; height: 100%;" class="image">
+      <img :src="item.articleImage" style="width: 100%; height: 100%; object-fit: contain" class="image">
     </el-carousel-item>
   </el-carousel>
 </template>

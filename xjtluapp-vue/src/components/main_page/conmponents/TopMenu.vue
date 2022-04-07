@@ -27,15 +27,24 @@
           :suffix-icon="Search"
       />
       <el-divider class="align-right" direction="vertical"/>
-      <el-avatar
-          class="align-right"
-          :size="50"
-          @click="router.push('/user/login')"
-          src="https://pic1.zhimg.com/v2-bf0480b6b8fbcada9095412e3de0a7c3_is.jpg?source=32738c0c"
-      />
-    </el-row>
+      <div>
+        <el-avatar
+            class="align-right avatar"
+            :size="50"
+            @click="handleAvatarClick"
+            src="https://pic1.zhimg.com/v2-bf0480b6b8fbcada9095412e3de0a7c3_is.jpg?source=32738c0c"
+        />
+        <el-card class="card">
+          <h2>Rui&nbsp;Bao&nbsp;Cry&nbsp;Cry</h2>
+          <h2>Rui&nbsp;Bao&nbsp;Cry&nbsp;Cry</h2>
+          <h2>Rui&nbsp;Bao&nbsp;Cry&nbsp;Cry</h2>
+          <h2>Rui&nbsp;Bao&nbsp;Cry&nbsp;Cry</h2>
+        </el-card>
+      </div>
 
+    </el-row>
   </el-menu>
+
 
 </template>
 
@@ -54,10 +63,44 @@ const router = useRouter()
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath)
 }
+
+const handleAvatarClick = () => {
+  router.push('/user/login')
+}
 </script>
 
 <style scoped>
   .align-right{
     margin: auto 10px auto auto;
   }
+
+  .avatar{
+    transition: 0.2s;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .avatar:hover{
+    transform: scale(1.5);
+    position: relative;
+    transition: transform 0.2s;
+
+  }
+
+  .card{
+    position: absolute;
+    transform: translate(calc(-50% + 25px));
+    z-index: 1;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+    transition-delay: 0.1s;
+  }
+
+  div > .avatar:hover + .card{
+    opacity: 1;
+    transition: opacity 0.3s;
+    transition-delay: 0.1s;
+  }
+
 </style>

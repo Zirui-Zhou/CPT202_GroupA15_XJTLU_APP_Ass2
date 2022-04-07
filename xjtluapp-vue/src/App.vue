@@ -7,7 +7,7 @@
 export default {
   name: 'App',
   mounted(){
-    document.body.style.backgroundColor = "#66ccff"
+    document.body.style.backgroundColor = "#ffffff"
   }
 }
 </script>
