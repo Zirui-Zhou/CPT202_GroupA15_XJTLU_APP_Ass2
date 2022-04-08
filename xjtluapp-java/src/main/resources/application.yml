@@ -12,12 +12,12 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml #扫描所有mybatis的xml文件
   type-aliases-package: com.groupa15.entity
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 shiro:
   jwtFilterName: "jwtFilter"
-  filterList: ["/hello/again", "/logout"]
+  filterList: ["/hello/again", "/logout", "/user/info"]
 
 jwt:
   secret: f4e2e52034348f86b67cde581c0f9eb5

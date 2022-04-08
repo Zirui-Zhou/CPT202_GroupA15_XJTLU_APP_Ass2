@@ -13,8 +13,8 @@
 
     <select id="queryTagTypeList" resultMap="TagTypeList">
         SELECT a.name as tagName, b.name as typeName
-        FROM tag a
-            INNER JOIN tag_type b
+        FROM student.tag a
+            INNER JOIN student.tag_type b
                 on a.type=b.id
     </select>
 

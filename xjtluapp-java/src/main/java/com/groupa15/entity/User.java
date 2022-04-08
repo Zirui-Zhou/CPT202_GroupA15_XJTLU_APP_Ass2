@@ -14,10 +14,18 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 public class User {
+
     @TableId
     private Long userId;
+
     private String userName;
+
     private String password;
+
     private String salt;
+
     private LocalDateTime createTime;
+
+    private String avatar;
+
 }

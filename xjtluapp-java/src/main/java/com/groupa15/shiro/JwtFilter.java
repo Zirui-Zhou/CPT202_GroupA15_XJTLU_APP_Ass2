@@ -49,7 +49,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
         try {
-            response.getWriter().print(JSONObject.toJSONString(Response.fail(HttpStatus.BAD_REQUEST, e.getMessage())));
+            response.getWriter().print(JSONObject.toJSONString(Response.fail(HttpStatus.UNAUTHORIZED, e.getMessage())));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
