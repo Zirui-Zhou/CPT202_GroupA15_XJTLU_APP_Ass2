@@ -1,6 +1,6 @@
 package com.groupa15.controller;
 
-import com.groupa15.common.lang.Response;
+import com.groupa15.common.Response;
 import org.apache.shiro.authc.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;

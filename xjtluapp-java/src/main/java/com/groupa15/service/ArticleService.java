@@ -3,6 +3,8 @@ package com.groupa15.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.groupa15.common.dto.ArticlePageDto;
 import com.groupa15.entity.Article;
+import com.groupa15.entity.vo.ArticleScreenshotVO;
+import com.groupa15.entity.vo.TagTypeVO;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public interface ArticleService extends IService<Article> {
     Article getArticleById(Long id);
     Article getArticleByTitle(String title);
-    List<Article> getArticlePageById(ArticlePageDto articleListDto);
+    List<ArticleScreenshotVO> getArticlePageById(ArticlePageDto articleListDto);
+    List<TagTypeVO> getAllTags();
     void addArticle(Article article);
 }

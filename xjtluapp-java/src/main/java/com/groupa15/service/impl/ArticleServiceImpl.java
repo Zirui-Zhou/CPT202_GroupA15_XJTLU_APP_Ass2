@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.groupa15.common.dto.ArticlePageDto;
 import com.groupa15.entity.Article;
+import com.groupa15.entity.vo.ArticleScreenshotVO;
+import com.groupa15.entity.vo.TagTypeVO;
 import com.groupa15.mapper.ArticleMapper;
 import com.groupa15.service.ArticleService;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -27,7 +29,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Article getArticleById(Long id) {
         Article article = this.getById(id);
-        if(null == article) {
+        if(article == null) {
             // TODO(Zirui): Attempt to define a custom exception to inform this.
             throw new UnknownAccountException("The article does not exist.");
         }
@@ -48,12 +50,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<Article> getArticlePageById(ArticlePageDto articlePageDto) {
-        Page<Article> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
-        wrapper.orderByDesc(Article::getId);
-        articleMapper.selectPage(page, wrapper);
+    public List<ArticleScreenshotVO> getArticlePageById(ArticlePageDto articlePageDto) {
+        Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
+//        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
+//        wrapper.orderByDesc(Article::getId);
+//        articleMapper.selectPage(page, wrapper);
+        page = articleMapper.getArticlePageVo(page);
         return page.getRecords();
+    }
+
+    @Override
+    public List<TagTypeVO> getAllTags() {
+        articleMapper.queryTagTypeList().forEach(System.out::println);
+        return articleMapper.queryTagTypeList();
     }
 
     @Override

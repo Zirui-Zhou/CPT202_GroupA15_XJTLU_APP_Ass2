@@ -27,5 +27,5 @@ public class Article {
 
         private LocalDateTime editTime;
 
-        private long userId;
+        private Long userId;
 }

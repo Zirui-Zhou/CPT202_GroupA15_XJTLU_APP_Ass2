@@ -1,4 +1,4 @@
-package com.groupa15.common.lang;
+package com.groupa15.common;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

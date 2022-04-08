@@ -1,8 +1,10 @@
 package com.groupa15.controller;
 
 import com.groupa15.common.dto.ArticlePageDto;
-import com.groupa15.common.lang.Response;
+import com.groupa15.common.Response;
 import com.groupa15.entity.Article;
+import com.groupa15.entity.vo.ArticleScreenshotVO;
+import com.groupa15.entity.vo.TagTypeVO;
 import com.groupa15.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,8 +39,13 @@ public class ArticleController {
 
     @PostMapping("/article/list")
     public Response getArticleList(@RequestBody ArticlePageDto articleListDto, HttpServletRequest httpServletRequest) {
-        List<Article> articleList = articleService.getArticlePageById(articleListDto);
+        List<ArticleScreenshotVO> articleList = articleService.getArticlePageById(articleListDto);
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
     }
 
+    @GetMapping("/article/tags")
+    public Response getArticle(HttpServletResponse httpServletRequest) {
+        List<TagTypeVO> tags = articleService.getAllTags();
+        return Response.success(HttpStatus.OK, null, tags);
+    }
 }

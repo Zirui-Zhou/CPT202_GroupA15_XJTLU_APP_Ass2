@@ -1,7 +1,7 @@
 package com.groupa15.controller;
 
 import com.groupa15.common.dto.LoginDto;
-import com.groupa15.common.lang.Response;
+import com.groupa15.common.Response;
 import com.groupa15.entity.User;
 import com.groupa15.service.UserService;
 import com.groupa15.utils.JwtUtils;
