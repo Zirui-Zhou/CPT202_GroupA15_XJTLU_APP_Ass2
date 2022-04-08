@@ -18,16 +18,16 @@
 
     <div class="customLink" v-for="(type, index) in typeList" :key="index">
 
-      <span class="customLinkTitle">{{type.name + ":"}}</span>
+      <span class="customLinkTitle">{{type.typeName + ":"}}</span>
 
       <div class="customLinkBlock">
-        <div class="customLinkItem" v-for="(item, index) in type.item" :key="index">
+        <div class="customLinkItem" v-for="(tag, index) in type.tagName" :key="index">
           <el-link
               :underline="false"
-              @click="handleLinkClick(item)"
-              :type="selectedList.indexOf(item) === -1 ? 'default' : 'primary'"
+              @click="handleLinkClick(tag)"
+              :type="selectedList.indexOf(tag) === -1 ? 'default' : 'primary'"
           >
-            {{item}}
+            {{tag}}
           </el-link>
         </div>
       </div>
@@ -44,32 +44,12 @@ export default {
 </script>
 
 <script setup>
-import {reactive} from "vue";
+import {onBeforeMount, reactive} from "vue";
+import {getTagTypeList} from "@/components/getArticle";
 
 const selectedList = reactive(["XJTLU", "Liverpool"])
 const typeList = reactive([])
-typeList.push(
-    {
-      name: "School",
-      item: ["XJTLU", "Liverpool"]
-    },
-    {
-      name: "Semester",
-      item: ["Semester1", "Semester2"]
-    },
-    {
-      name: "Grade",
-      item: ["Year1", "Year2", "Year3", "Year4"]
-    },
-    {
-      name: "Major",
-      item: ["ICS", "CST", "ECO"]
-    },
-    {
-      name: "Test",
-      item: ["TestMultiplyLine", "TestMultiplyLine", "TestMultiplyLine", "TestMultiplyLine", "TestMultiplyLine", "TestMultiplyLine"]
-    },
-)
+
 
 const handleClose = (tag) => {
   selectedList.forEach((item, index, arr) => {
@@ -86,6 +66,8 @@ const handleLinkClick = (item) => {
     handleClose(item)
   }
 }
+
+onBeforeMount(async ()=> typeList.push(...await getTagTypeList()))
 
 </script>
 

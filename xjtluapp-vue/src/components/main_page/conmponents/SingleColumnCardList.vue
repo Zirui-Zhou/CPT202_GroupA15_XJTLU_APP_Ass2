@@ -7,8 +7,8 @@
         <img :src="item.image" alt="xjtlu"/>
       </div>
       <div style="display: inline-block; position:absolute; right: 20px; bottom: 20px">
-<!--        <el-avatar :size="50" :src="item.userAvatar" style="margin: auto;  display: block;"/>-->
-        <span>{{item.userId}}</span>
+        <el-avatar :size="50" :src="item.avatar" style="margin: auto;  display: block;"/>
+        <span>{{item.userName}}</span>
         <span>&nbsp;2022.4.7</span>
       </div>
     </el-card>
@@ -67,7 +67,7 @@ import {onBeforeMount, reactive, ref} from "vue";
 
 <style scoped>
 img{
-  height: 100px
+  height: 110px
 }
 
 .card{
