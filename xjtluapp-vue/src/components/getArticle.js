@@ -19,10 +19,10 @@ async function getArticle(id) {
     return article
 }
 
-async function getArticleList(fromIndex, articleNum) {
+async function getArticleList(current, size) {
     let articleList
     await axios.post(serverUrl + "/article/list",
-        {fromIndex: fromIndex, articleNum: articleNum})
+        {current: current, size: size})
         .then(res => {
             articleList = res.data.data
         }).catch(error => {

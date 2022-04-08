@@ -58,7 +58,7 @@
   const store = useStore()
 
   const ruleForm = reactive({
-    username: '',
+    userName: '',
     password: '',
     isRemember: false,
   })

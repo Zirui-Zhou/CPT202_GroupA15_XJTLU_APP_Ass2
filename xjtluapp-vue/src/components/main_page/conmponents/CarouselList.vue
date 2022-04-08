@@ -3,10 +3,10 @@
     <el-carousel-item
         v-for="(item, index) in articleList"
         :key="index"
-        @click="clickCard(item.articleId)"
+        @click="clickCard(item.id)"
         onmouseover="" style="cursor: pointer;"
     >
-      <img :src="item.articleImage" style="width: 100%; height: 100%; object-fit: contain" class="image">
+      <img :src="item.image" style="width: 100%; height: 100%; object-fit: contain" class="image">
     </el-carousel-item>
   </el-carousel>
 </template>
