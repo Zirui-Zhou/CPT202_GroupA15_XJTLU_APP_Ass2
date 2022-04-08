@@ -12,6 +12,7 @@ import '@kangc/v-md-editor/lib/theme/style/github.css';
 import hljs from 'highlight.js';
 
 import App from './App'
+import axios from "axios"
 import router from "@/router";
 import store from "@/store";
 
@@ -23,6 +24,8 @@ VMdEditor.use(githubTheme, {
 VMdPreview.use(githubTheme, {
     hljs: hljs,
 });
+
+axios.defaults.withCredentials=true
 
 app.use(ElementPlus)
     .use(router)

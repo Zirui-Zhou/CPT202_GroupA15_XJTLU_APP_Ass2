@@ -28,12 +28,12 @@
           />
         </el-form-item>
 
-<!--        <el-form-item>-->
-<!--          <div style="margin-left: auto; margin-right: 0;">-->
-<!--            <el-switch  v-model="ruleForm.isRemember"/>-->
-<!--            <span style="margin-left: 10px">Remember Me?</span>-->
-<!--          </div>-->
-<!--        </el-form-item>-->
+        <el-form-item>
+          <div style="margin-left: auto; margin-right: 0;">
+            <el-switch  v-model="ruleForm.isRemember"/>
+            <span style="margin-left: 10px">Remember Me?</span>
+          </div>
+        </el-form-item>
 
         <el-form-item>
           <el-button size="large" class="button" type="primary" @click="submitForm()">Login</el-button>
@@ -52,16 +52,15 @@
   import {ref, unref, reactive} from 'vue'
   import {ElMessage} from 'element-plus'
   import {Avatar, Key} from "@element-plus/icons-vue"
-  import axios from "axios"
-  import {useStore} from "vuex"
-
-  const store = useStore()
+  import {login} from "@/components/handleUser";
 
   const ruleForm = reactive({
     userName: '',
     password: '',
     isRemember: false,
   })
+
+  const ruleFormDom = ref(null)
 
   const rules = reactive({
     username: [
@@ -71,8 +70,6 @@
       { required: true, message: 'Please input your password', trigger: 'change' }
     ],
   })
-
-  const ruleFormDom = ref(null)
 
   const submitForm = () => {
     const form = unref(ruleFormDom)
@@ -84,23 +81,9 @@
         })
         return false;
       }
+      login(ruleForm)
+    })
 
-      axios.post('http://localhost:8081/login', ruleForm).then(res => {
-        const jwt = res.headers['Authorization']
-        const userInfo = res.data.data
-        store.commit("SET_TOKEN", jwt)
-        store.commit("SET_USERINFO", userInfo)
-        ElMessage({
-          message: '啊对对对',
-          type: 'success',
-        })
-      }).catch(error => {
-        ElMessage({
-          message: error.response.data.msg,
-          type: 'error',
-        })
-      })
-    });
   }
 </script>
 

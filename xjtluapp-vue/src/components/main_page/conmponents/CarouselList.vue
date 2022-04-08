@@ -19,7 +19,7 @@ export default {
 
 <script setup>
 import {onMounted, reactive} from "vue";
-import {getArticleList, clickCard} from "@/components/getArticle";
+import {getArticleList, clickCard} from "@/components/handleArticle";
 
 let articleList = reactive([])
 

@@ -32,10 +32,10 @@ export default {
 
 <script setup>
 import {onBeforeMount, reactive, ref} from "vue";
-  import {getArticleList, clickCard} from "@/components/getArticle";
+  import {getArticleList, clickCard} from "@/components/handleArticle";
 
   const articleList = reactive([])
-  const currentPage = ref(1)
+  const currentPage = ref(0)
   const sizePage = ref(4)
   const isLoading = ref(false)
   const isNothing = ref(false)
@@ -43,9 +43,10 @@ import {onBeforeMount, reactive, ref} from "vue";
   const delay = ms => new Promise(res => setTimeout(res, ms))
 
   const loadNewArticle = async () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
       isLoading.value = true
-      await delay(2000)
+      if(currentPage.value !== 0) {
+        await delay(1000)
+      }
       const result = await getArticleList(currentPage.value + 1, sizePage.value)
       if(result.length === 0) {
         isNothing.value = true
@@ -53,15 +54,15 @@ import {onBeforeMount, reactive, ref} from "vue";
       currentPage.value++
       articleList.push(...result)
       isLoading.value = false
-    }
   }
 
   window.onscroll = async (event) => {
-    await loadNewArticle()
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
+      await loadNewArticle()
+    }
   }
 
-
-  onBeforeMount(async () => articleList.push(...await getArticleList(currentPage.value, sizePage.value)))
+  onBeforeMount(async () => loadNewArticle())
 
 </script>
 

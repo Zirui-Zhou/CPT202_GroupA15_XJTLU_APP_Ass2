@@ -28,9 +28,12 @@ export default {
 </script>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import {ref, reactive, onMounted} from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
+import {useStore} from "vuex";
+
+const store = useStore()
 
 const fileList = reactive([])
 const isUploadShow = ref(true)
@@ -67,6 +70,15 @@ const handleRemove = (file, files) => {
   fileList.pop()
   isUploadShow.value = true
 }
+
+
+// onMounted(()=>{
+//   const userinfo = store.getters.getUserInfo
+//   if(userinfo) {
+//     console.log(userinfo.avatar)
+//     fileList.push({raw: blobToDataURL(userinfo.avatar)})
+//   }
+// })
 
 </script>
 
@@ -124,7 +136,6 @@ const handleRemove = (file, files) => {
 
 .el-upload-list__item.is-success .el-upload-list__item-status-label {
   display: none;
-  transition: --;
 }
 
 .el-upload-list--picture-card .el-upload-list__item {

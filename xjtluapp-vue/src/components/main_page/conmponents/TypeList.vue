@@ -45,9 +45,9 @@ export default {
 
 <script setup>
 import {onBeforeMount, reactive} from "vue";
-import {getTagTypeList} from "@/components/getArticle";
+import {getTagTypeList} from "@/components/handleArticle";
 
-const selectedList = reactive(["XJTLU", "Liverpool"])
+const selectedList = reactive([])
 const typeList = reactive([])
 
 

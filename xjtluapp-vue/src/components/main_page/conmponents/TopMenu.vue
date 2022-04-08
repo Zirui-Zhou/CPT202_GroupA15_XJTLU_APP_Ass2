@@ -1,6 +1,6 @@
 <template>
   <el-menu
-      :default-active="router.path"
+      :default-active="router.currentRoute.value.path"
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
@@ -33,13 +33,17 @@
             class="align-right avatar"
             :size="50"
             @click="handleAvatarClick"
-            src="https://pic1.zhimg.com/v2-bf0480b6b8fbcada9095412e3de0a7c3_is.jpg?source=32738c0c"
+            :icon="UserFilled"
+            :src="userInfo ? userInfo.avatar : ''"
         />
         <el-card class="card">
-          <h2>Rui&nbsp;Bao&nbsp;Cry&nbsp;Cry</h2>
-          <h2>Rui&nbsp;Bao&nbsp;Cry&nbsp;Cry</h2>
-          <h2>Rui&nbsp;Bao&nbsp;Cry&nbsp;Cry</h2>
-          <h2>Rui&nbsp;Bao&nbsp;Cry&nbsp;Cry</h2>
+          <div v-if="userInfo">
+            <h2>Id:&nbsp;{{userInfo.userId}}</h2>
+            <h2>Name:&nbsp;{{userInfo.userName}}</h2>
+          </div>
+          <div v-show="!userInfo">
+            <h2>Please&nbsp;login&nbsp;first</h2>
+          </div>
         </el-card>
       </div>
 
@@ -56,20 +60,36 @@
 </script>
 
 <script setup>
-import {ref} from "vue"
-import {Search} from "@element-plus/icons-vue";
-import {useRouter} from "vue-router";
+import {onBeforeMount, ref} from "vue"
+import {Search, UserFilled} from "@element-plus/icons-vue";
+import {useRouter, useRoute} from "vue-router";
+import {useStore} from "vuex";
+import {getUserInfo, getIsAuth} from "@/components/handleUser";
 
 const router = useRouter()
+const store = useStore()
+
 const input = ref("")
+const userInfo = ref(null)
 
 const handleSelect = (key, keyPath) => {
   console.log(key, keyPath)
 }
 
-const handleAvatarClick = () => {
-  router.push('/user/login')
+const handleAvatarClick = async () => {
+   const result = await getIsAuth()
+  if(result === true) {
+    router.push('/student')
+  } else {
+    router.push('/user/login')
+  }
 }
+
+onBeforeMount(async () => {
+  await getUserInfo()
+  userInfo.value = store.getters.getUserInfo
+})
+
 </script>
 
 <style scoped>
@@ -90,6 +110,10 @@ const handleAvatarClick = () => {
 
   }
 
+  .el-avatar--icon {
+    --el-avatar-icon-size: 25px;
+  }
+
   .card{
     position: absolute;
     transform: translate(calc(-50% + 25px));
@@ -105,5 +129,6 @@ const handleAvatarClick = () => {
     transition: opacity 0.3s;
     transition-delay: 0.1s;
   }
+
 
 </style>
