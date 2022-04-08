@@ -1,6 +1,6 @@
 <template>
 
-  <RowCardList/>
+  <MultipleColumnCardList/>
 
   <br/>
 
@@ -27,7 +27,7 @@ export default {
 
 <script setup>
 
-  import RowCardList from "@/components/main_page/conmponents/RowCardList";
+  import MultipleColumnCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
 
   const guideUrl = [
     {name: "E-bridge", url: "https://ebridge.xjtlu.edu.cn"},
