@@ -2,7 +2,9 @@
   <div class="space">
     <div class="spaceItem" v-for="i in guideList" :key="i.id">
 
-      <el-card class="card">
+      <el-card class="card"
+      @click="openurl('https://mp.weixin.qq.com/mp/homepage?__biz=MzU5NzEwNDcwMw==&hid=2&sn=baa112a84a58bf59dbcff58fc6ed78b5&scene=18&devicetype=android-30&version=2800153b&lang=zh_CN&nettype=WIFI&ascene=7&session_us=gh_682e70e2e54d&pass_ticket=DYJcDufA6uMychPKoGT3Ovvmmjjh2ii2hXMu6rl4pk93jG01RsM9Q1baDxZDw7YB&wx_header=3')"
+      >
         <template #header>
           <div class="card-header">
             {{i.name}}
@@ -22,6 +24,11 @@ export default {
 </script>
 
 <script setup>
+
+const openurl = (url) => {
+  window.open(url)
+}
+
 const guideList = [
   {id:1,name:"New Student",idView:require('@/assets/guide/fresh.png')},
   {id:1,name:"Campus IT",idView:require('@/assets/guide/it.png')},
