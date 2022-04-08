@@ -34,7 +34,7 @@ public class AccountController {
         User user = userService.loginUser(loginDto);
         String jwt = jwtUtils.generateToken(user.getUserId());
         response.setHeader(jwtUtils.getHeader(), jwt);
-        return Response.success(HttpStatus.OK, user.getUsername());
+        return Response.success(HttpStatus.OK, user.getUserName());
     }
 
     @GetMapping("/logout")

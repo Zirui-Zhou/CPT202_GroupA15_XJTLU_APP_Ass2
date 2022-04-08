@@ -1,45 +1,31 @@
 package com.groupa15.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.*;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.Proxy;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 /**
- * @author Zirui Zhou
+ * @author Qi Xu
  * @date 2022/4/5
  */
 
-@Setter
-@Getter
-@ToString
+@Data
 @Accessors(chain = true)
-@RequiredArgsConstructor
-@Entity
-@Proxy(lazy = false)
 public class Article {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Integer articleId;
+        @TableId
+        private Long id;
 
-        private String articleTitle;
+        private String title;
 
-        private String articleImage;
+        private String image;
 
-        private String articleContent;
+        private String content;
 
-        private String userName;
+        private LocalDateTime createTime;
 
-        private String userAvatar;
+        private LocalDateTime editTime;
 
-//        private LocalDateTime createTime;
+        private long userId;
 }

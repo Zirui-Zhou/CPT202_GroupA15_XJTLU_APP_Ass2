@@ -1,16 +1,11 @@
 package com.groupa15.controller;
 
-import com.groupa15.common.dto.ArticleListDto;
-import com.groupa15.common.dto.LoginDto;
+import com.groupa15.common.dto.ArticlePageDto;
 import com.groupa15.common.lang.Response;
 import com.groupa15.entity.Article;
-import com.groupa15.entity.User;
 import com.groupa15.service.ArticleService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,20 +24,20 @@ public class ArticleController {
     ArticleService articleService;
 
     @GetMapping(value = "/article")
-    public Response getArticle(@RequestParam(name = "id") int id, HttpServletResponse httpServletRequest) {
-        Article article = articleService.getArticleByArticleId(id);
+    public Response getArticle(@RequestParam(name = "id") Long id, HttpServletResponse httpServletRequest) {
+        Article article = articleService.getArticleById(id);
         return Response.success(HttpStatus.OK, null, article);
     }
 
     @PostMapping("/article/add")
     public Response addArticle(@RequestBody Article article, HttpServletRequest httpServletRequest) {
         articleService.addArticle(article);
-        return Response.success(HttpStatus.OK, article.getArticleTitle());
+        return Response.success(HttpStatus.OK, article.getTitle());
     }
 
     @PostMapping("/article/list")
-    public Response getArticleList(@RequestBody ArticleListDto articleListDto, HttpServletRequest httpServletRequest) {
-        List<Article> articleList = articleService.getArticleListById(articleListDto);
+    public Response getArticleList(@RequestBody ArticlePageDto articleListDto, HttpServletRequest httpServletRequest) {
+        List<Article> articleList = articleService.getArticlePageById(articleListDto);
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
     }
 

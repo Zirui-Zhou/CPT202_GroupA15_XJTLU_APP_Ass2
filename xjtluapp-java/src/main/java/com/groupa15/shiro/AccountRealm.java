@@ -53,7 +53,7 @@ public class AccountRealm extends AuthorizingRealm {
             throw new ExpiredCredentialsException("The login credential expired.");
         }
 
-        int userId = Integer.parseInt(claim.getSubject());
+        Long userId = Long.parseLong(claim.getSubject());
         User user = userService.getUserByUserId(userId);
 
         /*

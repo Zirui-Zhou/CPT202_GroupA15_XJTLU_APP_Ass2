@@ -10,8 +10,8 @@ import java.io.Serializable;
  */
 
 @Data
-public class ArticleListDto implements Serializable {
-    private int fromIndex;
+public class ArticlePageDto implements Serializable {
+    private int current;
 
-    private int articleNum;
+    private int size;
 }
