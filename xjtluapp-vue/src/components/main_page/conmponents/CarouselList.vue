@@ -1,11 +1,13 @@
 <template>
-  <el-carousel height="330px" v-if="articleList.length > 0">
+  <el-carousel height="330px" v-loading="isLoading" ref="carousel">
     <el-carousel-item
         v-for="(item, index) in articleList"
         :key="index"
         @click="clickCard(item.id)"
         onmouseover="" style="cursor: pointer;"
     >
+
+      <h3>{{item.title}}</h3>
       <img :src="item.image" style="width: 100%; height: 100%; object-fit: contain" class="image">
     </el-carousel-item>
   </el-carousel>
@@ -18,25 +20,34 @@ export default {
 </script>
 
 <script setup>
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {getArticleList, clickCard} from "@/components/handleArticle";
 
-let articleList = reactive([])
+const articleList = reactive([])
+const isLoading = ref(true)
+const carousel = ref(null)
 
 onMounted(async () => {
-  articleList.push(...await getArticleList(1, 4))
+  // `push()` needs time
+  await articleList.push(...await getArticleList(1, 4))
+  carousel.value.setActiveItem(0)
+  isLoading.value = false
 })
 </script>
 
 <style scoped>
-/*.el-carousel__item h3 {*/
-/*  color: #475669;*/
-/*  font-size: 14px;*/
-/*  opacity: 0.75;*/
-/*  line-height: 500px;*/
-/*  margin: 10px;*/
-/*  text-align: center;*/
-/*}*/
+.el-carousel__item h3 {
+
+  /*opacity: 1;*/
+  line-height: 450px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  text-shadow: 3px 3px 0 black;
+  color: white;
+  font-size: 30px;
+}
 
 /*.el-carousel__item:nth-child(2n) {*/
 /*  background-color: #99a9bf;*/

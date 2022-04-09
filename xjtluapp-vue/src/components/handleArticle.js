@@ -1,9 +1,9 @@
 import router from "@/router"
 import {commonGet, commonPost} from "@/components/commonRequest";
+import {handleAvatar} from "@/components/handleUser";
 
-
-async function handleArticle(id) {
-    let result
+async function getArticle(id) {
+    let result = null
     await commonGet("/article",
         (res) => {
             result = res.data.data
@@ -13,19 +13,26 @@ async function handleArticle(id) {
     return result
 }
 
-async function getArticleList(current, size) {
-    let result
-    await commonPost("/article/list",
+async function getArticleListOfMine(current, size) {
+    return await getArticleList(current, size, "/mine", {}, true)
+}
+
+async function getArticleList(current, size, extraUrl="", config={}, isAuth=false) {
+    let result = []
+    await commonPost("/article/list" + extraUrl,
         {current: current, size: size},
         (res) => {
             result = res.data.data
-        }
+            result.forEach((item) => {item.avatar = handleAvatar(item.avatar)})
+        },
+        config,
+        isAuth
     )
     return result
 }
 
 async function getTagTypeList() {
-    let result
+    let result = []
     await commonGet("/article/tags",
         (res) => {
             result = res.data.data
@@ -41,4 +48,4 @@ function clickCard(id){
     })
 }
 
-export {handleArticle, getArticleList, getTagTypeList, clickCard}
+export {getArticle, getArticleList, getArticleListOfMine, getTagTypeList, clickCard}

@@ -3,8 +3,10 @@
     Image
   </div>
 
-  <el-row style="display: flex; margin: 20px auto">
-    <UploadImage style="margin: auto"/>
+  <el-row style="margin: 20px auto">
+    <div style="margin: auto 0 auto auto">
+    <UploadImage/>
+    </div>
     <el-descriptions
         :column="2"
         border
@@ -20,11 +22,16 @@
   </el-row>
 
   <div>
-    <el-tabs type="border-card" v-model="activeName" class="demo-tabs" @tab-click="handleClick" >
-      <el-tab-pane class="adf" label="History" name="first"></el-tab-pane>
-      <el-tab-pane label="Favourite" name="second"></el-tab-pane>
+    <el-tabs v-model="activeName" class="demo-tabs" >
+      <el-tab-pane label="Mine" name="first"></el-tab-pane>
+      <el-tab-pane label="History" name="second"></el-tab-pane>
+      <el-tab-pane label="Favourite" name="third"></el-tab-pane>
     </el-tabs>
   </div>
+
+  <br/>
+
+  <TimeLineList/>
 
 </template>
 
@@ -39,7 +46,10 @@ export default {
 
 <script setup>
 import UploadImage from "@/components/main_page/conmponents/UploadImage"
-import {reactive, unref} from "vue";
+import {reactive, unref, ref} from "vue";
+import TimeLineList from "@/components/main_page/conmponents/TimeLineCardList";
+
+const activeName = ref()
 
 const userinfo = reactive({
   name: "Ruibao",

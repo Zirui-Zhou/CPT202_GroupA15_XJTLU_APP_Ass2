@@ -2,8 +2,12 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    token: localStorage.getItem("token"),
-    userInfo: JSON.parse(sessionStorage.getItem("userInfo"))
+    token: [localStorage.getItem("token"), sessionStorage.getItem("token")]
+        .filter((item)=>item)
+        .pop(),
+    userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
+    serverUrl: "http://localhost:8081",
+    staticUrl: "/static"
   },
   mutations: {
     SET_TEMP_TOKEN: (state, token) => {
@@ -33,6 +37,14 @@ export default createStore({
 
     getToken: state => {
       return state.token
+    },
+
+    getServerUrl: state => {
+      return state.serverUrl
+    },
+
+    getStaticUrl: state => {
+      return state.serverUrl + state.staticUrl
     }
   },
   actions: {

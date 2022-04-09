@@ -8,6 +8,10 @@ const delay = ms => new Promise(res => setTimeout(res, ms))
 async function getUserInfo() {
     await commonGet("/userinfo",
         (res) => {
+            const result = res.data.data
+            if(result.avatar) {
+                result.avatar = handleAvatar(result.avatar)
+            }
             store.commit("SET_USERINFO", res.data.data)
         },
         {},
@@ -47,4 +51,11 @@ async function getIsAuth() {
     return result
 }
 
-export {getUserInfo, getIsAuth, login}
+function handleAvatar(avatar) {
+    if(!avatar){
+        return null
+    }
+    return store.getters.getStaticUrl + avatar
+}
+
+export {getUserInfo, getIsAuth, login, handleAvatar}

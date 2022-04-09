@@ -20,18 +20,15 @@
 </template>
 
 <script>
-
-import MultipleColumnCardList_sublist from "@/components/main_page/conmponents/MultipleColumnCardList_sublist";
-import MultipleColumnCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
-
 export default {
   name: "HomePage",
-  components: {MultipleColumnCardList_sublist, MultipleColumnCardList},
 
 }
 </script>
 
 <script setup>
+import MultipleColumnCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
+
 const guideUrl = [
   {name: "E-bridge", url: "https://ebridge.xjtlu.edu.cn"},
   {name: "Learning Mall", url: "https://learningmall.xjtlu.edu.cn"},

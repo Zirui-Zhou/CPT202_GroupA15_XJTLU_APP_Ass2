@@ -5,6 +5,7 @@ const routes = [
     path: '/',
     name: 'MainPage',
     component: () => import("@/views/MainPage"),
+    redirect: "/home",
     children: [
       {
         path: 'guide',

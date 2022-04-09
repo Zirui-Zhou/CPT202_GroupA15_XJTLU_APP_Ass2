@@ -11,14 +11,14 @@ export default {
 <script setup>
   import {useRoute} from "vue-router";
   import {onBeforeMount, reactive} from "vue";
-  import {handleArticle} from "@/components/handleArticle";
+  import {getArticle} from "@/components/handleArticle";
 
   const route = useRoute()
 
   const id = route.query.id
   const article = reactive({content: "Sorry, the context cannot be rendered correctly"})
 
-  onBeforeMount(async () => Object.assign(article, await handleArticle(id)))
+  onBeforeMount(async () => Object.assign(article, await getArticle(id)))
 
 </script>
 

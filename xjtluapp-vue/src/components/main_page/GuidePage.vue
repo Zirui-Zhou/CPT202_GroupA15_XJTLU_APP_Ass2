@@ -4,7 +4,7 @@
 
   <br/>
 
-  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+  <el-tabs v-model="activeName" class="demo-tabs">
     <el-tab-pane label="News" name="first"></el-tab-pane>
     <el-tab-pane label="University" name="second"></el-tab-pane>
     <el-tab-pane label="Clubs" name="third"></el-tab-pane>

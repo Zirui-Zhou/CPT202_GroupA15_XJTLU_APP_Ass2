@@ -2,13 +2,13 @@
   <el-upload
       class="avatar-uploader"
       action="http://localhost:8081/upload"
+      :headers="{Authorization: store.getters.getToken}"
       list-type="picture-card"
-      :file_list="fileList"
+      :file-list="fileList"
       :on-success="handleAvatarSuccess"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :before-upload="beforeAvatarUpload"
-      limit = 1
   >
 
     <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
@@ -32,6 +32,7 @@ import {ref, reactive, onMounted} from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import {useStore} from "vuex";
+import {handleAvatar} from "@/components/handleUser";
 
 const store = useStore()
 
@@ -42,15 +43,18 @@ const handleAvatarSuccess = (
     response,
     uploadFile
 ) => {
-  // imageUrl.value = URL.createObjectURL(uploadFile.raw)
-  fileList.push(uploadFile)
+  const userinfo = store.getters.getUserInfo
+  userinfo["avatar"] = handleAvatar(response.msg)
+  uploadFile.url = userinfo["avatar"]
+  store.commit("SET_USERINFO", userinfo)
 }
 
 const beforeAvatarUpload = async (rawFile) => {
-  if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format.')
-    return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
+  // if (rawFile.type !== 'image/jpeg') {
+  //   ElMessage.error('Avatar picture must be JPG format.')
+  //   return false
+  // } else
+  if (rawFile.size / 1024 / 1024 > 2) {
     ElMessage.error('Avatar picture size cannot exceed 2MB.')
     return false
   }
@@ -72,13 +76,13 @@ const handleRemove = (file, files) => {
 }
 
 
-// onMounted(()=>{
-//   const userinfo = store.getters.getUserInfo
-//   if(userinfo) {
-//     console.log(userinfo.avatar)
-//     fileList.push({raw: blobToDataURL(userinfo.avatar)})
-//   }
-// })
+onMounted(async ()=>{
+  const userinfo = store.getters.getUserInfo
+  if(userinfo.avatar) {
+    fileList.push({url: userinfo.avatar})
+    isUploadShow.value = false
+  }
+})
 
 </script>
 

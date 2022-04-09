@@ -1,7 +1,7 @@
 <template>
   <TypeList/>
   <br/>
-  <RowCardList/>
+  <MultipleColumnCardList/>
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
 
 <script setup>
 import TypeList from "@/components/main_page/conmponents/TypeList";
-import RowCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
+import MultipleColumnCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
 </script>
 
 <style scoped>

@@ -60,9 +60,9 @@
 </script>
 
 <script setup>
-import {onBeforeMount, ref} from "vue"
+import {onBeforeMount, ref, watch} from "vue"
 import {Search, UserFilled} from "@element-plus/icons-vue";
-import {useRouter, useRoute} from "vue-router";
+import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 import {getUserInfo, getIsAuth} from "@/components/handleUser";
 
@@ -73,7 +73,7 @@ const input = ref("")
 const userInfo = ref(null)
 
 const handleSelect = (key, keyPath) => {
-  console.log(key, keyPath)
+  // console.log(key, keyPath)
 }
 
 const handleAvatarClick = async () => {
@@ -84,6 +84,10 @@ const handleAvatarClick = async () => {
     router.push('/user/login')
   }
 }
+
+const watchUserInfo = watch(store.state.userInfo, (newValue, oldValue) => {
+  userInfo.value = newValue
+})
 
 onBeforeMount(async () => {
   await getUserInfo()
