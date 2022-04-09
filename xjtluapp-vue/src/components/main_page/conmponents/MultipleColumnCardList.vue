@@ -1,40 +1,63 @@
 <template>
   <div class="space">
+    <el-button v-show="unshowit" type="primary" @click="unshowit1()">
+      <el-icon style="vertical-align: middle;">
+        <back/>
+      </el-icon>
+      <span style="vertical-align: middle;"> 返回上一页 </span>
+    </el-button>
     <div class="spaceItem" v-for="i in guideList" :key="i.id">
 
-      <el-card class="card"
-      @click="openurl('https://mp.weixin.qq.com/mp/homepage?__biz=MzU5NzEwNDcwMw==&hid=2&sn=baa112a84a58bf59dbcff58fc6ed78b5&scene=18&devicetype=android-30&version=2800153b&lang=zh_CN&nettype=WIFI&ascene=7&session_us=gh_682e70e2e54d&pass_ticket=DYJcDufA6uMychPKoGT3Ovvmmjjh2ii2hXMu6rl4pk93jG01RsM9Q1baDxZDw7YB&wx_header=3')"
-      >
+      <el-card v-show="showit" shadow="hover" class="card"
+               @click="showit1()">
         <template #header>
           <div class="card-header">
-            {{i.name}}
+            {{ i.name }}
           </div>
         </template>
         <img :src="i.idView">
       </el-card>
 
     </div>
+    <MultipleColumnCardList_sublist v-show="unshowit"></MultipleColumnCardList_sublist>
   </div>
 </template>
 
 <script>
+import MultipleColumnCardList_sublist from "@/components/main_page/conmponents/MultipleColumnCardList_sublist";
 export default {
-  name: "RowCardList"
+  name: "RowCardList",
+  components: {MultipleColumnCardList_sublist},
+  data() {
+    return {
+      showit: true,
+      unshowit: false
+    }
+  },
+  methods: {
+
+    showit1() {
+      this.showit = false;
+      this.unshowit = true;
+    },
+    unshowit1() {
+      this.showit = true;
+      this.unshowit = false;
+    },
+
+  }
 }
 </script>
 
 <script setup>
-
-const openurl = (url) => {
-  window.open(url)
-}
+import {Back} from '@element-plus/icons-vue';
 
 const guideList = [
-  {id:1,name:"New Student",idView:require('@/assets/guide/fresh.png')},
-  {id:1,name:"Campus IT",idView:require('@/assets/guide/it.png')},
-  {id:1,name:"Campus Live",idView:require('@/assets/guide/live.png')},
-  {id:1,name:"Academic",idView:require('@/assets/guide/academic.png')},
-  {id:1,name:"2+2",idView:require('@/assets/guide/liverpool.png')},
+  {id: 1, name: "New Student", idView: require('@/assets/guide/fresh.png')},
+  {id: 1, name: "Campus IT", idView: require('@/assets/guide/it.png')},
+  {id: 1, name: "Campus Live", idView: require('@/assets/guide/live.png')},
+  {id: 1, name: "Academic", idView: require('@/assets/guide/academic.png')},
+  {id: 1, name: "2+2", idView: require('@/assets/guide/liverpool.png')},
 ]
 </script>
 
@@ -60,7 +83,7 @@ img {
   margin: 10px
 }
 
-.card:hover{
+.card:hover {
   transform: scale(1.05);
   position: relative;
   z-index: 1;
