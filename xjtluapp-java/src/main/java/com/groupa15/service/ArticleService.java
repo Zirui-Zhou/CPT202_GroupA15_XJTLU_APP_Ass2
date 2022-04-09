@@ -14,9 +14,17 @@ import java.util.List;
  */
 
 public interface ArticleService extends IService<Article> {
+
     Article getArticleById(Long id);
+
     Article getArticleByTitle(String title);
-    List<ArticleScreenshotVO> getArticlePageById(ArticlePageDto articleListDto);
+
+    List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto);
+
+    List<ArticleScreenshotVO> getArticlePageOfUserId(ArticlePageDto articlePageDto, Long userId);
+
     List<TagTypeVO> getAllTags();
+
     void addArticle(Article article);
+
 }

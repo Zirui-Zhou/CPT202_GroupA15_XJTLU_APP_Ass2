@@ -11,7 +11,9 @@ import java.io.Serializable;
 
 @Data
 public class ArticlePageDto implements Serializable {
+
     private int current;
 
     private int size;
+
 }

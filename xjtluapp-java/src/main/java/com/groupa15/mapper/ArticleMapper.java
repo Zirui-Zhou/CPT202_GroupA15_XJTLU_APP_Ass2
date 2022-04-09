@@ -20,8 +20,11 @@ import org.apache.ibatis.annotations.Select;
 public interface ArticleMapper extends BaseMapper<Article> {
 //    @Insert("Insert into news (title, content) values (#{title}, #{content})")
 //    int insert(News news);'
-    @Select("SELECT * from article a INNER JOIN user b on a.user_id=b.user_id")
+    @Select("SELECT * from student.article a INNER JOIN student.user b ON a.user_id=b.user_id ORDER BY a.create_time DESC")
     Page<ArticleScreenshotVO> getArticlePageVo(Page<ArticleScreenshotVO> iPage);
+
+    @Select("SELECT * from student.article a INNER JOIN student.user b ON a.user_id=b.user_id WHERE a.user_id=#{userId} ORDER BY a.create_time DESC")
+    Page<ArticleScreenshotVO> getArticlePageVoOfUserId(Page<ArticleScreenshotVO> iPage, Long userId);
 
     List<TagTypeVO> queryTagTypeList();
 

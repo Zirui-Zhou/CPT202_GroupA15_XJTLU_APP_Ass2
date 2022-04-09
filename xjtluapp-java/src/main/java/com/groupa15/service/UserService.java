@@ -13,8 +13,13 @@ import com.groupa15.entity.User;
 public interface UserService extends IService<User> {
 
     User getUserByUserId(Long userId);
+
     User getUserByUsername(String username);
+
     boolean registerUser(String username, String password);
+
     User loginUser(LoginDto loginDto);
+
+    void updateUser(User user);
 
 }

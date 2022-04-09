@@ -37,11 +37,15 @@ public class JwtUtils {
                  .compact();
     }
 
-    public Claims getClaimByToken(String token) throws JwtException{
+    public Claims getClaimByToken(String token) throws JwtException {
         return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public Long getUserIdByToken(String token) {
+        return Long.parseLong(this.getClaimByToken(token).getSubject());
     }
 
     public boolean isTokenExpired(Date expiration) {

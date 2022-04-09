@@ -6,6 +6,7 @@ import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.TagTypeVO;
 import com.groupa15.service.ArticleService;
+import com.groupa15.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,9 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+    @Autowired
+    JwtUtils jwtUtils;
+
     @GetMapping(value = "/article")
     public Response getArticle(@RequestParam(name = "id") Long id, HttpServletResponse httpServletRequest) {
         Article article = articleService.getArticleById(id);
@@ -39,7 +43,13 @@ public class ArticleController {
 
     @PostMapping("/article/list")
     public Response getArticleList(@RequestBody ArticlePageDto articleListDto, HttpServletRequest httpServletRequest) {
-        List<ArticleScreenshotVO> articleList = articleService.getArticlePageById(articleListDto);
+        List<ArticleScreenshotVO> articleList = articleService.getArticlePage(articleListDto);
+        return Response.success(HttpStatus.OK, "Get the article list", articleList);
+    }
+
+    @PostMapping("article/list/mine")
+    public Response getArticleList(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto) {
+        List<ArticleScreenshotVO> articleList = articleService.getArticlePageOfUserId(articleListDto, jwtUtils.getUserIdByToken(token));
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
     }
 

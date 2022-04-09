@@ -50,12 +50,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleScreenshotVO> getArticlePageById(ArticlePageDto articlePageDto) {
+    public List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-//        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
-//        wrapper.orderByDesc(Article::getId);
-//        articleMapper.selectPage(page, wrapper);
         page = articleMapper.getArticlePageVo(page);
+        return page.getRecords();
+    }
+
+    @Override
+    public List<ArticleScreenshotVO> getArticlePageOfUserId(ArticlePageDto articlePageDto, Long userId) {
+        Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
+        page = articleMapper.getArticlePageVoOfUserId(page, userId);
         return page.getRecords();
     }
 

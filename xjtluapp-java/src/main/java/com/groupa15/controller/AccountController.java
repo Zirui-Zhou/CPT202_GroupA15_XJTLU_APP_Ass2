@@ -49,7 +49,7 @@ public class AccountController {
 
     @GetMapping("/userinfo")
     public Response getUserInfo(@RequestHeader(value = "Authorization") String token) {
-        Long userId = Long.parseLong(jwtUtils.getClaimByToken(token).getSubject());
+        Long userId = jwtUtils.getUserIdByToken(token);
         User user = userService.getUserByUserId(userId);
         UserInfoVO userInfoVO = new UserInfoVO();
         BeanUtils.copyProperties(user, userInfoVO);
