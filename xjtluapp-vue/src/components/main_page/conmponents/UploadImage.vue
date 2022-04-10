@@ -28,7 +28,7 @@ export default {
 </script>
 
 <script setup>
-import {ref, reactive, onMounted} from 'vue'
+import {ref, reactive, onMounted, computed} from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import {useStore} from "vuex";
@@ -39,14 +39,16 @@ const store = useStore()
 const fileList = reactive([])
 const isUploadShow = ref(true)
 
+const userInfo = computed(()=>store.getters.getUserInfo)
+
 const handleAvatarSuccess = (
     response,
     uploadFile
 ) => {
-  const userinfo = store.getters.getUserInfo
-  userinfo["avatar"] = handleAvatar(response.msg)
-  uploadFile.url = userinfo["avatar"]
-  store.commit("SET_USERINFO", userinfo)
+  const newUserInfo = userInfo.value
+  newUserInfo["avatar"] = handleAvatar(response.msg)
+  uploadFile.url = newUserInfo["avatar"]
+  store.commit("SET_USERINFO", newUserInfo)
 }
 
 const beforeAvatarUpload = async (rawFile) => {
@@ -75,12 +77,12 @@ const handleRemove = (file, files) => {
   isUploadShow.value = true
 }
 
-
 onMounted(async ()=>{
-  const userinfo = store.getters.getUserInfo
-  if(userinfo.avatar) {
-    fileList.push({url: userinfo.avatar})
-    isUploadShow.value = false
+  if(userInfo.value) {
+    if(userInfo.value.avatar) {
+      fileList.push({url: userInfo.value.avatar})
+      isUploadShow.value = false
+    }
   }
 })
 

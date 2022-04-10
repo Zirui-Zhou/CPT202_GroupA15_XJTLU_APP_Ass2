@@ -1,12 +1,13 @@
 import store from "@/store";
 import router from "@/router"
 import {commonGet, commonPost} from "@/components/commonRequest";
-import {ElMessage} from "element-plus";
+import {ElNotification} from "element-plus";
+import {computed, watch} from "vue";
 
 const delay = ms => new Promise(res => setTimeout(res, ms))
 
 async function getUserInfo() {
-    await commonGet("/userinfo",
+    await commonGet("/user/info",
         (res) => {
             const result = res.data.data
             if(result.avatar) {
@@ -28,20 +29,49 @@ async function login(ruleForm) {
             } else {
                 store.commit("SET_TEMP_TOKEN", res.headers["authorization"])
             }
-            store.commit("SET_USERINFO", res.data.data)
-            ElMessage({
+            const result = res.data.data
+            if(result.avatar) {
+                result.avatar = handleAvatar(result.avatar)
+            }
+            store.commit("SET_USERINFO", result)
+            ElNotification({
+                title: 'Success',
                 message: res.data.msg,
                 type: 'success',
+                duration: 2000,
             })
-            await delay(1000)
-            await router.push('/home')
+            await delay(500)
+            await router.replace('/home')
         },
     )
 }
 
+async function needLogin(message="Please login first", url="/user/login") {
+    if(! await getIsAuth()) {
+        if(message.length > 0) {
+            ElNotification({
+                title: 'Warning',
+                message: message,
+                type: 'warning',
+                duration: 2000,
+            })
+        }
+        await router.push(url)
+        return false
+    }
+    return true
+}
+
+async function watchLogin() {
+    const token = computed(() => store.getters.getToken)
+    watch(token, async () => {
+        await needLogin("/")
+    })
+}
+
 async function getIsAuth() {
     let result = false
-    await commonGet("/isauth",
+    await commonGet("/auth",
         () => {
             result = true
         },
@@ -58,4 +88,4 @@ function handleAvatar(avatar) {
     return store.getters.getStaticUrl + avatar
 }
 
-export {getUserInfo, getIsAuth, login, handleAvatar}
+export {getUserInfo, getIsAuth, login, handleAvatar, needLogin, watchLogin}

@@ -17,6 +17,11 @@ export default {
 
 <script setup>
 import TopMenu from "@/components/main_page/conmponents/TopMenu";
+import {getUserInfo} from "@/components/handleUser";
+import {onBeforeMount} from "vue";
+
+onBeforeMount(async ()=> await getUserInfo())
+
 </script>
 
 <style scoped>

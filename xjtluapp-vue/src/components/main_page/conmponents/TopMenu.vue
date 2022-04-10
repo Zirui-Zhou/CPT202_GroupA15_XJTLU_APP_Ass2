@@ -3,7 +3,6 @@
       :default-active="router.currentRoute.value.path"
       class="el-menu-demo"
       mode="horizontal"
-      @select="handleSelect"
       router
   >
     <el-menu-item index="/student">
@@ -28,24 +27,8 @@
           :suffix-icon="Search"
       />
       <el-divider class="align-right" direction="vertical"/>
-      <div>
-        <el-avatar
-            class="align-right avatar"
-            :size="50"
-            @click="handleAvatarClick"
-            :icon="UserFilled"
-            :src="userInfo ? userInfo.avatar : ''"
-        />
-        <el-card class="card">
-          <div v-if="userInfo">
-            <h2>Id:&nbsp;{{userInfo.userId}}</h2>
-            <h2>Name:&nbsp;{{userInfo.userName}}</h2>
-          </div>
-          <div v-show="!userInfo">
-            <h2>Please&nbsp;login&nbsp;first</h2>
-          </div>
-        </el-card>
-      </div>
+
+      <AvatarWithCard class="align-right"/>
 
     </el-row>
   </el-menu>
@@ -60,79 +43,21 @@
 </script>
 
 <script setup>
-import {onBeforeMount, ref, watch} from "vue"
-import {Search, UserFilled} from "@element-plus/icons-vue";
+import {ref} from "vue"
+import {Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
-import {useStore} from "vuex";
-import {getUserInfo, getIsAuth} from "@/components/handleUser";
+import AvatarWithCard from "@/components/main_page/conmponents/AvatarWithCard";
 
 const router = useRouter()
-const store = useStore()
 
 const input = ref("")
-const userInfo = ref(null)
-
-const handleSelect = (key, keyPath) => {
-  // console.log(key, keyPath)
-}
-
-const handleAvatarClick = async () => {
-   const result = await getIsAuth()
-  if(result === true) {
-    router.push('/student')
-  } else {
-    router.push('/user/login')
-  }
-}
-
-const watchUserInfo = watch(store.state.userInfo, (newValue, oldValue) => {
-  userInfo.value = newValue
-})
-
-onBeforeMount(async () => {
-  await getUserInfo()
-  userInfo.value = store.getters.getUserInfo
-})
 
 </script>
 
 <style scoped>
+
   .align-right{
     margin: auto 10px auto auto;
   }
-
-  .avatar{
-    transition: 0.2s;
-    z-index: 2;
-    cursor: pointer;
-  }
-
-  .avatar:hover{
-    transform: scale(1.5);
-    position: relative;
-    transition: transform 0.2s;
-
-  }
-
-  .el-avatar--icon {
-    --el-avatar-icon-size: 25px;
-  }
-
-  .card{
-    position: absolute;
-    transform: translate(calc(-50% + 25px));
-    z-index: 1;
-
-    opacity: 0;
-    transition: opacity 0.3s;
-    transition-delay: 0.1s;
-  }
-
-  div > .avatar:hover + .card{
-    opacity: 1;
-    transition: opacity 0.3s;
-    transition-delay: 0.1s;
-  }
-
 
 </style>

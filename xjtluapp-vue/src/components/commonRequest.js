@@ -1,7 +1,7 @@
 import store from "@/store";
 import axios from "axios";
 import {transformBigint} from "@/components/transformBigint";
-import {ElMessage} from "element-plus";
+import {ElNotification} from "element-plus";
 
 function getToken() {
     return store.getters.getToken
@@ -20,9 +20,11 @@ function getConfig(isAuth) {
 }
 
 const handleError = (error) => {
-    ElMessage({
+    ElNotification({
+        title: 'Error',
         message: error.response.data.msg,
         type: 'error',
+        duration: 2000
     })
 }
 
@@ -40,7 +42,6 @@ async function commonGet(url, func, extraConfig={}, isAuth=false) {
 }
 
 async function commonPost(url, data, func, extraConfig={}, isAuth=false) {
-    console.log(getToken())
     if(isAuth && !getToken()) {
         return
     }

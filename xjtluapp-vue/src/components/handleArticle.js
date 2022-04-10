@@ -17,7 +17,7 @@ async function getArticleListOfMine(current, size) {
     return await getArticleList(current, size, "/mine", {}, true)
 }
 
-async function getArticleList(current, size, extraUrl="", config={}, isAuth=false) {
+async function getArticleList(current, size, extraUrl="", config={}, isAuth=true) {
     let result = []
     await commonPost("/article/list" + extraUrl,
         {current: current, size: size},

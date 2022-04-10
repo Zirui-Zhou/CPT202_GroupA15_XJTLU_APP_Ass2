@@ -1,4 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import {getIsAuth} from "@/components/handleUser";
+import {ElNotification} from "element-plus";
 
 const routes = [
   {
@@ -10,6 +12,9 @@ const routes = [
       {
         path: 'guide',
         name: 'Guide',
+        meta: {
+          requireAuth: true
+        },
         component: () => import('@/components/main_page/GuidePage')
       },
       {
@@ -20,11 +25,17 @@ const routes = [
       {
         path: 'module',
         name: 'Module',
+        meta: {
+          requireAuth: true
+        },
         component: () => import('@/components/main_page/ModulePage')
       },
       {
         path: 'student',
         name: 'Student',
+        meta: {
+          requireAuth: true
+        },
         component: () => import('@/components/main_page/StudentPage')
       },
     ]
@@ -56,6 +67,20 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeResolve(async (to) => {
+  if (to.matched.some(res => res.meta.requireAuth)) {
+    if (! await getIsAuth()) {
+      ElNotification({
+        title: "Warning",
+        message: "Please login first",
+        type: 'warning',
+        duration: 2000,
+      })
+      return {path: '/user/login',}
+    }
+  }
 })
 
 export default router

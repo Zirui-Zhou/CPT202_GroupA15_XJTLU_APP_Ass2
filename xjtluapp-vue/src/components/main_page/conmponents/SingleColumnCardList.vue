@@ -8,6 +8,7 @@
   >
     <br/>
     <el-card class="card" @click="clickCard(item.id)">
+
       <div style="display: inline-block;">
         <h3 style="margin-top: 0">{{item.title}}</h3>
         <el-image class="img" v-if="item.isLoading" v-loading="true">
@@ -21,12 +22,15 @@
             @load="item.isLoading=false"
         />
       </div>
-      <div style="display: inline-block; position:absolute; right: 20px; bottom: 20px">
-        <el-avatar class="avatar" :size="50" :src="item.avatar" style="margin: auto; "/>
+
+      <div class="userinfo">
+        <el-avatar :size="50" :src="item.avatar"/>
         <br/>
-        <span>{{item.userName}}</span>
-        <span>&nbsp;2022.4.7</span>
+        <span style="font-weight: bold">{{item.userName}}</span>
+        <br/>
+        <span style="font-size: 12px">{{getFormattedDate(item.createTime)}}</span>
       </div>
+
     </el-card>
   </component>
 
@@ -36,8 +40,8 @@
   >
     <br/>
     <el-card v-loading="true" v-show="isLoading" class="card"/>
-    <el-card v-show="isNothing" class="card" style="text-align: center">
-      <h2>There is nothing below.</h2>
+    <el-card v-show="isNothing" class="card nothingCard">
+      <h1>There is nothing below.</h1>
     </el-card>
   </component>
 
@@ -51,17 +55,14 @@ export default {
 </script>
 
 <script setup>
-  import {onBeforeMount, reactive, ref, defineProps, watch} from "vue";
+  import {onMounted, reactive, ref, defineProps} from "vue";
   import {getArticleList, clickCard} from "@/components/handleArticle";
   import moment from "moment"
-  import {useStore} from "vuex";
 
   const articleList = reactive([])
   const currentPage = ref(0)
   const isLoading = ref(false)
   const isNothing = ref(false)
-
-  const store = useStore()
 
   const props = defineProps({
     rootType: {
@@ -115,17 +116,17 @@ export default {
     return moment(time).format('YYYY-MM-DD HH:mm:ss')
   }
 
+  const getFormattedDate = (time) => {
+    return moment(time).format('YYYY-MM-DD')
+  }
+
   window.onscroll = async (event) => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
       await loadNewArticle()
     }
   }
 
-  onBeforeMount(async () => loadNewArticle())
-
-  // const watchUserInfo = watch(store.state.userInfo, (newValue, oldValue) => {
-  //   articleList
-  // })
+  onMounted(async () => loadNewArticle())
 
 </script>
 
@@ -149,9 +150,18 @@ export default {
   cursor: pointer;
 }
 
-.avatar{
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+.nothingCard{
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
+
+.userinfo{
+  display: inline-block;
+  position:absolute;
+  right: var(--el-card-padding);
+  bottom: var(--el-card-padding);
+  text-align: center
+}
+
 </style>

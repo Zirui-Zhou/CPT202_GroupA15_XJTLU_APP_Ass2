@@ -36,12 +36,39 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button size="large" class="button" type="primary" @click="submitForm()">Login</el-button>
+          <el-button
+              size="large"
+              class="button"
+              type="primary"
+              @click="submitForm()"
+          >
+            Login
+          </el-button>
         </el-form-item>
 
         <el-form-item>
-          <el-button size="large" class="button" type="default" @click="$router.push('/user/register')">Have no account?</el-button>
+          <el-button
+              size="large"
+              class="button"
+              type="default"
+              @click="router.push('/user/register')"
+          >
+            Have no account?
+          </el-button>
         </el-form-item>
+
+        <el-form-item>
+          <el-button
+              size="large"
+              class="button"
+              type="default"
+              :icon="ArrowLeft"
+              @click="handlePrevClick"
+          >
+            Previous
+          </el-button>
+        </el-form-item>
+
       </el-form>
     </el-main>
 
@@ -50,9 +77,12 @@
 
 <script setup>
   import {ref, unref, reactive} from 'vue'
-  import {ElMessage} from 'element-plus'
-  import {Avatar, Key} from "@element-plus/icons-vue"
+  import {ElNotification} from 'element-plus'
+  import {Avatar, Key, ArrowLeft} from "@element-plus/icons-vue"
   import {login} from "@/components/handleUser";
+  import {useRouter} from "vue-router";
+
+  const router = useRouter()
 
   const ruleForm = reactive({
     userName: '',
@@ -75,7 +105,8 @@
     const form = unref(ruleFormDom)
     form.validate((valid) => {
       if (!valid) {
-        ElMessage({
+        ElNotification({
+          title: "Error",
           message: 'Please input the correct info.',
           type: 'error',
         })
@@ -83,8 +114,12 @@
       }
       login(ruleForm)
     })
-
   }
+
+  const handlePrevClick = () => {
+    router.back()
+  }
+
 </script>
 
 <style scoped>

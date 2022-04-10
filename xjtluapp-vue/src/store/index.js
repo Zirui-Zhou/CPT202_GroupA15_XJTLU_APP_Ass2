@@ -22,11 +22,12 @@ export default createStore({
       state.userInfo = userInfo
       sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
     },
-    REMOVE_INFO: (state) => {
+    REMOVE_USER: (state) => {
       state.token = ''
-      state.userInfo = {}
-      localStorage.setItem("token", '')
-      sessionStorage.setItem("userInfo", JSON.stringify(''))
+      state.userInfo = null
+      localStorage.removeItem("token")
+      sessionStorage.removeItem("token")
+      sessionStorage.removeItem("userInfo")
     }
   },
   getters: {
