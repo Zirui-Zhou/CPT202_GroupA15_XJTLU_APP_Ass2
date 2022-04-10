@@ -17,7 +17,7 @@ mybatis-plus:
 
 shiro:
   jwtFilterName: "jwtFilter"
-  filterList: ["/hello/again", "/logout", "/user/info"]
+  filterList: ["/hello/again", "/logout", "/user/info", "/article/list/**", "/auth"]
 
 jwt:
   secret: f4e2e52034348f86b67cde581c0f9eb5

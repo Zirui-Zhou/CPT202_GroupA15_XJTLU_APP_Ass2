@@ -43,12 +43,6 @@ public class ShiroConfig {
 
         securityManager.setRealm(accountRealm);
 
-        //inject sessionManager
-        //securityManager.setSessionManager(sessionManager);
-
-        // inject redisCacheManager
-        //securityManager.setCacheManager(redisCacheManager);
-
         /*
          * 关闭shiro自带的session，详情见文档
          * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29

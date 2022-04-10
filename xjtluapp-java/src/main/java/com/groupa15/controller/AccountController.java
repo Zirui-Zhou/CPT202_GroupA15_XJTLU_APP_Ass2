@@ -42,12 +42,12 @@ public class AccountController {
         return Response.success(HttpStatus.OK, "Login Successfully", userInfoVO);
     }
 
-    @GetMapping("/isauth")
+    @GetMapping("/auth")
     public Response isAuth() {
         return Response.success(HttpStatus.OK, null);
     }
 
-    @GetMapping("/userinfo")
+    @GetMapping("/user/info")
     public Response getUserInfo(@RequestHeader(value = "Authorization") String token) {
         Long userId = jwtUtils.getUserIdByToken(token);
         User user = userService.getUserByUserId(userId);
