@@ -116,7 +116,7 @@ const logout = () => {
 
   .avatar{
     position: relative;
-    z-index: 2;
+    z-index: 12;
     cursor: pointer;
 
     transform: scale(v-bind("showAvatarCard ? 1.5 : 1"));
@@ -132,7 +132,7 @@ const logout = () => {
     min-width: 250px;
     position: absolute;
     transform: translateX(calc(-50% + v-bind(avatarSize + 'px') / 2)) translateY(-10px);
-    z-index: 1;
+    z-index: 11;
 
     opacity: v-bind("showAvatarCard ? 1 : 0");
     transition: opacity 0.3s;
