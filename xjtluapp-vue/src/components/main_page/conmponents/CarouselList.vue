@@ -1,5 +1,5 @@
 <template>
-  <el-carousel height="330px" v-loading="isLoading" ref="carousel">
+  <el-carousel height="330px" v-loading="isLoading" ref="carousel" arrow="always">
     <el-carousel-item
         v-for="(item, index) in articleList"
         :key="index"

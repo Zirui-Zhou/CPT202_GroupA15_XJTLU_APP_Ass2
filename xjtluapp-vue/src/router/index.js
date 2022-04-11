@@ -7,20 +7,20 @@ const routes = [
     path: '/',
     name: 'MainPage',
     component: () => import("@/views/MainPage"),
-    redirect: "/home",
+    redirect: "/guide",
     children: [
-      {
-        path: 'guide',
-        name: 'Guide',
-        meta: {
-          requireAuth: true
-        },
-        component: () => import('@/components/main_page/GuidePage')
-      },
       {
         path: 'home',
         name: 'Home',
+        meta: {
+          requireAuth: true
+        },
         component: () => import('@/components/main_page/HomePage')
+      },
+      {
+        path: 'guide',
+        name: 'Guide',
+        component: () => import('@/components/main_page/GuidePage')
       },
       {
         path: 'module',

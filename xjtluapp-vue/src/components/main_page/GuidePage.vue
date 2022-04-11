@@ -1,46 +1,62 @@
 <template>
 
-  <CarouselList/>
+  <MultipleColumnCardList/>
 
   <br/>
 
-  <el-tabs v-model="activeName" class="demo-tabs">
-    <el-tab-pane label="News" name="first"></el-tab-pane>
-    <el-tab-pane label="University" name="second"></el-tab-pane>
-    <el-tab-pane label="Clubs" name="third"></el-tab-pane>
-    <el-tab-pane label="Academic" name="fourth"></el-tab-pane>
-  </el-tabs>
+  <div class="customSpace">
+    <div class="customSpaceItem" v-for="i in guideUrl" :key="i.id">
+      <el-button
+          type="default"
+          style="display:block; width: 200px; margin: 10px auto"
+          @click="openurl(i.url)"
+      >
+        {{ i.name }}
+      </el-button>
+    </div>
 
-  <CardGroup/>
+  </div>
 
 </template>
 
 <script>
 export default {
-  name: "MainPage"
+  name: "GuidePage",
+
 }
 </script>
 
 <script setup>
-import {ref} from 'vue'
-import CardGroup from "@/components/main_page/conmponents/SingleColumnCardList";
-import CarouselList from "@/components/main_page/conmponents/CarouselList";
+import MultipleColumnCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
 
-const activeName = ref('first')
+const guideUrl = [
+  {name: "E-bridge", url: "https://ebridge.xjtlu.edu.cn"},
+  {name: "Learning Mall", url: "https://learningmall.xjtlu.edu.cn"},
+  {name: "Library", url: "https://lib.xjtlu.edu.cn"},
+  {name: "Utalk", url: "https://utalk.xjtlu.edu.cn"},
+  {name: "Box", url: "https://box.xjtlu.edu.cn"},
+  {name: "Mediasite", url: "https://video.xjtlu.edu.cn"},
+  {name: "Email", url: "https://mail.xjtlu.edu.cn"},
+]
+
+const openurl = (url) => {
+  window.open(url)
+}
 
 </script>
 
 <style scoped>
 
-  .demo-tabs > .el-tabs__content {
-    padding: 32px;
-    color: #6b778c;
-    font-size: 32px;
-    font-weight: 600;
-  }
+.customSpace {
+  text-align: center;
+  display: flex;
+  align-content: flex-start;
+  flex-flow: row wrap;
+}
 
-  .demo-tabs{
-    background-color: white;
-  }
+.customSpaceItem {
+  flex: 0 0 33.3%;
+}
 
 </style>
+

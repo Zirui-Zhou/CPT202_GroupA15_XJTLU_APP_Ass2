@@ -16,13 +16,14 @@
     >
       <div v-if="userInfo">
 <!--        <h2>Id:&nbsp;{{userInfo.userId}}</h2>-->
-        <h2 style="margin: 20px 10px; text-align: center">{{userInfo.userName}}</h2>
+        <h2 style="margin: 30px 10px 15px 10px; text-align: center">{{userInfo.realName}}</h2>
 
         <div >
           <ul style="padding: 0">
-            <li class="el-menu-item">item-one</li>
-            <li class="el-menu-item">item two</li>
-            <li class="el-menu-item">item three</li>
+            <li class="el-menu-item" v-for="([key, value], index) in Object.entries(unref(userInfoList))" :key="index">
+              <span style="font-weight: bold">{{key + ":"}}</span>
+              <span>&emsp;{{value}}</span>
+            </li>
           </ul>
         </div>
 
@@ -52,7 +53,7 @@ export default {
 
 <script setup>
 import {needLogin} from "@/components/handleUser";
-import {computed, ref} from "vue";
+import {computed, ref, unref, reactive} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 
@@ -68,6 +69,12 @@ const avatarSize = 50
 
 const showAvatarCard = ref(false)
 let hideTimer = null
+
+const userInfoList = reactive({
+  ID: userInfo.value.realId,
+  Major: userInfo.value.major,
+  Grade: userInfo.value.semester,
+})
 
 const handleAvatarClick = async () => {
   if(await needLogin(""))
