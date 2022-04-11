@@ -71,9 +71,9 @@ const showAvatarCard = ref(false)
 let hideTimer = null
 
 const userInfoList = reactive({
-  ID: userInfo.value.realId,
-  Major: userInfo.value.major,
-  Grade: userInfo.value.semester,
+  ID: userInfo.value ? userInfo.value.realId : null,
+  Major: userInfo.value ? userInfo.value.major : null,
+  Grade: userInfo.value ? userInfo.value.semester : null,
 })
 
 const handleAvatarClick = async () => {

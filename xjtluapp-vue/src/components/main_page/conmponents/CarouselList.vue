@@ -6,7 +6,7 @@
         @click="clickCard(item.id)"
     >
 
-      <h3>{{item.title}}</h3>
+<!--      <h3>{{item.title}}</h3>-->
       <img :src="item.image" >
     </el-carousel-item>
   </el-carousel>
