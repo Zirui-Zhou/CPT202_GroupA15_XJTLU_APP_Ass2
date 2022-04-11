@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import com.groupa15.common.dto.LoginDto;
 import com.groupa15.entity.User;
+import com.groupa15.entity.vo.UserInfoVO;
 
 /**
  * @author Qi Xu
@@ -15,6 +16,8 @@ public interface UserService extends IService<User> {
     User getUserByUserId(Long userId);
 
     User getUserByUsername(String username);
+
+    UserInfoVO getUserInfoByUserId(Long userId);
 
     boolean registerUser(String username, String password);
 

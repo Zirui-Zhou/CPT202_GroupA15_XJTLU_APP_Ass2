@@ -18,4 +18,12 @@ public class UserInfoVO {
 
     private String avatar;
 
+    private String realName;
+
+    private String major;
+
+    private String semester;
+
+    private String realId;
+
 }

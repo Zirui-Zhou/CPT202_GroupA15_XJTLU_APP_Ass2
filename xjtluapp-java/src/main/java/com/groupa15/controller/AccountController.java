@@ -37,8 +37,9 @@ public class AccountController {
         String jwt = jwtUtils.generateToken(user.getUserId());
         response.setHeader(jwtUtils.getHeader(), jwt);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
-        UserInfoVO userInfoVO = new UserInfoVO();
-        BeanUtils.copyProperties(user, userInfoVO);
+        UserInfoVO userInfoVO = userService.getUserInfoByUserId(user.getUserId());
+//        UserInfoVO userInfoVO = new UserInfoVO();
+//        BeanUtils.copyProperties(user, userInfoVO);
         return Response.success(HttpStatus.OK, "Login Successfully", userInfoVO);
     }
 
@@ -50,9 +51,9 @@ public class AccountController {
     @GetMapping("/user/info")
     public Response getUserInfo(@RequestHeader(value = "Authorization") String token) {
         Long userId = jwtUtils.getUserIdByToken(token);
-        User user = userService.getUserByUserId(userId);
-        UserInfoVO userInfoVO = new UserInfoVO();
-        BeanUtils.copyProperties(user, userInfoVO);
+        UserInfoVO userInfoVO = userService.getUserInfoByUserId(userId);
+//        UserInfoVO userInfoVO = new UserInfoVO();
+//        BeanUtils.copyProperties(user, userInfoVO);
         return Response.success(HttpStatus.OK, null, userInfoVO);
     }
 
