@@ -1,11 +1,12 @@
 <template>
   <div style="width: 900px; margin: auto">
-    <img src="@/assets/xjtlu_banner.svg" style="width: 15%; height: 15%">
+    <img src="@/assets/xjtlu_banner.svg" style="width: 15%; height: 15%; margin: 10px">
     <TopMenu/>
     <br/>
     <ArticleReader/>
 <!--    <ArticleEditor/>-->
   </div>
+  <el-backtop :right="100" :bottom="100" />
 </template>
 
 <script>
