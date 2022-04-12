@@ -45,7 +45,7 @@ public class AccountController {
 
     @GetMapping("/auth")
     public Response isAuth() {
-        return Response.success(HttpStatus.OK, null);
+        return Response.success(HttpStatus.OK, null, true);
     }
 
     @GetMapping("/user/info")

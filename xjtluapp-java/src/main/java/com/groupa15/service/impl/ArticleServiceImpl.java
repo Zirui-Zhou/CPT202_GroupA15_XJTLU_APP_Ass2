@@ -65,7 +65,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public List<TagTypeVO> getAllTags() {
-        articleMapper.queryTagTypeList().forEach(System.out::println);
         return articleMapper.queryTagTypeList();
     }
 

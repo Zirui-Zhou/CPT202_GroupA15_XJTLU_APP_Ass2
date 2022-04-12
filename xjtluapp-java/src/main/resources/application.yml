@@ -7,6 +7,8 @@ spring:
     url: jdbc:mysql://121.5.190.117:3306/student?serverTimezone=GMT%2b8
     username: student
     password: p5ZPWjd8Yjf8pnzE
+    hikari:
+      max-lifetime: 500000
 #     show-sql: true
 
 mybatis-plus:
