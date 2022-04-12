@@ -29,12 +29,6 @@
   </el-container>
 </template>
 
-<script>
-export default {
-  name: "RegisterForm"
-}
-</script>
-
 <script setup>
 import {ref, unref, reactive} from 'vue'
 import {ElMessage} from 'element-plus'

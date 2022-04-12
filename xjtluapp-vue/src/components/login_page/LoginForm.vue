@@ -79,8 +79,9 @@
   import {ref, unref, reactive} from 'vue'
   import {ElNotification} from 'element-plus'
   import {Avatar, Key, ArrowLeft} from "@element-plus/icons-vue"
-  import {login} from "@/components/handleUser";
+  import {login} from "@/scripts/handleUserApi";
   import {useRouter} from "vue-router";
+  import {delay} from "@/scripts/commonUtils";
 
   const router = useRouter()
 
@@ -103,7 +104,7 @@
 
   const submitForm = () => {
     const form = unref(ruleFormDom)
-    form.validate((valid) => {
+    form.validate(async (valid) => {
       if (!valid) {
         ElNotification({
           title: "Error",
@@ -112,7 +113,9 @@
         })
         return false;
       }
-      login(ruleForm)
+      await login(ruleForm)
+      await delay(500)
+      await router.replace('/home')
     })
   }
 

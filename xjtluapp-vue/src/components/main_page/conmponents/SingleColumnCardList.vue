@@ -7,7 +7,7 @@
       :timestamp="getFormattedTime(item.createTime)"
   >
     <br/>
-    <el-card class="card" @click="clickCard(item.id)">
+    <el-card class="card" @click="LinkToArticle(item.id)">
 
       <div style="display: inline-block;">
         <h3 style="margin-top: 0">{{item.title}}</h3>
@@ -44,19 +44,11 @@
       <h1>There is nothing below.</h1>
     </el-card>
   </component>
-
-
 </template>
-
-<script>
-export default {
-  name: "SingleColumnCardList"
-}
-</script>
 
 <script setup>
   import {onMounted, reactive, ref, defineProps} from "vue";
-  import {getArticleList, clickCard} from "@/components/handleArticle";
+  import {getArticleList, LinkToArticle} from "@/scripts/handleArticleApi";
   import moment from "moment"
 
   const articleList = reactive([])
@@ -110,6 +102,9 @@ export default {
     result.forEach((item) => Object.assign(item, {isLoading: true}))
     articleList.push(...result)
     isLoading.value = false
+    if(result.length < props.sizePage) {
+      isNothing.value = true
+    }
   }
 
   const getFormattedTime = (time) => {
@@ -120,14 +115,13 @@ export default {
     return moment(time).format('YYYY-MM-DD')
   }
 
-  window.onscroll = async (event) => {
+  window.onscroll = async () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
       await loadNewArticle()
     }
   }
 
   onMounted(async () => loadNewArticle())
-
 </script>
 
 <style scoped>

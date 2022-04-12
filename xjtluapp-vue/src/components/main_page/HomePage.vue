@@ -15,19 +15,12 @@
 
 </template>
 
-<script>
-export default {
-  name: "HomePage"
-}
-</script>
-
 <script setup>
 import {ref} from 'vue'
 import CardGroup from "@/components/main_page/conmponents/SingleColumnCardList";
 import CarouselList from "@/components/main_page/conmponents/CarouselList";
 
 const activeName = ref('first')
-
 </script>
 
 <style scoped>

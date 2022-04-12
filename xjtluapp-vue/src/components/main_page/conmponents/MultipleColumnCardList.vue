@@ -68,11 +68,11 @@
 </template>
 
 <script>
-import MultipleColumnCardList_sublist from "@/components/main_page/conmponents/MultipleColumnCardList_sublist";
-import Sublist_campusIT from "@/components/main_page/conmponents/Sublist_campusIT";
-import CampusLife from "@/components/main_page/conmponents/CampusLife";
-import Academic from "@/components/main_page/conmponents/Academic";
-import Twoplustwo from "@/components/main_page/conmponents/twoplustwo";
+import MultipleColumnCardList_sublist from "@/components/main_page/conmponents/Sublist/MultipleColumnCardList_sublist";
+import Sublist_campusIT from "@/components/main_page/conmponents/Sublist/Sublist_campusIT";
+import CampusLife from "@/components/main_page/conmponents/Sublist/CampusLife";
+import Academic from "@/components/main_page/conmponents/Sublist/Academic";
+import Twoplustwo from "@/components/main_page/conmponents/Sublist/twoplustwo";
 export default {
   name: "RowCardList",
   components: {Twoplustwo, Academic, CampusLife, Sublist_campusIT, MultipleColumnCardList_sublist},

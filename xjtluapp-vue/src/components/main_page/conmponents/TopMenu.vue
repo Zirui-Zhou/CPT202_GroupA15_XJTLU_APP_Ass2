@@ -1,4 +1,7 @@
 <template>
+
+  <img src="@/assets/xjtlu_banner.svg" class="banner">
+
   <el-menu
       :default-active="router.currentRoute.value.path"
       class="el-menu-demo"
@@ -33,14 +36,7 @@
     </el-row>
   </el-menu>
 
-
 </template>
-
-<script>
-  export default {
-    name: "TopMenu"
-  }
-</script>
 
 <script setup>
 import {ref} from "vue"
@@ -51,13 +47,16 @@ import AvatarWithCard from "@/components/main_page/conmponents/AvatarWithCard";
 const router = useRouter()
 
 const input = ref("")
-
 </script>
 
 <style scoped>
+.banner{
+  width: 15%;
+  height: 15%;
+  margin: 10px;
+}
 
-  .align-right{
-    margin: auto 10px auto auto;
-  }
-
+.align-right{
+  margin: auto 10px auto auto;
+}
 </style>

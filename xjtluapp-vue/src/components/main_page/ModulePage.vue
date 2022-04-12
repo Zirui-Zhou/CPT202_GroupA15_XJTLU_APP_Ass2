@@ -1,17 +1,15 @@
 <template>
-  <TypeList/>
+
+  <TagList/>
+
   <br/>
+
   <MultipleColumnCardList/>
+
 </template>
 
-<script>
-export default {
-  name: "ModulePage",
-}
-</script>
-
 <script setup>
-import TypeList from "@/components/main_page/conmponents/TypeList";
+import TagList from "@/components/main_page/conmponents/TagList";
 import MultipleColumnCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
 </script>
 

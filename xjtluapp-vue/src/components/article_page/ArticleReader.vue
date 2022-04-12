@@ -2,16 +2,10 @@
   <v-md-preview :text="article.content" style="background-color: white"></v-md-preview>
 </template>
 
-<script>
-export default {
-  name: "ArticleReader"
-}
-</script>
-
 <script setup>
   import {useRoute} from "vue-router";
   import {onBeforeMount, reactive} from "vue";
-  import {getArticle} from "@/components/handleArticle";
+  import {getArticle} from "@/scripts/handleArticleApi";
 
   const route = useRoute()
 

@@ -15,15 +15,9 @@
   </el-timeline>
 </template>
 
-<script>
-export default {
-  name: "TimeLineList"
-}
-</script>
-
 <script setup>
 import SingleColumnCardList from "./SingleColumnCardList"
-import {getArticleListOfMine} from "@/components/handleArticle"
+import {getArticleListOfMine} from "@/scripts/handleArticleApi"
 
 </script>
 

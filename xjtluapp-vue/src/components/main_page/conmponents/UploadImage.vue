@@ -32,7 +32,7 @@ import {ref, reactive, onMounted, computed} from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import {useStore} from "vuex";
-import {handleAvatar} from "@/components/handleUser";
+import {handleAvatar} from "@/scripts/handleUserApi";
 
 const store = useStore()
 

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import {getIsAuth} from "@/components/handleUser";
-import {ElNotification} from "element-plus";
+import {getIsAuth, needLogin} from "@/scripts/handleUserApi";
+import {addMessage} from "@/scripts/messageUtils";
 
 const routes = [
   {
@@ -48,11 +48,17 @@ const routes = [
       {
         path: 'login',
         name: 'Login',
+        meta: {
+          requireNoAuth: true
+        },
         component: () => import("@/components/login_page/LoginForm")
       },
       {
         path: 'register',
         name: 'Register',
+        meta: {
+          requireNoAuth: true
+        },
         component: () => import("@/components/login_page/RegisterForm")
       },
     ]
@@ -69,16 +75,17 @@ const router = createRouter({
   routes
 })
 
-router.beforeResolve(async (to) => {
+router.beforeEach(async (to) => {
   if (to.matched.some(res => res.meta.requireAuth)) {
-    if (! await getIsAuth()) {
-      ElNotification({
-        title: "Warning",
-        message: "Please login first",
-        type: 'warning',
-        duration: 2000,
-      })
-      return {path: '/user/login',}
+    await needLogin()
+  }
+})
+
+router.beforeEach(async (to) => {
+  if (to.matched.some(res => res.meta.requireNoAuth)) {
+    if (await getIsAuth()) {
+      addMessage("Please logout first", "warning")
+      return false
     }
   }
 })

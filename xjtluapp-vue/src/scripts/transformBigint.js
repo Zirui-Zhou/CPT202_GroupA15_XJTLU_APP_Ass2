@@ -8,4 +8,6 @@ const transformBigint = (data) => {
     }
 }
 
-export {transformBigint}
+export {
+    transformBigint
+}

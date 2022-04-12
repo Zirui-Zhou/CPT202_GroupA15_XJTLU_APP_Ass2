@@ -9,56 +9,44 @@
         :icon="UserFilled"
         :src="userInfo ? userInfo.avatar : ''"
     />
+
     <el-card
         class="card"
         @mouseenter="handleCardEnter"
         @mouseleave="handleLeave"
     >
       <div v-if="userInfo">
-<!--        <h2>Id:&nbsp;{{userInfo.userId}}</h2>-->
-        <h2 style="margin: 30px 10px 15px 10px; text-align: center">{{userInfo.realName}}</h2>
+        <h2 style="margin: 30px 10px 15px 10px; text-align: center">
+          {{ userInfo.realName }}
+        </h2>
 
-        <div >
-          <ul style="padding: 0">
-            <li class="el-menu-item" v-for="([key, value], index) in Object.entries(unref(userInfoList))" :key="index">
-              <span style="font-weight: bold">{{key + ":"}}</span>
-              <span>&emsp;{{value}}</span>
-            </li>
-          </ul>
-        </div>
+        <ul style="padding: 0">
+          <li class="el-menu-item" v-for="([key, value], index) in userInfoList" :key="index">
+            <span style="font-weight: bold">{{ key + ":" }}</span>
+            <span>&emsp;{{ value }}</span>
+          </li>
+        </ul>
 
-        <el-button
-            @click="logout"
-            style="width: calc(100% - 20px);
-            margin: 10px; height: 40px"
-        >
+        <el-button @click="logoutUser" class="button">
           Logout
         </el-button>
 
       </div>
 
       <div v-if="!userInfo">
-        <h2 style="margin: 20px">Please&nbsp;login&nbsp;first</h2>
+        <h2 style="margin: 120px 0; text-align: center">Please&nbsp;login&nbsp;first</h2>
       </div>
 
     </el-card>
   </div>
 </template>
 
-<script>
-export default {
-  name: "AvatarWithCard"
-}
-</script>
-
 <script setup>
-import {needLogin} from "@/components/handleUser";
-import {computed, ref, unref, reactive} from "vue";
+import {logout, needLogin} from "@/scripts/handleUserApi";
+import {computed, ref, reactive} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
-
 import {UserFilled} from "@element-plus/icons-vue"
-import {ElNotification} from "element-plus";
 
 const store = useStore()
 const router = useRouter()
@@ -70,11 +58,11 @@ const avatarSize = 50
 const showAvatarCard = ref(false)
 let hideTimer = null
 
-const userInfoList = reactive({
-  ID: userInfo.value ? userInfo.value.realId : null,
-  Major: userInfo.value ? userInfo.value.major : null,
-  Grade: userInfo.value ? userInfo.value.semester : null,
-})
+const userInfoList = reactive([
+  ["ID", userInfo.value ? userInfo.value.realId : null],
+  ["Major", userInfo.value ? userInfo.value.major : null],
+  ["Grade", userInfo.value ? userInfo.value.semester : null],
+])
 
 const handleAvatarClick = async () => {
   if(await needLogin(""))
@@ -98,22 +86,13 @@ const handleLeave = () => {
   hideTimer = setTimeout(()=>showAvatarCard.value = false, 100)
 }
 
-const logout = () => {
+const logoutUser = () => {
   showAvatarCard.value = false
-  store.commit("REMOVE_USER")
-  ElNotification({
-    title: 'Success',
-    message: "Logout successfully",
-    type: 'success',
-    duration: 2000,
-  })
-  router.replace("/")
+  logout()
 }
-
 </script>
 
 <style scoped>
-
   .avatar{
     position: relative;
     z-index: 12;
@@ -129,13 +108,21 @@ const logout = () => {
 
   .card{
     --el-card-padding: 0;
-    min-width: 250px;
+
+    width: 90%;
     position: absolute;
     transform: translateX(calc(-50% + v-bind(avatarSize + 'px') / 2)) translateY(-10px);
     z-index: 11;
 
+    display: v-bind("showAvatarCard ? 'block' : 'none'");
     opacity: v-bind("showAvatarCard ? 1 : 0");
-    transition: opacity 0.3s;
+    transition: opacity, display 0.3s;
     transition-delay: 0.1s;
+  }
+
+  .button{
+    width: calc(100% - 20px);
+    margin: 10px;
+    height: 40px;
   }
 </style>

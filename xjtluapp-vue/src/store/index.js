@@ -23,7 +23,7 @@ export default createStore({
       sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
     },
     REMOVE_USER: (state) => {
-      state.token = ''
+      state.token = ""
       state.userInfo = null
       localStorage.removeItem("token")
       sessionStorage.removeItem("token")
