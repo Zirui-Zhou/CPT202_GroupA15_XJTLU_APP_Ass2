@@ -137,7 +137,7 @@ onMounted(async ()=>{
 }
 
 .avatar-uploader .el-upload {
-  display: v-bind("isUploadShow === true ? 'block' : 'none' ");
+  display: v-bind("isUploadShow === true ? 'block' : 'none'");
 }
 
 .el-upload-list__item.is-success .el-upload-list__item-status-label {

@@ -1,6 +1,6 @@
 import store from "@/store";
 import axios from "axios";
-import {transformBigint} from "@/scripts/transformBigint";
+import JSONbig from "json-bigint";
 import {addMessage} from "@/scripts/messageUtils";
 
 function getToken() {
@@ -22,6 +22,14 @@ function getDefaultConfig(isAuth, extraConfig="") {
 
 const handleError = (error) => {
     addMessage(error.response.data.msg, "error")
+}
+
+function transformBigint(data) {
+    try {
+        return JSONbig.parse(data)
+    } catch (e) {
+        return data
+    }
 }
 
 async function commonGet(url, func, isAuth=false, extraConfig={}) {

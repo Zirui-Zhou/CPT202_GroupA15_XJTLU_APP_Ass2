@@ -7,7 +7,21 @@
       :timestamp="getFormattedTime(item.createTime)"
   >
     <br/>
-    <el-card class="card" @click="LinkToArticle(item.id)">
+    <el-card class="card" @click="linkToArticle(item.id)">
+
+      <div class="iconList">
+        <el-icon
+            class="icon"
+            :class="{'iconFilled': item.isFavourite}"
+            :size="30"
+            @click.stop="clickStarIcon(item, item.id)">
+          <Star/>
+        </el-icon>
+
+        <el-icon class="icon" :size="30" @click.stop="clickLinkIcon(item.id)">
+          <Link/>
+        </el-icon>
+      </div>
 
       <div style="display: inline-block;">
         <h3 style="margin-top: 0">{{item.title}}</h3>
@@ -26,7 +40,7 @@
       <div class="userinfo">
         <el-avatar :size="50" :src="item.avatar"/>
         <br/>
-        <span style="font-weight: bold">{{item.userName}}</span>
+        <span style="font-weight: bold">{{item.editorName}}</span>
         <br/>
         <span style="font-size: 12px">{{getFormattedDate(item.createTime)}}</span>
       </div>
@@ -48,8 +62,11 @@
 
 <script setup>
   import {onMounted, reactive, ref, defineProps} from "vue";
-  import {getArticleList, LinkToArticle} from "@/scripts/handleArticleApi";
+  import {getArticleLink, getArticleList, handleFavouriteArticle, linkToArticle} from "@/scripts/handleArticleApi";
   import moment from "moment"
+  import {Star, Link} from "@element-plus/icons-vue";
+  import {delay} from "@/scripts/commonUtils";
+  import {addMessage} from "@/scripts/messageUtils";
 
   const articleList = reactive([])
   const currentPage = ref(0)
@@ -83,8 +100,6 @@
     }
   })
 
-  const delay = ms => new Promise(res => setTimeout(res, ms))
-
   const cardScale = props.cardScale.valueOf()
 
   const loadNewArticle = async () => {
@@ -113,6 +128,30 @@
 
   const getFormattedDate = (time) => {
     return moment(time).format('YYYY-MM-DD')
+  }
+
+  const clickLinkIcon = async (id) => {
+    const link = getArticleLink(id)
+    try {
+      await navigator.clipboard.writeText(link);
+      addMessage("Copy link to clipboard successfully", "success")
+    } catch(e) {
+      addMessage("Cannot copy the link to clipboard", "error")
+    }
+  }
+
+  const clickStarIcon = async (item, id) => {
+    const result = await handleFavouriteArticle(id)
+    if(result) {
+      item.isFavourite = !item.isFavourite
+      if(item.isFavourite) {
+        addMessage("Add favourite successfully", "success")
+      } else {
+        addMessage("Cancel favourite successfully", "success")
+      }
+    } else {
+      addMessage("Adding favourite fails", "error")
+    }
   }
 
   window.onscroll = async () => {
@@ -158,4 +197,25 @@
   text-align: center
 }
 
+.iconList{
+  display: inline-block;
+  position:absolute;
+  right: var(--el-card-padding);
+  top: var(--el-card-padding);
+  text-align: center
+}
+
+.icon{
+  margin-right: 10px;
+}
+
+.iconFilled{
+  color: var(--el-color-primary-light-1);
+}
+
+.icon:hover{
+  transform: scale(1.2);
+  color: var(--el-color-primary-light-1);
+  transition: transform 0.5s;
+}
 </style>

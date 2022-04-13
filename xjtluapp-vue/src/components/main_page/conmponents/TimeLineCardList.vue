@@ -3,7 +3,7 @@
 
     <SingleColumnCardList
       root-type="el-timeline-item"
-      :get-list-func="getArticleListOfMine"
+      :get-list-func="getArticleListOfFavourite"
       :card-scale="1.03"
       :attrs="{
         center: true,
@@ -17,7 +17,7 @@
 
 <script setup>
 import SingleColumnCardList from "./SingleColumnCardList"
-import {getArticleListOfMine} from "@/scripts/handleArticleApi"
+import {getArticleListOfMine, getArticleListOfFavourite} from "@/scripts/handleArticleApi"
 
 </script>
 
