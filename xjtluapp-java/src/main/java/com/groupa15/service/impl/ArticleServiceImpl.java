@@ -50,9 +50,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto) {
+    public List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto, Long viewerId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        page = articleMapper.getArticlePageVo(page);
+        page = articleMapper.selectArticlePageVo(page, viewerId);
         return page.getRecords();
     }
 
@@ -61,6 +61,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
         page = articleMapper.getArticlePageVoOfUserId(page, userId);
         return page.getRecords();
+    }
+
+    @Override
+    public List<ArticleScreenshotVO> getArticlePageOfFavourite(ArticlePageDto articlePageDto, Long viewerId) {
+        Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
+        page = articleMapper.selectArticlePageVoOfFavourite(page, viewerId);
+        return page.getRecords();
+    }
+
+    @Override
+    public Boolean changeFavouriteArticle(Long userId, Long articleId) {
+        Boolean result = false;
+        if(articleMapper.queryIsFavourite(userId, articleId)) {
+            result = articleMapper.deleteFavouriteArticle(userId, articleId);
+        } else {
+            result = articleMapper.insertFavouriteArticle(userId, articleId);
+        }
+        return result;
     }
 
     @Override

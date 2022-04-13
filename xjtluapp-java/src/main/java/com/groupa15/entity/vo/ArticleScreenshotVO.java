@@ -25,8 +25,10 @@ public class ArticleScreenshotVO implements Serializable {
 
     private LocalDateTime editTime;
 
-    private String userName;
+    private String editorName;
 
     private String avatar;
+
+    private Boolean isFavourite;
 
 }

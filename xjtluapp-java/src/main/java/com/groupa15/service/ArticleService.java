@@ -19,9 +19,13 @@ public interface ArticleService extends IService<Article> {
 
     Article getArticleByTitle(String title);
 
-    List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto);
+    List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto, Long viewerId);
 
     List<ArticleScreenshotVO> getArticlePageOfUserId(ArticlePageDto articlePageDto, Long userId);
+
+    List<ArticleScreenshotVO> getArticlePageOfFavourite(ArticlePageDto articlePageDto, Long viewerId);
+
+    Boolean changeFavouriteArticle(Long userId, Long articleId);
 
     List<TagTypeVO> getAllTags();
 

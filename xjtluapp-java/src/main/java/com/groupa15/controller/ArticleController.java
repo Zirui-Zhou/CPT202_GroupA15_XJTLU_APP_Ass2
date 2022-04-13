@@ -42,15 +42,27 @@ public class ArticleController {
     }
 
     @PostMapping("/article/list")
-    public Response getArticleList(@RequestBody ArticlePageDto articleListDto, HttpServletRequest httpServletRequest) {
-        List<ArticleScreenshotVO> articleList = articleService.getArticlePage(articleListDto);
+    public Response getArticleList(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto, HttpServletRequest httpServletRequest) {
+        List<ArticleScreenshotVO> articleList = articleService.getArticlePage(articleListDto, jwtUtils.getUserIdByToken(token));
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
     }
 
     @PostMapping("article/list/mine")
-    public Response getArticleList(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto) {
+    public Response getArticleListOfMine(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto) {
         List<ArticleScreenshotVO> articleList = articleService.getArticlePageOfUserId(articleListDto, jwtUtils.getUserIdByToken(token));
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
+    }
+
+    @PostMapping("article/list/favourite")
+    public Response getArticleListOfFavourite(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto) {
+        List<ArticleScreenshotVO> articleList = articleService.getArticlePageOfFavourite(articleListDto, jwtUtils.getUserIdByToken(token));
+        return Response.success(HttpStatus.OK, "Get the article list", articleList);
+    }
+
+    @GetMapping("article/favourite")
+    public Response handleFavouriteArticle(@RequestHeader(value = "Authorization") String token, @RequestParam(name = "id") Long id) {
+        Boolean result = articleService.changeFavouriteArticle(jwtUtils.getUserIdByToken(token), id);
+        return Response.success(HttpStatus.OK, null, result);
     }
 
     @GetMapping("/article/tags")
