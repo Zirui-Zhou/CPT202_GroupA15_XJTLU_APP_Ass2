@@ -17,7 +17,7 @@
 
 <script setup>
 import {ref} from 'vue'
-import CardGroup from "@/components/main_page/conmponents/SingleColumnCardList";
+import CardGroup from "@/components/main_page/conmponents/card_list/SingleColumnCardList";
 import CarouselList from "@/components/main_page/conmponents/CarouselList";
 
 const activeName = ref('first')

@@ -2,9 +2,9 @@
   <el-timeline>
 
     <SingleColumnCardList
-      root-type="el-timeline-item"
-      :get-list-func="getArticleListOfFavourite"
-      :card-scale="1.03"
+      rootType="el-timeline-item"
+      :listType="listType"
+      :cardScale="1.03"
       :attrs="{
         center: true,
         placement: 'top',
@@ -17,7 +17,11 @@
 
 <script setup>
 import SingleColumnCardList from "./SingleColumnCardList"
-import {getArticleListOfMine, getArticleListOfFavourite} from "@/scripts/handleArticleApi"
+import {defineProps} from "vue";
+
+const prop = defineProps({
+  listType: String,
+})
 
 </script>
 

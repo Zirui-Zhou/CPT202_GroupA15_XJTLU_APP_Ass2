@@ -6,25 +6,26 @@
   <UserInfoForm/>
 
   <div>
-    <el-tabs v-model="activeName" class="demo-tabs" >
-      <el-tab-pane label="Mine" name="first"></el-tab-pane>
-      <el-tab-pane label="History" name="second"></el-tab-pane>
-      <el-tab-pane label="Favourite" name="third"></el-tab-pane>
+    <el-tabs v-model="activeTab" class="demo-tabs" >
+      <el-tab-pane label="Mine" name="mine"></el-tab-pane>
+      <el-tab-pane label="History" name="history"></el-tab-pane>
+      <el-tab-pane label="Favourite" name="favourite"></el-tab-pane>
     </el-tabs>
   </div>
 
   <br/>
 
-  <TimeLineList/>
+  <TimeLineList :key="activeTab" :list-type="activeTab"/>
 
 </template>
 
 <script setup>
 import {ref} from "vue";
-import TimeLineList from "@/components/main_page/conmponents/TimeLineCardList";
+import TimeLineList from "@/components/main_page/conmponents/card_list/TimeLineCardList";
 import UserInfoForm from "@/components/main_page/conmponents/UserInfoForm";
 
-const activeName = ref()
+const activeTab = ref("mine")
+
 </script>
 
 <style scoped>

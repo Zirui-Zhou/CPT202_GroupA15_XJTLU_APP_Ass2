@@ -8,7 +8,7 @@
     <el-carousel-item
         v-for="(item, index) in articleList"
         :key="index"
-        @click="LinkToArticle(item.id)"
+        @click="linkToArticle(item.id)"
     >
 <!--      <h3>{{item.title}}</h3>-->
       <img :src="item.image">
@@ -18,7 +18,7 @@
 
 <script setup>
 import {onMounted, reactive, ref} from "vue";
-import {getArticleList, LinkToArticle} from "@/scripts/handleArticleApi";
+import {getArticleList, linkToArticle} from "@/scripts/handleArticleApi";
 
 const articleList = reactive([])
 const isLoading = ref(true)

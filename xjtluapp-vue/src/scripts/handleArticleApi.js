@@ -15,6 +15,10 @@ async function getArticleListOfFavourite(current, size) {
     return await getArticleList(current, size, "/favourite", {})
 }
 
+async function getArticleListOfHistory(current, size) {
+    return await getArticleList(current, size, "/history", {})
+}
+
 async function getArticleList(current, size, extraUrl="", config={}) {
     const result = (await commonPostData(
         "/article/list" + extraUrl,
@@ -33,6 +37,16 @@ async function getArticleList(current, size, extraUrl="", config={}) {
 async function handleFavouriteArticle(id) {
     const idn = BigInt(id)
     return (await commonGetData("/article/favourite", true, {params: {id: idn}})).data
+}
+
+async function addHistoryArticle(id) {
+    const idn = BigInt(id)
+    return (await commonGetData("/article/history/add", true, {params: {id: idn}})).data
+}
+
+async function removeHistoryArticle(id) {
+    const idn = BigInt(id)
+    return (await commonGetData("/article/history/remove", true, {params: {id: idn}})).data
 }
 
 async function getTagTypeList() {
@@ -59,7 +73,10 @@ export {
     getArticleList,
     getArticleListOfMine,
     getArticleListOfFavourite,
+    getArticleListOfHistory,
     handleFavouriteArticle,
+    addHistoryArticle,
+    removeHistoryArticle,
     getTagTypeList,
     linkToArticle,
     getArticleLink

@@ -5,14 +5,17 @@
 <script setup>
   import {useRoute} from "vue-router";
   import {onBeforeMount, reactive} from "vue";
-  import {getArticle} from "@/scripts/handleArticleApi";
+  import {getArticle, addHistoryArticle} from "@/scripts/handleArticleApi";
 
   const route = useRoute()
 
   const id = route.query.id
   const article = reactive({content: "Sorry, the context cannot be rendered correctly"})
 
-  onBeforeMount(async () => Object.assign(article, await getArticle(id)))
+  onBeforeMount(async () => {
+    Object.assign(article, await getArticle(id))
+    await addHistoryArticle(id)
+  })
 
 </script>
 
