@@ -25,7 +25,13 @@ public interface ArticleService extends IService<Article> {
 
     List<ArticleScreenshotVO> getArticlePageOfFavourite(ArticlePageDto articlePageDto, Long viewerId);
 
+    List<ArticleScreenshotVO> getArticlePageOfHistory(ArticlePageDto articlePageDto, Long viewerId);
+
     Boolean changeFavouriteArticle(Long userId, Long articleId);
+
+    Boolean addHistoryArticle(Long userId, Long articleId);
+
+    Boolean removeHistoryArticle(Long userId, Long articleId);
 
     List<TagTypeVO> getAllTags();
 

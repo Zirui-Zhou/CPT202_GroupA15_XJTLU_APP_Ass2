@@ -59,9 +59,27 @@ public class ArticleController {
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
     }
 
+    @PostMapping("article/list/history")
+    public Response getArticleListOfHistory(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto) {
+        List<ArticleScreenshotVO> articleList = articleService.getArticlePageOfHistory(articleListDto, jwtUtils.getUserIdByToken(token));
+        return Response.success(HttpStatus.OK, "Get the article list", articleList);
+    }
+
     @GetMapping("article/favourite")
     public Response handleFavouriteArticle(@RequestHeader(value = "Authorization") String token, @RequestParam(name = "id") Long id) {
         Boolean result = articleService.changeFavouriteArticle(jwtUtils.getUserIdByToken(token), id);
+        return Response.success(HttpStatus.OK, null, result);
+    }
+
+    @GetMapping("article/history/add")
+    public Response addHistoryArticle(@RequestHeader(value = "Authorization") String token, @RequestParam(name = "id") Long id) {
+        Boolean result = articleService.addHistoryArticle(jwtUtils.getUserIdByToken(token), id);
+        return Response.success(HttpStatus.OK, null, result);
+    }
+
+    @GetMapping("article/history/remove")
+    public Response removeHistoryArticle(@RequestHeader(value = "Authorization") String token, @RequestParam(name = "id") Long id) {
+        Boolean result = articleService.removeHistoryArticle(jwtUtils.getUserIdByToken(token), id);
         return Response.success(HttpStatus.OK, null, result);
     }
 

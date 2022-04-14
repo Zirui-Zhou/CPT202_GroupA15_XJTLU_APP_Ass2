@@ -9,7 +9,7 @@ spring:
     password: p5ZPWjd8Yjf8pnzE
     hikari:
       max-lifetime: 500000
-#     show-sql: true
+
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml #扫描所有mybatis的xml文件

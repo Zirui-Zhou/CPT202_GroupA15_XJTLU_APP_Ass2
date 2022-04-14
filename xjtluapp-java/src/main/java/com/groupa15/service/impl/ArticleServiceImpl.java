@@ -52,21 +52,28 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto, Long viewerId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        page = articleMapper.selectArticlePageVo(page, viewerId);
+        page = articleMapper.selectArticlePageVoOfMode(page, viewerId, "all");
         return page.getRecords();
     }
 
     @Override
     public List<ArticleScreenshotVO> getArticlePageOfUserId(ArticlePageDto articlePageDto, Long userId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        page = articleMapper.getArticlePageVoOfUserId(page, userId);
+        page = articleMapper.selectArticlePageVoOfMode(page, userId, "mine");
         return page.getRecords();
     }
 
     @Override
     public List<ArticleScreenshotVO> getArticlePageOfFavourite(ArticlePageDto articlePageDto, Long viewerId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        page = articleMapper.selectArticlePageVoOfFavourite(page, viewerId);
+        page = articleMapper.selectArticlePageVoOfMode(page, viewerId, "favourite");
+        return page.getRecords();
+    }
+
+    @Override
+    public List<ArticleScreenshotVO> getArticlePageOfHistory(ArticlePageDto articlePageDto, Long viewerId) {
+        Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
+        page = articleMapper.selectArticlePageVoOfMode(page, viewerId, "history");
         return page.getRecords();
     }
 
@@ -77,6 +84,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             result = articleMapper.deleteFavouriteArticle(userId, articleId);
         } else {
             result = articleMapper.insertFavouriteArticle(userId, articleId);
+        }
+        return result;
+    }
+
+    @Override
+    public Boolean addHistoryArticle(Long userId, Long articleId) {
+        Boolean result = false;
+        if(!articleMapper.queryIsHistory(userId, articleId)) {
+            result = articleMapper.insertHistoryArticle(userId, articleId);
+        }
+        return result;
+    }
+
+    @Override
+    public Boolean removeHistoryArticle(Long userId, Long articleId) {
+        Boolean result = false;
+        if(articleMapper.queryIsHistory(userId, articleId)) {
+            result = articleMapper.deleteHistoryArticle(userId, articleId);
         }
         return result;
     }

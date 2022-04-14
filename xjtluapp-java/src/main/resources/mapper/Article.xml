@@ -34,27 +34,16 @@
                 )
     </select>
 
-    <select id="selectArticlePageVo" resultMap="ArticleScreenshotMap">
-        SELECT id,
-               title,
-               content,
-               edit_time,
-               create_time,
-               a.editor_id,
-               image,
-               editor_name,
-               avatar,
-               #{viewerId} as viewer_id
-        FROM (
-                 Select user_id as editor_id, user_name as editor_name, avatar
-                 FROM student.user
-             ) as u
-                 LEFT JOIN student.article a
-                           ON a.editor_id = u.editor_id
-        ORDER BY a.create_time DESC
+    <select id="queryIsHistory" resultType="java.lang.Boolean">
+        SELECT EXISTS(
+                SELECT 1
+                FROM student.history_article h
+                WHERE h.user_id = #{viewerId}
+                AND h.article_id = #{articleId}
+                )
     </select>
 
-    <select id="selectArticlePageVoOfFavourite" resultMap="ArticleScreenshotMap">
+    <select id="selectArticlePageVoOfMode" resultMap="ArticleScreenshotMap">
         SELECT id,
                title,
                content,
@@ -66,13 +55,27 @@
                avatar,
                #{viewerId} as viewer_id
         FROM (
-                 Select user_id as editor_id, user_name as editor_name, avatar
-                 FROM student.user
+                Select user_id as editor_id,
+                       user_name as editor_name,
+                       avatar
+                FROM student.user
              ) as u
-                 LEFT JOIN student.article a
-                           ON a.editor_id = u.editor_id
-                 INNER JOIN student.favourite_article f
-                            ON a.id = f.article_id AND f.user_id = #{viewerId}
+                LEFT JOIN student.article a
+                ON a.editor_id = u.editor_id
+        <if test="'all'.equals(mode)">
+
+        </if>
+        <if test="'mine'.equals(mode)">
+        WHERE a.editor_id = #{viewerId}
+        </if>
+        <if test="'favourite'.equals(mode)">
+                INNER JOIN student.favourite_article f
+                ON a.id = f.article_id AND f.user_id = #{viewerId}
+        </if>
+        <if test="'history'.equals(mode)">
+                INNER JOIN student.history_article f
+                ON a.id = f.article_id AND f.user_id = #{viewerId}
+        </if>
         ORDER BY a.create_time DESC
     </select>
 
