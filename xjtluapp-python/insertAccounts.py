@@ -47,9 +47,9 @@ def insertToDatabase(df):
         real_id = item["ID number"].item()
         email = item["Email address"].item()
 
-        cursor.execute('INSERT INTO student.user (user_id, user_name, password, salt) values (%s, %s, %s, %s)',
+        cursor.execute('INSERT INTO student.user (user_id, user_name, password, salt) VALUES (%s, %s, %s, %s)',
                        [user_id, user_name, password, salt])
-        cursor.execute('INSERT INTO student.user_info (user_id, real_name, major, semester, real_id, email) values (%s, %s, %s, %s, %s, %s)',
+        cursor.execute('INSERT INTO student.user_info (user_id, real_name, major, semester, real_id, email) VALUES (%s, %s, %s, %s, %s, %s)',
                        [user_id, real_name, "ICS", "Year3", real_id, email])
     print("Insert successfully")
 
@@ -59,6 +59,7 @@ def insertToDatabase(df):
 
 
 def main():
+    # TODO(Zirui): Add docstrings
     df = readUserInfoList("./CPT202-2122-S2 Project Groups.xlsx")
     insertToDatabase(df)
 
