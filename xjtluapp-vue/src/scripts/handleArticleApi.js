@@ -1,6 +1,7 @@
 import router from "@/router"
 import {commonGetData, commonPostData} from "@/scripts/requestUtils";
 import {handleAvatar} from "@/scripts/handleUserApi";
+import store from "@/store";
 
 async function getArticle(id) {
     const idn = BigInt(id)
@@ -17,6 +18,10 @@ async function getArticleListOfFavourite(current, size) {
 
 async function getArticleListOfHistory(current, size) {
     return await getArticleList(current, size, "/history", {})
+}
+
+async function getArticleListOfType(current, size, id) {
+    return await getArticleList(current, size, "/type", {params:{id: id}})
 }
 
 async function getArticleList(current, size, extraUrl="", config={}) {
@@ -53,6 +58,11 @@ async function getTagTypeList() {
     return (await commonGetData("/article/tags", true)).data
 }
 
+async function getAllArticleTypes() {
+    const result = (await commonGetData("/article/types", true)).data
+    store.commit("SET_ARTICLE_TYPE_LIST", result)
+}
+
 function getArticleLink(id) {
     const route = router.resolve({
         path: '/article',
@@ -74,10 +84,12 @@ export {
     getArticleListOfMine,
     getArticleListOfFavourite,
     getArticleListOfHistory,
+    getArticleListOfType,
     handleFavouriteArticle,
     addHistoryArticle,
     removeHistoryArticle,
     getTagTypeList,
+    getAllArticleTypes,
     linkToArticle,
     getArticleLink
 }

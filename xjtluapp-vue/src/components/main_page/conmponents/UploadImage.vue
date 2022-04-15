@@ -21,18 +21,12 @@
 
 </template>
 
-<script>
-export default {
-  name: "UploadImage"
-}
-</script>
-
 <script setup>
 import {ref, reactive, onMounted, computed} from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import {useStore} from "vuex";
-import {handleAvatar} from "@/scripts/handleUserApi";
+import {handleAvatarUrl} from "@/scripts/handleUserApi";
 
 const store = useStore()
 
@@ -46,7 +40,7 @@ const handleAvatarSuccess = (
     uploadFile
 ) => {
   const newUserInfo = userInfo.value
-  newUserInfo["avatar"] = handleAvatar(response.msg)
+  newUserInfo["avatar"] = handleAvatarUrl(response.msg)
   uploadFile.url = newUserInfo["avatar"]
   store.commit("SET_USERINFO", newUserInfo)
 }
@@ -72,7 +66,7 @@ const handlePictureCardPreview = (file) => {
   dialogVisible.value = true
 }
 
-const handleRemove = (file, files) => {
+const handleRemove = () => {
   fileList.pop()
   isUploadShow.value = true
 }

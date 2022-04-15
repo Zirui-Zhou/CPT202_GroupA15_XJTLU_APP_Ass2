@@ -16,12 +16,20 @@
         @mouseleave="handleLeave"
     >
       <div v-if="userInfo">
-        <h2 style="margin: 30px 10px 15px 10px; text-align: center">
+        <h2 class="nameLabel">
           {{ userInfo.realName }}
         </h2>
 
+        <span class="emailLabel">
+          {{ userInfo.email }}
+        </span>
+
         <ul style="padding: 0">
-          <li class="el-menu-item" v-for="([key, value], index) in userInfoList" :key="index">
+          <li
+              class="el-menu-item"
+              v-for="([key, value], index) in userInfoList"
+              :key="index"
+          >
             <span style="font-weight: bold">{{ key + ":" }}</span>
             <span>&emsp;{{ value }}</span>
           </li>
@@ -58,11 +66,12 @@ const avatarSize = 50
 const showAvatarCard = ref(false)
 let hideTimer = null
 
-const userInfoList = reactive([
-  ["ID", userInfo.value ? userInfo.value.realId : null],
-  ["Major", userInfo.value ? userInfo.value.major : null],
-  ["Grade", userInfo.value ? userInfo.value.semester : null],
-])
+const userInfoList = userInfo.value ?
+  reactive([
+    ["ID", userInfo.value.realId],
+    ["Major", userInfo.value.major],
+    ["Grade", userInfo.value.semester],
+]) : {}
 
 const handleAvatarClick = async () => {
   if(await needLogin(""))
@@ -118,6 +127,19 @@ const logoutUser = () => {
     opacity: v-bind("showAvatarCard ? 1 : 0");
     transition: opacity, display 0.3s;
     transition-delay: 0.1s;
+  }
+
+  .nameLabel{
+    margin: 30px 10px 5px 10px;
+    text-align: center;
+  }
+
+  .emailLabel{
+    display:block;
+    margin-bottom:10px;
+    font-size: 5px;
+    text-align: center;
+    color: var(--el-color-info-light-3);
   }
 
   .button{

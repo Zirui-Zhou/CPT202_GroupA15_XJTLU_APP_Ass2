@@ -11,8 +11,12 @@
 import TopMenu from "@/components/main_page/conmponents/TopMenu";
 import {getUserInfo} from "@/scripts/handleUserApi";
 import {onBeforeMount} from "vue";
+import {getAllArticleTypes} from "@/scripts/handleArticleApi";
 
-onBeforeMount(async ()=> await getUserInfo())
+onBeforeMount(async ()=> {
+  await getUserInfo()
+  await getAllArticleTypes()
+})
 </script>
 
 <style scoped>

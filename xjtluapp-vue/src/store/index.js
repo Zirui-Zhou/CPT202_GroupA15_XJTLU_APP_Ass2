@@ -7,7 +7,8 @@ export default createStore({
         .pop(),
     userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
     serverUrl: "http://localhost:8081",
-    staticUrl: "/static"
+    staticUrl: "/static",
+    articleTypeList: []
   },
   mutations: {
     SET_TEMP_TOKEN: (state, token) => {
@@ -28,6 +29,9 @@ export default createStore({
       localStorage.removeItem("token")
       sessionStorage.removeItem("token")
       sessionStorage.removeItem("userInfo")
+    },
+    SET_ARTICLE_TYPE_LIST: (state, type_list) => {
+      state.articleTypeList = type_list
     }
   },
   getters: {
@@ -46,6 +50,10 @@ export default createStore({
 
     getStaticUrl: state => {
       return state.serverUrl + state.staticUrl
+    },
+
+    getArticleTypeList: state => {
+      return state.articleTypeList
     }
   },
   actions: {

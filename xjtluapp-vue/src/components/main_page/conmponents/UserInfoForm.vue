@@ -17,18 +17,14 @@
         <template #label>
           <div class="label" style="text-transform: capitalize">{{ key }}</div>
         </template>
-        <div class="content">{{ value }}</div>
+        <div class="content" style="display: flex">
+          <span>{{ value }}</span>
+        </div>
       </el-descriptions-item>
     </el-descriptions>
-
   </el-row>
-</template>
 
-<script>
-export default {
-  name: "UserInfoForm"
-}
-</script>
+</template>
 
 <script setup>
 import UploadImage from "@/components/main_page/conmponents/UploadImage"
@@ -52,7 +48,19 @@ const userInfoList = reactive({
 .label{
   min-width: 50px;
 }
+
 .content{
   min-width: 240px;
+}
+
+.editIcon{
+  margin: auto 0 auto auto;
+  color: var(--el-color-info-light-3)
+}
+
+.editIcon:hover{
+  margin: auto 0 auto auto;
+  color: var(--el-color-primary-light-3);
+  cursor: pointer;
 }
 </style>

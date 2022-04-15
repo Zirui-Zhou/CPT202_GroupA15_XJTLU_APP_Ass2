@@ -85,7 +85,7 @@ const clickStarIcon = async (item, id) => {
 }
 
 .icon{
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .iconFilled{

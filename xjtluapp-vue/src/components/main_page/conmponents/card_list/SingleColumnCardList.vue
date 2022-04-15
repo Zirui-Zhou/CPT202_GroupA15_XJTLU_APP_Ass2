@@ -7,7 +7,11 @@
       :timestamp="getFormattedTime(item.createTime)"
   >
     <br/>
-    <el-card class="card" :class="{cardRemove: item.isRemoving}" @click="linkToArticle(item.id)">
+    <el-card
+        class="card"
+        :class="{cardRemove: item.isRemoving}"
+        @click="linkToArticle(item.id)"
+    >
 
       <CardIconList
           :item="item"
@@ -16,7 +20,7 @@
           :itemFunc="itemFunc"
       />
 
-      <CardArticle
+      <CardArticleInfo
           :item="item"
           :itemFunc="itemFunc"
       />
@@ -51,14 +55,16 @@
   import {onMounted, reactive, ref, defineProps} from "vue";
   import {
     getArticleList,
-    getArticleListOfFavourite, getArticleListOfHistory,
+    getArticleListOfFavourite,
+    getArticleListOfHistory,
     getArticleListOfMine,
+    getArticleListOfType,
     linkToArticle
   } from "@/scripts/handleArticleApi";
   import moment from "moment"
   import {delay} from "@/scripts/commonUtils";
   import CardIconList from "@/components/main_page/conmponents/card_list/CardIconList";
-  import CardArticle from "@/components/main_page/conmponents/card_list/CardArticle";
+  import CardArticleInfo from "@/components/main_page/conmponents/card_list/CardArticleInfo";
   import CardUserInfo from "@/components/main_page/conmponents/card_list/CardUserInfo";
 
   const articleList = reactive([])
@@ -75,6 +81,10 @@
     listType: {
       type: String,
       default: "common",
+    },
+    listFuncParam: {
+      type: Object,
+      default: () => {return []}
     },
     cardScale: {
       type: Number,
@@ -98,6 +108,9 @@
     },
     history: {
       func: getArticleListOfHistory
+    },
+    type: {
+      func: getArticleListOfType
     }
   }
 
@@ -106,7 +119,7 @@
     if(currentPage.value !== 0) {
       await delay(1000)
     }
-    const result = await listTypeList[props.listType].func(currentPage.value + 1, sizePage)
+    const result = await listTypeList[props.listType].func(currentPage.value + 1, sizePage, ...props.listFuncParam)
     if(result.length === 0) {
       isNothing.value = true
       isLoading.value = false
