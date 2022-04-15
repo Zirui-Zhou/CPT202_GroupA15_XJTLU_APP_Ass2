@@ -4,6 +4,7 @@ import com.groupa15.common.dto.ArticlePageDto;
 import com.groupa15.common.Response;
 import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
+import com.groupa15.entity.vo.ArticleTypeVO;
 import com.groupa15.entity.vo.TagTypeVO;
 import com.groupa15.service.ArticleService;
 import com.groupa15.utils.JwtUtils;
@@ -35,6 +36,12 @@ public class ArticleController {
         return Response.success(HttpStatus.OK, null, article);
     }
 
+    @GetMapping("/article/types")
+    public Response getArticleTypes(HttpServletResponse httpServletRequest) {
+        List<ArticleTypeVO> tags = articleService.getAllArticleTypes();
+        return Response.success(HttpStatus.OK, null, tags);
+    }
+
     @PostMapping("/article/add")
     public Response addArticle(@RequestBody Article article, HttpServletRequest httpServletRequest) {
         articleService.addArticle(article);
@@ -42,8 +49,14 @@ public class ArticleController {
     }
 
     @PostMapping("/article/list")
-    public Response getArticleList(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto, HttpServletRequest httpServletRequest) {
+    public Response getArticleList(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto) {
         List<ArticleScreenshotVO> articleList = articleService.getArticlePage(articleListDto, jwtUtils.getUserIdByToken(token));
+        return Response.success(HttpStatus.OK, "Get the article list", articleList);
+    }
+
+    @PostMapping("/article/list/type")
+    public Response getArticleList(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto, @RequestParam(name = "id") Long id) {
+        List<ArticleScreenshotVO> articleList = articleService.getArticlePageOfType(articleListDto, jwtUtils.getUserIdByToken(token), id);
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
     }
 

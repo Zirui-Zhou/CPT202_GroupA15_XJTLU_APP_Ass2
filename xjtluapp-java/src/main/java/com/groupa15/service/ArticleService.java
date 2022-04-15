@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.groupa15.common.dto.ArticlePageDto;
 import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
+import com.groupa15.entity.vo.ArticleTypeVO;
 import com.groupa15.entity.vo.TagTypeVO;
 
 import java.util.List;
@@ -27,6 +28,8 @@ public interface ArticleService extends IService<Article> {
 
     List<ArticleScreenshotVO> getArticlePageOfHistory(ArticlePageDto articlePageDto, Long viewerId);
 
+    List<ArticleScreenshotVO> getArticlePageOfType(ArticlePageDto articlePageDto, Long viewerId, Long typeId);
+
     Boolean changeFavouriteArticle(Long userId, Long articleId);
 
     Boolean addHistoryArticle(Long userId, Long articleId);
@@ -34,6 +37,8 @@ public interface ArticleService extends IService<Article> {
     Boolean removeHistoryArticle(Long userId, Long articleId);
 
     List<TagTypeVO> getAllTags();
+
+    List<ArticleTypeVO> getAllArticleTypes();
 
     void addArticle(Article article);
 

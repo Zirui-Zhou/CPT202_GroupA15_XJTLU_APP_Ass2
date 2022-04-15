@@ -26,4 +26,6 @@ public class UserInfoVO {
 
     private String realId;
 
+    private String email;
+
 }

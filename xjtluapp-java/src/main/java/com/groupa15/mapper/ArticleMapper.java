@@ -8,6 +8,7 @@ import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.Article;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.groupa15.entity.vo.ArticleTypeVO;
 import com.groupa15.entity.vo.TagTypeVO;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.annotations.Param;
@@ -22,7 +23,15 @@ public interface ArticleMapper extends BaseMapper<Article> {
 //    @Insert("Insert into news (title, content) values (#{title}, #{content})")
 //    int insert(News news);'
 
-    Page<ArticleScreenshotVO> selectArticlePageVoOfMode(Page<ArticleScreenshotVO> iPage, @Param("viewerId") Long viewerId, @Param("mode") String mode);
+    Page<ArticleScreenshotVO> selectArticlePageVo(Page<ArticleScreenshotVO> iPage, @Param("viewerId") Long viewerId);
+
+    Page<ArticleScreenshotVO> selectArticlePageVoOfFavourite(Page<ArticleScreenshotVO> iPage, @Param("viewerId") Long viewerId);
+
+    Page<ArticleScreenshotVO> selectArticlePageVoOfHistory(Page<ArticleScreenshotVO> iPage, @Param("viewerId") Long viewerId);
+
+    Page<ArticleScreenshotVO> selectArticlePageVoOfMine(Page<ArticleScreenshotVO> iPage, @Param("viewerId") Long viewerId);
+
+    Page<ArticleScreenshotVO> selectArticlePageVoOfType(Page<ArticleScreenshotVO> page, @Param("viewerId") Long viewerId, @Param("typeId")Long typeId);
 
     @Insert("INSERT INTO student.favourite_article(user_id, article_id) values(#{userId}, #{articleId})")
     Boolean insertFavouriteArticle(Long userId, Long articleId);
@@ -41,5 +50,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     Boolean queryIsHistory(@Param("viewerId") Long userId, @Param("articleId") Long articleId);
 
     List<TagTypeVO> queryTagTypeList();
+
+    List<ArticleTypeVO> selectAllArticleTypes();
 
 }

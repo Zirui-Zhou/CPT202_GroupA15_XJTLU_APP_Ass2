@@ -31,4 +31,6 @@ public class ArticleScreenshotVO implements Serializable {
 
     private Boolean isFavourite;
 
+    private int typeId;
+
 }

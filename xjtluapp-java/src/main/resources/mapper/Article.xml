@@ -25,6 +25,10 @@
                             on a.type = b.id
     </select>
 
+    <select id="selectAllArticleTypes" resultType="ArticleTypeVO">
+        SELECT * FROM student.article_type
+    </select>
+
     <select id="queryIsFavourite" resultType="Boolean">
         SELECT EXISTS(
                 SELECT 1
@@ -43,39 +47,50 @@
                 )
     </select>
 
-    <select id="selectArticlePageVoOfMode" resultMap="ArticleScreenshotMap">
-        SELECT id,
-               title,
-               content,
-               edit_time,
-               create_time,
-               a.editor_id,
-               image,
-               editor_name,
-               avatar,
-               #{viewerId} as viewer_id
+    <sql id="selectArticle">
+        SELECT id, title, content, edit_time, create_time, a.editor_id, image,
+               editor_name, avatar, type_id, #{viewerId} as viewer_id
         FROM (
                 Select user_id as editor_id,
                        user_name as editor_name,
                        avatar
                 FROM student.user
-             ) as u
-                LEFT JOIN student.article a
-                ON a.editor_id = u.editor_id
-        <if test="'all'.equals(mode)">
+                ) as u
+                    LEFT JOIN student.article a
+                    ON a.editor_id = u.editor_id
+                    LEFT JOIN student.article_type_list t
+                    ON a.id = t.article_id
+    </sql>
 
-        </if>
-        <if test="'mine'.equals(mode)">
+    <select id="selectArticlePageVo" resultMap="ArticleScreenshotMap">
+        <include refid="selectArticle"/>
+        WHERE id != 0
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="selectArticlePageVoOfFavourite" resultMap="ArticleScreenshotMap">
+        <include refid="selectArticle"/>
+        INNER JOIN student.favourite_article f
+        ON a.id = f.article_id AND f.user_id = #{viewerId}
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="selectArticlePageVoOfHistory" resultMap="ArticleScreenshotMap">
+        <include refid="selectArticle"/>
+        INNER JOIN student.history_article h
+        ON a.id = h.article_id AND h.user_id = #{viewerId}
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="selectArticlePageVoOfMine" resultMap="ArticleScreenshotMap">
+        <include refid="selectArticle"/>
         WHERE a.editor_id = #{viewerId}
-        </if>
-        <if test="'favourite'.equals(mode)">
-                INNER JOIN student.favourite_article f
-                ON a.id = f.article_id AND f.user_id = #{viewerId}
-        </if>
-        <if test="'history'.equals(mode)">
-                INNER JOIN student.history_article f
-                ON a.id = f.article_id AND f.user_id = #{viewerId}
-        </if>
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="selectArticlePageVoOfType" resultMap="ArticleScreenshotMap">
+        <include refid="selectArticle"/>
+        WHERE t.type_id = #{typeId}
         ORDER BY a.create_time DESC
     </select>
 

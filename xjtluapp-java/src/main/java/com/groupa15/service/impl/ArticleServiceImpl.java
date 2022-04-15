@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.groupa15.common.dto.ArticlePageDto;
 import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
+import com.groupa15.entity.vo.ArticleTypeVO;
 import com.groupa15.entity.vo.TagTypeVO;
 import com.groupa15.mapper.ArticleMapper;
 import com.groupa15.service.ArticleService;
@@ -52,28 +53,35 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto, Long viewerId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        page = articleMapper.selectArticlePageVoOfMode(page, viewerId, "all");
+        page = articleMapper.selectArticlePageVo(page, viewerId);
         return page.getRecords();
     }
 
     @Override
     public List<ArticleScreenshotVO> getArticlePageOfUserId(ArticlePageDto articlePageDto, Long userId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        page = articleMapper.selectArticlePageVoOfMode(page, userId, "mine");
+        page = articleMapper.selectArticlePageVoOfMine(page, userId);
         return page.getRecords();
     }
 
     @Override
     public List<ArticleScreenshotVO> getArticlePageOfFavourite(ArticlePageDto articlePageDto, Long viewerId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        page = articleMapper.selectArticlePageVoOfMode(page, viewerId, "favourite");
+        page = articleMapper.selectArticlePageVoOfFavourite(page, viewerId);
         return page.getRecords();
     }
 
     @Override
     public List<ArticleScreenshotVO> getArticlePageOfHistory(ArticlePageDto articlePageDto, Long viewerId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
-        page = articleMapper.selectArticlePageVoOfMode(page, viewerId, "history");
+        page = articleMapper.selectArticlePageVoOfHistory(page, viewerId);
+        return page.getRecords();
+    }
+
+    @Override
+    public List<ArticleScreenshotVO> getArticlePageOfType(ArticlePageDto articlePageDto, Long viewerId, Long typeId) {
+        Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
+        page = articleMapper.selectArticlePageVoOfType(page, viewerId, typeId);
         return page.getRecords();
     }
 
@@ -109,6 +117,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<TagTypeVO> getAllTags() {
         return articleMapper.queryTagTypeList();
+    }
+
+    @Override
+    public List<ArticleTypeVO> getAllArticleTypes() {
+        return articleMapper.selectAllArticleTypes();
     }
 
     @Override
