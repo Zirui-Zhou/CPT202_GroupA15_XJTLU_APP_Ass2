@@ -1,5 +1,5 @@
 <template>
-  <div class="space">
+  <div v-loading="isLoading" class="space">
 
     <div
         class="spaceItem"
@@ -20,32 +20,53 @@
 </template>
 
 <script setup>
-import {getResourceList} from "@/scripts/handleResourceApi";
-import {onMounted, reactive, ref} from "vue";
+import {getResourceListOfTags} from "@/scripts/handleResourceApi";
+import {computed, onMounted, reactive, ref, watch} from "vue";
 import {delay} from "@/scripts/commonUtils";
+import {useStore} from "vuex";
+
+const store = useStore()
 
 const currentPage = ref(0)
 const sizePage = 9
 
-const moduleList = reactive([])
+const isLoading = ref(false)
 
+const moduleList = reactive([])
+const selectedTags = computed(()=>store.getters.getSelectedTags)
+let selectedTagIds = []
 
 const loadNewArticle = async () => {
 
-  if(currentPage.value !== 0) {
-    await delay(1000)
-  }
-  const result = await getResourceList(currentPage.value, sizePage)
+  isLoading.value = true
 
-  currentPage.value++
 
+  await delay(500)
+
+  const result = await getResourceListOfTags(currentPage.value, sizePage, selectedTagIds)
+
+  clearModuleList()
   moduleList.push(...result)
 
+  isLoading.value = false
+
+}
+
+const clearModuleList = () => {
+  moduleList.length = 0
 }
 
 const clickCard = (url) => {
   window.open(url)
 }
+
+const watchFunc = watch(selectedTags.value, async ()=>{
+  selectedTagIds = []
+  selectedTags.value.forEach((item)=>selectedTagIds.push(item.tagId))
+
+  await loadNewArticle()
+
+})
 
 onMounted(async () => await loadNewArticle())
 
@@ -62,6 +83,9 @@ img {
 .space {
   display: flex;
   flex-flow: row wrap;
+
+  /*Ensure the loading animation in the right position*/
+  min-height: 300px;
 }
 
 .spaceItem {

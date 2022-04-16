@@ -57,10 +57,6 @@ async function removeHistoryArticle(id) {
     return (await commonGetData("/article/history/remove", true, {params: {id: idn}})).data
 }
 
-async function getTagTypeList() {
-    return (await commonGetData("/article/tags", true)).data
-}
-
 async function getAllArticleTypes() {
     const result = (await commonGetData("/article/types", true)).data
     store.commit("SET_ARTICLE_TYPE_LIST", result)
@@ -92,7 +88,6 @@ export {
     handleFavouriteArticle,
     addHistoryArticle,
     removeHistoryArticle,
-    getTagTypeList,
     getAllArticleTypes,
     linkToArticle,
     getArticleLink

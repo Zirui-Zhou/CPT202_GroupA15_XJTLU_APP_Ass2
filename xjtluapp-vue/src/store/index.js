@@ -8,7 +8,8 @@ export default createStore({
     userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
     serverUrl: "http://localhost:8081",
     staticUrl: "/static",
-    articleTypeList: []
+    articleTypeList: [],
+    selectedTags: [],
   },
   mutations: {
     SET_TEMP_TOKEN: (state, token) => {
@@ -32,6 +33,16 @@ export default createStore({
     },
     SET_ARTICLE_TYPE_LIST: (state, type_list) => {
       state.articleTypeList = type_list
+    },
+    PUSH_SELECTED_TAG: (state, tag) => {
+      state.selectedTags.push(tag)
+    },
+    POP_SELECTED_TAG: (state, tag) => {
+      state.selectedTags.forEach((item, index, array) => {
+        if (item === tag) {
+          array.splice(index,1);
+        }
+      })
     }
   },
   getters: {
@@ -54,6 +65,10 @@ export default createStore({
 
     getArticleTypeList: state => {
       return state.articleTypeList
+    },
+
+    getSelectedTags: state => {
+      return state.selectedTags
     }
   },
   actions: {
