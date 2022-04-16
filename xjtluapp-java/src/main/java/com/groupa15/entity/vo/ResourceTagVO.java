@@ -11,10 +11,10 @@ import java.util.List;
  */
 
 @Data
-public class TagTypeVO implements Serializable {
+public class ResourceTagVO implements Serializable {
 
-    private String typeName;
+    private String tagId;
 
-    private List<String> tagName;
+    private String tagName;
 
 }

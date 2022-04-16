@@ -1,9 +1,9 @@
-import {commonPostData, handleResource} from "@/scripts/requestUtils";
+import {commonGetData, commonPostData, handleResource} from "@/scripts/requestUtils";
 
-async function getResourceList(current, size, extraUrl="", config={}) {
+async function getResourceList(current, size, tagList=[],  extraUrl="", config={}) {
     const result = (await commonPostData(
         "/resource/list" + extraUrl,
-        {current: current, size: size},
+        {current: current, size: size, tagList: tagList},
         true,
         config
     )).data
@@ -16,6 +16,16 @@ async function getResourceList(current, size, extraUrl="", config={}) {
     return result
 }
 
+async function getAllResourceTags() {
+    return (await commonGetData("/resource/tags", true)).data
+}
+
+async function getResourceListOfTags(current, size, tagList) {
+    return await getResourceList(current, size, tagList, "/tags")
+}
+
 export {
     getResourceList,
+    getAllResourceTags,
+    getResourceListOfTags,
 }

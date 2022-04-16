@@ -3,6 +3,8 @@ package com.groupa15.common.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Zirui Zhou
@@ -15,5 +17,7 @@ public class ResourcePageDto implements Serializable {
     private int current;
 
     private int size;
+
+    private List<Integer> tagList;
 
 }

@@ -9,7 +9,6 @@ import com.groupa15.entity.Article;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.groupa15.entity.vo.ArticleTypeVO;
-import com.groupa15.entity.vo.TagTypeVO;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -48,8 +47,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
     Boolean queryIsFavourite(@Param("viewerId") Long userId, @Param("articleId") Long articleId);
 
     Boolean queryIsHistory(@Param("viewerId") Long userId, @Param("articleId") Long articleId);
-
-    List<TagTypeVO> queryTagTypeList();
 
     List<ArticleTypeVO> selectAllArticleTypes();
 

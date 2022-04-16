@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.groupa15.common.dto.ResourcePageDto;
 import com.groupa15.entity.Resource;
 import com.groupa15.entity.vo.ResourceScreenshotVO;
+import com.groupa15.entity.vo.ResourceTagListVO;
 import com.groupa15.mapper.ResourceMapper;
 import com.groupa15.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,18 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         Page<ResourceScreenshotVO> page = new Page<>(resourcePageDto.getCurrent(), resourcePageDto.getSize());
         page = resourceMapper.selectResourcePageVo(page);
         return page.getRecords();
+    }
+
+    @Override
+    public List<ResourceScreenshotVO> getResourcePageOfTags(ResourcePageDto resourcePageDto) {
+        Page<ResourceScreenshotVO> page = new Page<>(resourcePageDto.getCurrent(), resourcePageDto.getSize());
+        page = resourceMapper.selectResourcePageVoOfTags(page, resourcePageDto.getTagList());
+        return page.getRecords();
+    }
+
+    @Override
+    public List<ResourceTagListVO> getAllResourceTags() {
+        return resourceMapper.selectAllResourceTypes();
     }
 
 }

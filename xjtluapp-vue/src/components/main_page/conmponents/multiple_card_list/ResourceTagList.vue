@@ -1,36 +1,36 @@
 <template>
 
-  <div class="tagList" v-show="selectedList.length > 0">
+  <div class="tagList" v-show="selectedTags.length > 0">
     <span class="tagTitle">Classification:</span>
     <div class="tagBlock">
       <el-tag
           class="tagItem"
-          v-for="tag in selectedList"
-          :key="tag"
+          v-for="tag in selectedTags"
+          :key="tag.tagId"
           closable
           @close="handleClose(tag)"
       >
-        {{ tag }}
+        {{ tag.tagName }}
       </el-tag>
     </div>
   </div>
 
   <div
       class="tagList"
-      v-for="(tags, index) in tagList"
+      v-for="(tags, index) in allTagList"
       :key="index"
   >
     <span class="tagTitle">{{ tags.typeName + ":" }}</span>
     <div class="tagBlock">
       <el-link
           class="linkItem"
-          v-for="(tag, index) in tags.tagName"
+          v-for="(tag, index) in tags.tagList"
           :key="index"
           :underline="false"
           @click="handleLinkClick(tag)"
           :type="isSelected(tag) ? 'default' : 'primary'"
       >
-        {{ tag }}
+        {{ tag.tagName }}
       </el-link>
     </div>
   </div>
@@ -38,33 +38,32 @@
 </template>
 
 <script setup>
-import {onBeforeMount, reactive} from "vue";
-import {getTagTypeList} from "@/scripts/handleArticleApi";
+import {computed, onBeforeMount, reactive} from "vue";
+import {getAllResourceTags} from "@/scripts/handleResourceApi";
+import {useStore} from "vuex";
 
-const selectedList = reactive([])
-const tagList = reactive([])
+const store = useStore()
+
+const selectedTags = computed(()=>store.getters.getSelectedTags)
+const allTagList = reactive([])
 
 const handleClose = (tag) => {
-  selectedList.forEach((item, index, array) => {
-    if (item === tag) {
-      array.splice(index,1);
-    }
-  })
+  store.commit("POP_SELECTED_TAG", tag)
 }
 
 const handleLinkClick = (item) => {
   if(isSelected(item)) {
-    selectedList.push(item)
+    store.commit("PUSH_SELECTED_TAG", item)
   } else {
     handleClose(item)
   }
 }
 
 const isSelected = (item) => {
-  return selectedList.indexOf(item) === -1
+  return selectedTags.value.indexOf(item) === -1
 }
 
-onBeforeMount(async ()=> tagList.push(...await getTagTypeList()))
+onBeforeMount(async ()=> allTagList.push(...await getAllResourceTags()))
 </script>
 
 <style scoped>
