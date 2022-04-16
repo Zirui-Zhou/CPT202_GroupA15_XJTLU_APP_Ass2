@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.groupa15.mapper.ResourceMapper">
+
+    <resultMap id="ResourceScreenshotMap" type="ResourceScreenshotVO">
+        <result property="resourceId" column="resource_id"/>
+        <result property="resourceName" column="resource_name"/>
+        <result property="resourceImage" column="resource_image"/>
+        <result property="resourcePath" column="resource_path"/>
+        <collection property="resourceTagList" ofType="Integer">
+            <result column="tag_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectResourcePageVo" resultMap="ResourceScreenshotMap">
+        SELECT s.resource_id, s.resource_name, s.resource_image, s.resource_path, l.tag_id
+        FROM student.resource s
+        LEFT JOIN student.resource_tag_list l
+            ON s.resource_id = l.resource_id
+    </select>
+
+</mapper>

@@ -20,8 +20,6 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
-//    @Insert("Insert into news (title, content) values (#{title}, #{content})")
-//    int insert(News news);'
 
     Page<ArticleScreenshotVO> selectArticlePageVo(Page<ArticleScreenshotVO> iPage, @Param("viewerId") Long viewerId);
 
