@@ -33,6 +33,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     Page<ArticleScreenshotVO> selectArticlePageVoOfType(Page<ArticleScreenshotVO> page, @Param("viewerId") Long viewerId, @Param("typeId")Long typeId);
 
+    Page<ArticleScreenshotVO> selectArticlePageVoOfKeyword(Page<ArticleScreenshotVO> page, @Param("viewerId") Long viewerId, @Param("keyWord")String keyWord);
+
     @Insert("INSERT INTO student.favourite_article(user_id, article_id) values(#{userId}, #{articleId})")
     Boolean insertFavouriteArticle(Long userId, Long articleId);
 

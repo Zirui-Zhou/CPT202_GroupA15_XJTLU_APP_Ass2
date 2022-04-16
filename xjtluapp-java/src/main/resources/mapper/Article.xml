@@ -56,15 +56,14 @@
                        avatar
                 FROM student.user
                 ) as u
-                    LEFT JOIN student.article a
+                    INNER JOIN student.article a
                     ON a.editor_id = u.editor_id
-                    LEFT JOIN student.article_type_list t
+                    INNER JOIN student.article_type_list t
                     ON a.id = t.article_id
     </sql>
 
     <select id="selectArticlePageVo" resultMap="ArticleScreenshotMap">
         <include refid="selectArticle"/>
-        WHERE id != 0
         ORDER BY a.create_time DESC
     </select>
 
@@ -91,6 +90,12 @@
     <select id="selectArticlePageVoOfType" resultMap="ArticleScreenshotMap">
         <include refid="selectArticle"/>
         WHERE t.type_id = #{typeId}
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="selectArticlePageVoOfKeyword" resultMap="ArticleScreenshotMap">
+        <include refid="selectArticle"/>
+        WHERE a.title LIKE '%${keyWord}%' OR u.editor_name LIKE '%${keyWord}%'
         ORDER BY a.create_time DESC
     </select>
 

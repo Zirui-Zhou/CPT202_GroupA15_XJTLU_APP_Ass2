@@ -28,6 +28,8 @@ public interface ArticleService extends IService<Article> {
 
     List<ArticleScreenshotVO> getArticlePageOfHistory(ArticlePageDto articlePageDto, Long viewerId);
 
+    List<ArticleScreenshotVO> getArticlePageOfKeyWord(ArticlePageDto articlePageDto, Long viewerId, String keyWord);
+
     List<ArticleScreenshotVO> getArticlePageOfType(ArticlePageDto articlePageDto, Long viewerId, Long typeId);
 
     Boolean changeFavouriteArticle(Long userId, Long articleId);

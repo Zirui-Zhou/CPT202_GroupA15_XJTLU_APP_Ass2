@@ -78,6 +78,12 @@ public class ArticleController {
         return Response.success(HttpStatus.OK, "Get the article list", articleList);
     }
 
+    @PostMapping("article/list/search")
+    public Response getArticleListOfSearch(@RequestHeader(value = "Authorization") String token, @RequestBody ArticlePageDto articleListDto, @RequestParam(name = "word") String word) {
+        List<ArticleScreenshotVO> articleList = articleService.getArticlePageOfKeyWord(articleListDto, jwtUtils.getUserIdByToken(token), word);
+        return Response.success(HttpStatus.OK, "Get the article list", articleList);
+    }
+
     @GetMapping("article/favourite")
     public Response handleFavouriteArticle(@RequestHeader(value = "Authorization") String token, @RequestParam(name = "id") Long id) {
         Boolean result = articleService.changeFavouriteArticle(jwtUtils.getUserIdByToken(token), id);

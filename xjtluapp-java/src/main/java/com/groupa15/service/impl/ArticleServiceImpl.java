@@ -79,6 +79,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    public List<ArticleScreenshotVO> getArticlePageOfKeyWord(ArticlePageDto articlePageDto, Long viewerId, String keyWord) {
+        Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
+        page = articleMapper.selectArticlePageVoOfKeyword(page, viewerId, keyWord);
+        return page.getRecords();
+    }
+
+    @Override
     public List<ArticleScreenshotVO> getArticlePageOfType(ArticlePageDto articlePageDto, Long viewerId, Long typeId) {
         Page<ArticleScreenshotVO> page = new Page<>(articlePageDto.getCurrent(), articlePageDto.getSize());
         page = articleMapper.selectArticlePageVoOfType(page, viewerId, typeId);
