@@ -38,6 +38,14 @@ const routes = [
         },
         component: () => import('@/components/main_page/StudentPage')
       },
+      {
+        path: 'search',
+        name: 'search',
+        meta: {
+          requireAuth: true
+        },
+        component: () => import('@/components/main_page/SearchPage')
+      },
     ]
   },
   {

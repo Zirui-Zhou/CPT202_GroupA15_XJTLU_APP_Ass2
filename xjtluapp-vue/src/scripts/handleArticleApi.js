@@ -24,6 +24,10 @@ async function getArticleListOfType(current, size, id) {
     return await getArticleList(current, size, "/type", {params:{id: id}})
 }
 
+async function getArticleListOfSearch(current, size, keyword) {
+    return await getArticleList(current, size, "/search", {params:{word: keyword}})
+}
+
 async function getArticleList(current, size, extraUrl="", config={}) {
     const result = (await commonPostData(
         "/article/list" + extraUrl,
@@ -85,6 +89,7 @@ export {
     getArticleListOfFavourite,
     getArticleListOfHistory,
     getArticleListOfType,
+    getArticleListOfSearch,
     handleFavouriteArticle,
     addHistoryArticle,
     removeHistoryArticle,

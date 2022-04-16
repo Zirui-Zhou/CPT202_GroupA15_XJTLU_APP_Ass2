@@ -25,9 +25,12 @@
       <el-input
           placeholder="Please input"
           v-model="input"
+          :disabled="!userInfo"
           style="width: 200px"
           class="align-right"
           :suffix-icon="Search"
+          maxlength="32"
+          @keydown.enter="searchArticle(input)"
       />
       <el-divider class="align-right" direction="vertical"/>
 
@@ -39,14 +42,28 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
+import {ref, computed} from "vue"
 import {Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
+import {useStore} from "vuex";
 import AvatarWithCard from "@/components/main_page/conmponents/AvatarWithCard";
+import {addMessage} from "@/scripts/messageUtils";
 
 const router = useRouter()
+const store = useStore()
+
+const userInfo = computed(()=>store.getters.getUserInfo)
 
 const input = ref("")
+
+const searchArticle = (keyWord) => {
+  if(keyWord.length === 0) {
+    addMessage("Please input search keyword.")
+    return
+  }
+  router.push({path: "/search", query: {word: keyWord}})
+}
+
 </script>
 
 <style scoped>

@@ -30,8 +30,8 @@
               v-for="([key, value], index) in userInfoList"
               :key="index"
           >
-            <span style="font-weight: bold">{{ key + ":" }}</span>
-            <span>&emsp;{{ value }}</span>
+            <span style="font-weight: bold">{{ key + ":&emsp;" }}</span>
+            <span>{{ value }}</span>
           </li>
         </ul>
 

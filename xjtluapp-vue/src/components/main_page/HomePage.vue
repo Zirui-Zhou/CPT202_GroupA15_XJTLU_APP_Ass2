@@ -26,7 +26,11 @@
 
   </el-tabs>
 
-  <SingleColumnCardList :key="activeTab" list-type="type" :list-func-param="[activeTab]"/>
+  <SingleColumnCardList
+      :key="activeTab"
+      list-type="type"
+      :list-func-param="[activeTab]"
+  />
 
 </template>
 

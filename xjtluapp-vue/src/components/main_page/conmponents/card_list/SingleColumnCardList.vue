@@ -57,7 +57,7 @@
     getArticleList,
     getArticleListOfFavourite,
     getArticleListOfHistory,
-    getArticleListOfMine,
+    getArticleListOfMine, getArticleListOfSearch,
     getArticleListOfType,
     linkToArticle
   } from "@/scripts/handleArticleApi";
@@ -111,6 +111,9 @@
     },
     type: {
       func: getArticleListOfType
+    },
+    search: {
+      func: getArticleListOfSearch
     }
   }
 
