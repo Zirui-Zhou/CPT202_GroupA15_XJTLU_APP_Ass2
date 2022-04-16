@@ -28,27 +28,40 @@ import {useStore} from "vuex";
 const store = useStore()
 
 const currentPage = ref(0)
-const sizePage = 9
+const sizePage = 6
 
 const isLoading = ref(false)
+const isNothing = ref(false)
 
 const moduleList = reactive([])
 const selectedTags = computed(()=>store.getters.getSelectedTags)
 let selectedTagIds = []
 
-const loadNewArticle = async () => {
+const loadResource = async (isReload=false) => {
 
   isLoading.value = true
 
-
   await delay(500)
+
+  if(isReload) {
+    currentPage.value = 0
+  }
+
+  currentPage.value++
 
   const result = await getResourceListOfTags(currentPage.value, sizePage, selectedTagIds)
 
-  clearModuleList()
+  if(isReload){
+    isNothing.value = false
+    clearModuleList()
+  }
+
   moduleList.push(...result)
 
   isLoading.value = false
+  if(result.length < sizePage) {
+    isNothing.value = true
+  }
 
 }
 
@@ -63,12 +76,16 @@ const clickCard = (url) => {
 const watchFunc = watch(selectedTags.value, async ()=>{
   selectedTagIds = []
   selectedTags.value.forEach((item)=>selectedTagIds.push(item.tagId))
-
-  await loadNewArticle()
-
+  await loadResource(true)
 })
 
-onMounted(async () => await loadNewArticle())
+window.onscroll = async () => {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
+    await loadResource()
+  }
+}
+
+onMounted(async () => await loadResource())
 
 </script>
 
