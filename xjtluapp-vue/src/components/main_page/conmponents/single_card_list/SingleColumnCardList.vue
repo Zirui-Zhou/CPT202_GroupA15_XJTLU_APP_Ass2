@@ -63,9 +63,9 @@
   } from "@/scripts/handleArticleApi";
   import moment from "moment"
   import {delay} from "@/scripts/commonUtils";
-  import CardIconList from "@/components/main_page/conmponents/card_list/CardIconList";
-  import CardArticleInfo from "@/components/main_page/conmponents/card_list/CardArticleInfo";
-  import CardUserInfo from "@/components/main_page/conmponents/card_list/CardUserInfo";
+  import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
+  import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
+  import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
 
   const articleList = reactive([])
   const currentPage = ref(0)

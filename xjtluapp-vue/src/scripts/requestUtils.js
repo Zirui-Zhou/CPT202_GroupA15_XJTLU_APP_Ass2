@@ -11,6 +11,22 @@ function getServerUrl() {
     return store.getters.getServerUrl
 }
 
+function handleResourceUrl(image) {
+    if(!image){
+        return null
+    }
+    return store.getters.getStaticUrl + image
+}
+
+function handleResource(object, key) {
+    if(object) {
+        if(object[key]) {
+            object[key] = handleResourceUrl(object[key])
+        }
+    }
+    return object
+}
+
 function getDefaultConfig(isAuth, extraConfig="") {
     let axiosConfig = {transformResponse: transformBigint}
     if(isAuth) {
@@ -75,5 +91,7 @@ export {
     commonGet,
     commonPost,
     commonGetData,
-    commonPostData
+    commonPostData,
+    handleResourceUrl,
+    handleResource
 }

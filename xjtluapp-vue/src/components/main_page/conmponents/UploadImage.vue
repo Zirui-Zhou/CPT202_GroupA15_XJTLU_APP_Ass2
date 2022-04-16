@@ -26,7 +26,7 @@ import {ref, reactive, onMounted, computed} from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import {useStore} from "vuex";
-import {handleAvatarUrl} from "@/scripts/handleUserApi";
+import {handleResourceUrl} from "@/scripts/requestUtils";
 
 const store = useStore()
 
@@ -40,7 +40,7 @@ const handleAvatarSuccess = (
     uploadFile
 ) => {
   const newUserInfo = userInfo.value
-  newUserInfo["avatar"] = handleAvatarUrl(response.msg)
+  newUserInfo["avatar"] = handleResourceUrl(response.msg)
   uploadFile.url = newUserInfo["avatar"]
   store.commit("SET_USERINFO", newUserInfo)
 }

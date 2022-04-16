@@ -21,7 +21,7 @@
 
 <script setup>
 import {ref} from "vue";
-import TimeLineList from "@/components/main_page/conmponents/card_list/TimeLineCardList";
+import TimeLineList from "@/components/main_page/conmponents/single_card_list/TimeLineCardList";
 import UserInfoForm from "@/components/main_page/conmponents/UserInfoForm";
 
 const activeTab = ref("mine")

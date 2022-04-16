@@ -1,6 +1,5 @@
 import router from "@/router"
-import {commonGetData, commonPostData} from "@/scripts/requestUtils";
-import {handleAvatar} from "@/scripts/handleUserApi";
+import {commonGetData, commonPostData, handleResource} from "@/scripts/requestUtils";
 import store from "@/store";
 
 async function getArticle(id) {
@@ -37,7 +36,7 @@ async function getArticleList(current, size, extraUrl="", config={}) {
     )).data
 
     if(result) {
-        result.forEach((item, index, array) => {array[index] = handleAvatar(item)})
+        result.forEach((item, index, array) => {array[index] = handleResource(item, "avatar")})
     }
 
     return result

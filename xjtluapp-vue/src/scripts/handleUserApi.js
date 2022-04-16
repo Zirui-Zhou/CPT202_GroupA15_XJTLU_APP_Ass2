@@ -1,12 +1,12 @@
 import store from "@/store";
 import router from "@/router"
-import {commonGetData, commonPost} from "@/scripts/requestUtils";
+import {commonGetData, commonPost, handleResource} from "@/scripts/requestUtils";
 import {computed, watch} from "vue";
 import {addMessage} from "@/scripts/messageUtils";
 
 async function getUserInfo() {
     let result = (await commonGetData("/user/info", true)).data
-    result = handleAvatar(result)
+    result = handleResource(result, "avatar")
     store.commit("SET_USERINFO", result)
 }
 
@@ -19,7 +19,7 @@ async function login(loginForm) {
             } else {
                 store.commit("SET_TEMP_TOKEN", res.headers["authorization"])
             }
-            const userInfo = handleAvatar(res.data.data)
+            const userInfo = handleResource(res.data.data, "avatar")
             store.commit("SET_USERINFO", userInfo)
             addMessage(res.data.msg, "success")
         },
@@ -54,29 +54,11 @@ async function getIsAuth() {
     return (await commonGetData("/auth", true)).data
 }
 
-function handleAvatarUrl(avatar) {
-    if(!avatar){
-        return null
-    }
-    return store.getters.getStaticUrl + avatar
-}
-
-function handleAvatar(object) {
-    if(object) {
-        if(object.avatar) {
-            object.avatar = handleAvatarUrl(object.avatar)
-        }
-    }
-    return object
-}
-
 export {
     getUserInfo,
     getIsAuth,
     login,
     logout,
-    handleAvatarUrl,
-    handleAvatar,
     needLogin,
     watchLogin
 }

@@ -1,6 +1,6 @@
 <template>
 
-  <MultipleColumnCardList/>
+  <GuideMultipleColumnCardList/>
 
   <br/>
 
@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import MultipleColumnCardList from "@/components/main_page/conmponents/MultipleColumnCardList";
+import GuideMultipleColumnCardList from "@/components/main_page/conmponents/GuideMultipleColumnCardList";
 import ReferenceList from "@/components/main_page/conmponents/ReferenceList";
 </script>
 

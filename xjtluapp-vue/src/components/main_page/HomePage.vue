@@ -49,7 +49,7 @@ export default {
 
 <script setup>
 import {computed, ref} from 'vue'
-import SingleColumnCardList from "@/components/main_page/conmponents/card_list/SingleColumnCardList";
+import SingleColumnCardList from "@/components/main_page/conmponents/single_card_list/SingleColumnCardList";
 import CarouselList from "@/components/main_page/conmponents/CarouselList";
 import {useStore} from "vuex";
 

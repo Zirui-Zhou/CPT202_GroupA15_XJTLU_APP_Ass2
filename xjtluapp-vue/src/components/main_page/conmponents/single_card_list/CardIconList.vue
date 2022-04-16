@@ -66,7 +66,7 @@ const clickStarIcon = async (item, id) => {
   if(props.listType === "favourite") {
     props.removeFunc(item)
   }
-  if(!item.isFavourite) {
+  if(item.isFavourite) {
     addMessage("Add favourite successfully", "success")
   } else {
     addMessage("Cancel favourite successfully", "success")
