@@ -32,7 +32,7 @@
     <select id="queryIsFavourite" resultType="Boolean">
         SELECT EXISTS(
                 SELECT 1
-                FROM student.favourite_article f
+                FROM student.article_favourite f
                 WHERE f.user_id = #{viewerId}
                 AND f.article_id = #{articleId}
                 )
@@ -41,7 +41,7 @@
     <select id="queryIsHistory" resultType="java.lang.Boolean">
         SELECT EXISTS(
                 SELECT 1
-                FROM student.history_article h
+                FROM student.article_history h
                 WHERE h.user_id = #{viewerId}
                 AND h.article_id = #{articleId}
                 )
@@ -69,14 +69,14 @@
 
     <select id="selectArticlePageVoOfFavourite" resultMap="ArticleScreenshotMap">
         <include refid="selectArticle"/>
-        INNER JOIN student.favourite_article f
+        INNER JOIN student.article_favourite f
         ON a.id = f.article_id AND f.user_id = #{viewerId}
         ORDER BY a.create_time DESC
     </select>
 
     <select id="selectArticlePageVoOfHistory" resultMap="ArticleScreenshotMap">
         <include refid="selectArticle"/>
-        INNER JOIN student.history_article h
+        INNER JOIN student.article_history h
         ON a.id = h.article_id AND h.user_id = #{viewerId}
         ORDER BY a.create_time DESC
     </select>

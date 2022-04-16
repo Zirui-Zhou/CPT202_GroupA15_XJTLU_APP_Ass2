@@ -33,16 +33,16 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     Page<ArticleScreenshotVO> selectArticlePageVoOfKeyword(Page<ArticleScreenshotVO> page, @Param("viewerId") Long viewerId, @Param("keyWord")String keyWord);
 
-    @Insert("INSERT INTO student.favourite_article(user_id, article_id) values(#{userId}, #{articleId})")
+    @Insert("INSERT INTO student.article_favourite(user_id, article_id) values(#{userId}, #{articleId})")
     Boolean insertFavouriteArticle(Long userId, Long articleId);
 
-    @Delete("Delete FROM student.favourite_article WHERE user_id=#{userId} AND article_id=#{articleId}")
+    @Delete("Delete FROM student.article_favourite WHERE user_id=#{userId} AND article_id=#{articleId}")
     Boolean deleteFavouriteArticle(Long userId, Long articleId);
 
-    @Insert("INSERT INTO student.history_article(user_id, article_id) values(#{userId}, #{articleId})")
+    @Insert("INSERT INTO student.article_history(user_id, article_id) values(#{userId}, #{articleId})")
     Boolean insertHistoryArticle(Long userId, Long articleId);
 
-    @Delete("Delete FROM student.history_article WHERE user_id=#{userId} AND article_id=#{articleId}")
+    @Delete("Delete FROM student.article_history WHERE user_id=#{userId} AND article_id=#{articleId}")
     Boolean deleteHistoryArticle(Long userId, Long articleId);
 
     Boolean queryIsFavourite(@Param("viewerId") Long userId, @Param("articleId") Long articleId);
