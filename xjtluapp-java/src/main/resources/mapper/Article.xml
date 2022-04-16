@@ -4,26 +4,12 @@
 
 <mapper namespace="com.groupa15.mapper.ArticleMapper">
 
-    <resultMap id="TagTypeList" type="TagTypeVo">
-        <result property="typeName" column="typeName" />
-        <collection property="tagName" ofType="String">
-            <result column="tagName"/>
-        </collection>
-    </resultMap>
-
     <resultMap id="ArticleScreenshotMap" type="articleScreenshotVO">
         <association property="isFavourite"
                      javaType="Boolean"
                      select="queryIsFavourite"
                      column="{viewerId=viewer_id, articleId=id}"/>
     </resultMap>
-
-    <select id="queryTagTypeList" resultMap="TagTypeList">
-        SELECT a.name as tagName, b.name as typeName
-        FROM student.resource_tag a
-                 INNER JOIN student.resource_tag_type b
-                            on a.type = b.id
-    </select>
 
     <select id="selectAllArticleTypes" resultType="ArticleTypeVO">
         SELECT * FROM student.article_type

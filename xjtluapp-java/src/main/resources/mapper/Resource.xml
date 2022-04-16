@@ -4,21 +4,59 @@
 
 <mapper namespace="com.groupa15.mapper.ResourceMapper">
 
+    <resultMap id="ResourceTagMap" type="ResourceTagListVO">
+        <result property="typeName" column="typeName" />
+        <collection property="tagList" ofType="ResourceTagVO">
+            <result property="tagId" column="tagId"/>
+            <result property="tagName" column="tagName"/>
+        </collection>
+    </resultMap>
+    
     <resultMap id="ResourceScreenshotMap" type="ResourceScreenshotVO">
         <result property="resourceId" column="resource_id"/>
         <result property="resourceName" column="resource_name"/>
         <result property="resourceImage" column="resource_image"/>
         <result property="resourcePath" column="resource_path"/>
-        <collection property="resourceTagList" ofType="Integer">
+        <collection property="resourceTagList"
+                    ofType="Integer"
+                    select="selectTagsOfResource"
+                    column="{resource_id=resource_id}">
             <result column="tag_id"/>
         </collection>
     </resultMap>
 
-    <select id="selectResourcePageVo" resultMap="ResourceScreenshotMap">
-        SELECT s.resource_id, s.resource_name, s.resource_image, s.resource_path, l.tag_id
-        FROM student.resource s
-        LEFT JOIN student.resource_tag_list l
-            ON s.resource_id = l.resource_id
+    <select id="selectAllResourceTypes" resultMap="ResourceTagMap">
+        SELECT a.id as tagId, a.name as tagName, b.name as typeName
+        FROM student.resource_tag a
+                 INNER JOIN student.resource_tag_type b
+                            on a.type = b.id
     </select>
 
+    <select id="selectResourcePageVo" resultMap="ResourceScreenshotMap">
+        SELECT DISTINCT s.resource_id, s.resource_name, s.resource_image, s.resource_path
+        FROM student.resource s
+                LEFT JOIN student.resource_tag_list l
+                        ON s.resource_id = l.resource_id
+    </select>
+
+    <select id="selectTagsOfResource" resultType="Integer">
+        SELECT l.tag_id
+        FROM student.resource_tag_list l
+                WHERE l.resource_id = #{resource_id}
+    </select>
+    
+    <select id="selectResourcePageVoOfTags" resultMap="ResourceScreenshotMap">
+        SELECT DISTINCT s.resource_id, s.resource_name, s.resource_image, s.resource_path
+        FROM student.resource s
+                LEFT JOIN student.resource_tag_list l
+                        ON s.resource_id = l.resource_id
+        <if test="!tagList.isEmpty()">
+            WHERE l.tag_id IN
+            <foreach collection="tagList" item="tagId" index="index"
+                     open="(" close=")" separator=",">
+                #{tagId}
+            </foreach>
+        </if>
+    </select>
+    
 </mapper>

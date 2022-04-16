@@ -5,7 +5,6 @@ import com.groupa15.common.dto.ArticlePageDto;
 import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
-import com.groupa15.entity.vo.TagTypeVO;
 
 import java.util.List;
 
@@ -17,8 +16,6 @@ import java.util.List;
 public interface ArticleService extends IService<Article> {
 
     Article getArticleById(Long id);
-
-    Article getArticleByTitle(String title);
 
     List<ArticleScreenshotVO> getArticlePage(ArticlePageDto articlePageDto, Long viewerId);
 
@@ -37,8 +34,6 @@ public interface ArticleService extends IService<Article> {
     Boolean addHistoryArticle(Long userId, Long articleId);
 
     Boolean removeHistoryArticle(Long userId, Long articleId);
-
-    List<TagTypeVO> getAllTags();
 
     List<ArticleTypeVO> getAllArticleTypes();
 

@@ -5,7 +5,7 @@ import com.groupa15.common.Response;
 import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
-import com.groupa15.entity.vo.TagTypeVO;
+import com.groupa15.entity.vo.ResourceTagVO;
 import com.groupa15.service.ArticleService;
 import com.groupa15.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,9 +102,4 @@ public class ArticleController {
         return Response.success(HttpStatus.OK, null, result);
     }
 
-    @GetMapping("/article/tags")
-    public Response getArticle(HttpServletResponse httpServletRequest) {
-        List<TagTypeVO> tags = articleService.getAllTags();
-        return Response.success(HttpStatus.OK, null, tags);
-    }
 }

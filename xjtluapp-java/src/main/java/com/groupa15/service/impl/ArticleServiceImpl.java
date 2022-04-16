@@ -7,7 +7,6 @@ import com.groupa15.common.dto.ArticlePageDto;
 import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
-import com.groupa15.entity.vo.TagTypeVO;
 import com.groupa15.mapper.ArticleMapper;
 import com.groupa15.service.ArticleService;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -34,19 +33,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             // TODO(Zirui): Attempt to define a custom exception to inform this.
             throw new UnknownAccountException("The article does not exist.");
         }
-        return article;
-    }
-
-    @Override
-    public Article getArticleByTitle(String title) {
-        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Article::getTitle, title);
-        Article article = this.getOne(wrapper);
-
-        if(article == null) {
-            throw new UnknownAccountException("The account does not exist.");
-        }
-
         return article;
     }
 
@@ -119,11 +105,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             result = articleMapper.deleteHistoryArticle(userId, articleId);
         }
         return result;
-    }
-
-    @Override
-    public List<TagTypeVO> getAllTags() {
-        return articleMapper.queryTagTypeList();
     }
 
     @Override
