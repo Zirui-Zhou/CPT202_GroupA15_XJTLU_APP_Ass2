@@ -1,6 +1,6 @@
 <template>
 
-  <img src="@/assets/xjtlu_banner.svg" class="banner">
+  <img src="@/assets/xjtlu_banner.svg" class="banner" @click="handleBannerClick()">
 
   <el-menu
       :default-active="router.currentRoute.value.path"
@@ -68,6 +68,10 @@ const searchArticle = (keyWord) => {
   router.push({path: "/search", query: {word: keyWord}})
 }
 
+const handleBannerClick = ()=>{
+  router.push("/guide")
+}
+
 </script>
 
 <style scoped>
@@ -75,6 +79,10 @@ const searchArticle = (keyWord) => {
   width: 15%;
   height: 15%;
   margin: 10px;
+}
+
+.banner:hover{
+  cursor: pointer;
 }
 
 .align-right{

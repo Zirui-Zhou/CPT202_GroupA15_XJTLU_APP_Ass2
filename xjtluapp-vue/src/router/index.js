@@ -18,9 +18,14 @@ const routes = [
         component: () => import('@/components/main_page/HomePage')
       },
       {
-        path: 'guide',
+        path: '/guide',
         name: 'Guide',
-        component: () => import('@/components/main_page/GuidePage')
+        component: () => import('@/components/main_page/GuidePage'),
+      },
+      {
+        path: 'guide/detail',
+        name: 'GuideDetail',
+        component: () => import("@/components/main_page/GuideDetailPage")
       },
       {
         path: 'module',

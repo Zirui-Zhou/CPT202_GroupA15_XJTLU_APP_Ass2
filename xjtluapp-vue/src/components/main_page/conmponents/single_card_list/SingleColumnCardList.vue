@@ -119,7 +119,7 @@
   const loadNewArticle = async () => {
     isLoading.value = true
 
-    await delay(800)
+    await delay(500)
 
     const result = await listTypeList[props.listType].func(currentPage.value + 1, sizePage, ...props.listFuncParam)
     if(result.length === 0) {

@@ -42,10 +42,6 @@
 
 /* Attention: the style here is not scoped to overwrite the spinner style */
 
-.articleContent{
-  min-height: 200px;
-}
-
 .articleContent .el-loading-spinner{
   top: 60%;
   left: 0;

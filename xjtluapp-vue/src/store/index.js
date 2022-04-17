@@ -9,6 +9,7 @@ export default createStore({
     serverUrl: "http://localhost:8081",
     staticUrl: "/static",
     articleTypeList: [],
+    guideTypeList: [],
     selectedTags: [],
   },
   mutations: {
@@ -33,6 +34,9 @@ export default createStore({
     },
     SET_ARTICLE_TYPE_LIST: (state, type_list) => {
       state.articleTypeList = type_list
+    },
+    SET_GUIDE_TYPE_LIST: (state, type_list) => {
+      state.guideTypeList = type_list
     },
     PUSH_SELECTED_TAG: (state, tag) => {
       state.selectedTags.push(tag)
@@ -65,6 +69,10 @@ export default createStore({
 
     getArticleTypeList: state => {
       return state.articleTypeList
+    },
+
+    getGuideTypeList: state => {
+      return state.guideTypeList
     },
 
     getSelectedTags: state => {
