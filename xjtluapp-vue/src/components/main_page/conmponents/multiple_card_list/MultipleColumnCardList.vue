@@ -40,13 +40,11 @@ let selectedTagIds = []
 const loadResource = async (isReload=false) => {
 
   isLoading.value = true
-
   await delay(500)
 
   if(isReload) {
     currentPage.value = 0
   }
-
   currentPage.value++
 
   const result = await getResourceListOfTags(currentPage.value, sizePage, selectedTagIds)

@@ -13,19 +13,13 @@
 
     <el-image
         class="img"
-        v-if="item.isLoading"
-        v-loading="true"
+        style="object-fit: cover"
+        v-loading="item.isLoading"
+        :src="item.image"
+        @load="itemFunc(item, 'isLoading', false)"
     >
       <template #error><div/></template>
     </el-image>
-
-    <el-image
-        class="img"
-        style="object-fit: cover"
-        v-show="!item.isLoading"
-        :src="item.image"
-        @load="itemFunc(item, 'isLoading', false)"
-    />
 
   </div>
 </template>

@@ -20,13 +20,17 @@
           {{ userInfo.realName }}
         </h2>
 
-        <span class="emailLabel">
+        <span
+            class="emailLabel"
+            :class="{email: !isSelf}"
+            @click="handleEmailClick()"
+        >
           {{ userInfo.email }}
         </span>
 
         <ul style="padding: 0">
           <li
-              class="el-menu-item"
+              class="el-menu el-menu-item"
               v-for="([key, value], index) in userInfoList"
               :key="index"
           >
@@ -35,7 +39,11 @@
           </li>
         </ul>
 
-        <el-button @click="logoutUser" class="button">
+        <el-button
+            @click="logoutUser"
+            class="button"
+            v-if="isSelf"
+        >
           Logout
         </el-button>
 
@@ -51,31 +59,60 @@
 
 <script setup>
 import {logout, needLogin} from "@/scripts/handleUserApi";
-import {computed, ref, reactive} from "vue";
-import {useStore} from "vuex";
+import {ref, defineProps, reactive, onUpdated, onBeforeMount} from "vue";
 import {useRouter} from "vue-router";
 import {UserFilled} from "@element-plus/icons-vue"
 
-const store = useStore()
 const router = useRouter()
 
-const userInfo = computed(()=>store.getters.getUserInfo)
+const props = defineProps({
+  userInfo: Object,
+  isSelf: {
+    type: Boolean,
+    default: false,
+  }
+})
 
 const avatarSize = 50
 
 const showAvatarCard = ref(false)
 let hideTimer = null
 
-const userInfoList = userInfo.value ?
-  reactive([
-    ["ID", userInfo.value.realId],
-    ["Major", userInfo.value.major],
-    ["Grade", userInfo.value.semester],
-]) : {}
+const userInfoList = reactive({})
+
+onBeforeMount(()=>{
+  handleInfoList()
+})
+
+onUpdated(()=>{
+  handleInfoList()
+})
+
+const handleInfoList = ()=>{
+  if(props.userInfo) {
+    Object.assign(
+        userInfoList,
+        [
+          ["ID", props.userInfo.realId],
+          ["Major", props.userInfo.major],
+          ["Grade", props.userInfo.semester],
+        ]
+    )
+  }
+}
 
 const handleAvatarClick = async () => {
+  if(!props.isSelf) {
+    return
+  }
   if(await needLogin(""))
     await router.push("/student")
+}
+
+const handleEmailClick = () => {
+  if(!props.isSelf) {
+    window.open("mailto:" + props.userInfo.email)
+  }
 }
 
 const handleAvatarEnter = () => {
@@ -118,7 +155,7 @@ const logoutUser = () => {
   .card{
     --el-card-padding: 0;
 
-    width: 90%;
+    width: 250px;
     position: absolute;
     transform: translateX(calc(-50% + v-bind(avatarSize + 'px') / 2)) translateY(-10px);
     z-index: 11;
@@ -140,6 +177,11 @@ const logoutUser = () => {
     font-size: 5px;
     text-align: center;
     color: var(--el-color-info-light-3);
+  }
+
+  .email:hover{
+    color: var(--el-color-primary-light-3);
+    cursor: pointer;
   }
 
   .button{

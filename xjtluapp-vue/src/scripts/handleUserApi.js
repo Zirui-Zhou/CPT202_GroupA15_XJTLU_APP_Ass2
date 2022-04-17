@@ -10,6 +10,13 @@ async function getUserInfo() {
     store.commit("SET_USERINFO", result)
 }
 
+async function getEditorInfo(userId) {
+    const idn = BigInt(userId)
+    let result = (await commonGetData("/user/info", true, {params: {id: idn}})).data
+    result = handleResource(result, "avatar")
+    return result
+}
+
 async function login(loginForm) {
     await commonPost("/login",
         loginForm,
@@ -56,9 +63,10 @@ async function getIsAuth() {
 
 export {
     getUserInfo,
+    getEditorInfo,
     getIsAuth,
     login,
     logout,
     needLogin,
-    watchLogin
+    watchLogin,
 }

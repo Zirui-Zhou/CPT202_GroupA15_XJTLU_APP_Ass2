@@ -34,7 +34,11 @@
       />
       <el-divider class="align-right" direction="vertical"/>
 
-      <AvatarWithCard class="align-right"/>
+      <AvatarWithCard
+          class="align-right"
+          :user-info="userInfo"
+          :is-self="true"
+      />
 
     </el-row>
   </el-menu>

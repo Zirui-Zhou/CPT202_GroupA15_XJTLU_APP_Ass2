@@ -61,8 +61,7 @@
     getArticleListOfType,
     linkToArticle
   } from "@/scripts/handleArticleApi";
-  import moment from "moment"
-  import {delay} from "@/scripts/commonUtils";
+  import {delay, getFormattedTime} from "@/scripts/commonUtils";
   import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
   import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
   import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
@@ -145,10 +144,6 @@
 
   const itemFunc = async (item, key, value) => {
     item[key] = value
-  }
-
-  const getFormattedTime = (time) => {
-    return moment(time).format('YYYY-MM-DD HH:mm:ss')
   }
 
   window.onscroll = async () => {

@@ -13,17 +13,14 @@
 </template>
 
 <script setup>
-import moment from "moment";
 import {defineProps} from "vue";
 import {UserFilled} from "@element-plus/icons-vue"
+import {getFormattedDate} from "@/scripts/commonUtils";
 
 const props = defineProps({
   item: Object,
 })
 
-const getFormattedDate = (time) => {
-  return moment(time).format('YYYY-MM-DD')
-}
 </script>
 
 <style scoped>
