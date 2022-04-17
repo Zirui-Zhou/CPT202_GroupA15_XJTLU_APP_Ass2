@@ -1,7 +1,6 @@
 package com.groupa15.controller;
 
 import com.groupa15.common.Response;
-import com.groupa15.entity.User;
 import com.groupa15.entity.UserInfo;
 import com.groupa15.service.UserInfoService;
 import com.groupa15.service.UserService;

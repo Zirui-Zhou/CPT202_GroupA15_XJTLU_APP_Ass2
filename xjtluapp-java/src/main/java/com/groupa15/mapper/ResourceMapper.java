@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.groupa15.entity.Resource;
 import com.groupa15.entity.vo.ResourceScreenshotVO;
 import com.groupa15.entity.vo.ResourceTagListVO;
-import com.groupa15.entity.vo.ResourceTagVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
