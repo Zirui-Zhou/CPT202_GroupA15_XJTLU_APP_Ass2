@@ -52,8 +52,12 @@ public class AccountController {
     public Response getUserInfo(@RequestHeader(value = "Authorization") String token) {
         Long userId = jwtUtils.getUserIdByToken(token);
         UserInfoVO userInfoVO = userService.getUserInfoByUserId(userId);
-//        UserInfoVO userInfoVO = new UserInfoVO();
-//        BeanUtils.copyProperties(user, userInfoVO);
+        return Response.success(HttpStatus.OK, null, userInfoVO);
+    }
+
+    @GetMapping(value="/user/info", params = "id")
+    public Response getEditorInfo(@RequestParam(name = "id") Long userId) {
+        UserInfoVO userInfoVO = userService.getUserInfoByUserId(userId);
         return Response.success(HttpStatus.OK, null, userInfoVO);
     }
 

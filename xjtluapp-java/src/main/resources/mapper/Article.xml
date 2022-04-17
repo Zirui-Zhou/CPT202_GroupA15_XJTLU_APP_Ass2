@@ -38,9 +38,9 @@
                editor_name, avatar, type_id, #{viewerId} as viewer_id
         FROM (
                 Select user_id as editor_id,
-                       user_name as editor_name,
+                       real_name as editor_name,
                        avatar
-                FROM student.user
+                FROM student.user_info
                 ) as u
                     INNER JOIN student.article a
                     ON a.editor_id = u.editor_id

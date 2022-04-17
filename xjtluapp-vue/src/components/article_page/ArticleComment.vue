@@ -1,5 +1,5 @@
 <template>
-  
+
     <h1>Comments</h1>
     <el-row style="display:flex; justify-content:space-between;margin: auto 32px; min-height: 400px">
       <AvatarWithCard :user-info="userInfo"/>

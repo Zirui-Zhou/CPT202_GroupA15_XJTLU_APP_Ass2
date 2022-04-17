@@ -52,7 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public UserInfoVO getUserInfoByUserId(Long userId) {
-        UserInfoVO userInfoVO = userMapper.queryUserInfoByUserId(userId);
+        UserInfoVO userInfoVO = userMapper.selectUserInfoVoByUserId(userId);
 
         if(userInfoVO == null) {
             throw new UnknownAccountException("The account does not exist.");

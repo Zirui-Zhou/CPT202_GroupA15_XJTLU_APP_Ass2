@@ -7,23 +7,27 @@ import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
 
 /**
- * @author Qi Xu
- * @date 2022/3/15
+ * @author Zirui Zhou
+ * @date 2022/4/17
  */
 
 @Data
 @Accessors(chain = true)
-public class User {
+public class UserInfo {
 
     @TableId
     private Long userId;
 
-    private String userName;
+    private String realName;
 
-    private String password;
+    private Long realId;
 
-    private String salt;
+    private String major;
 
-    private LocalDateTime createTime;
+    private String semester;
+
+    private String email;
+
+    private String avatar;
 
 }

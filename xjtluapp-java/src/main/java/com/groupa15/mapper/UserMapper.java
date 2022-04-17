@@ -15,7 +15,6 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-    @Select("Select * from student.user a JOIN student.user_info b ON a.user_id = b.user_id where a.user_id = #{userId}")
-    UserInfoVO queryUserInfoByUserId(Long userId);
+    UserInfoVO selectUserInfoVoByUserId(@Param("userId") Long userId);
 
 }

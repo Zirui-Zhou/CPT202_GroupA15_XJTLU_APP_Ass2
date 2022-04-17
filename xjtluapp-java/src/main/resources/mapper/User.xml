@@ -3,4 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.groupa15.mapper.UserMapper">
+    <select id="selectUserInfoVoByUserId" resultType="UserInfoVO">
+
+        SELECT u.user_id, u.user_name, i.avatar, i.real_name,
+               i.major, i.semester, i.real_id, i.email
+        FROM student.user u
+            INNER JOIN student.user_info i
+            ON u.user_id = i.user_id
+        WHERE u.user_id = #{userId}
+
+    </select>
 </mapper>

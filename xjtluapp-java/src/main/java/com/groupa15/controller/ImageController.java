@@ -2,6 +2,8 @@ package com.groupa15.controller;
 
 import com.groupa15.common.Response;
 import com.groupa15.entity.User;
+import com.groupa15.entity.UserInfo;
+import com.groupa15.service.UserInfoService;
 import com.groupa15.service.UserService;
 import com.groupa15.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class ImageController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserInfoService userInfoService;
 
     @PostMapping("/upload")
     public Response upload(@RequestHeader(name="Authorization") String token, @RequestParam(name = "file", required = false) MultipartFile file) {
@@ -75,10 +80,10 @@ public class ImageController {
             new File(resourcePath + oldFilename).delete();
         }
 
-        User user = new User()
+        UserInfo userInfo = new UserInfo()
                 .setUserId(userId)
                 .setAvatar(subPath + "/" + filename);
-        userService.updateUser(user);
+        userInfoService.updateUserInfo(userInfo);
 
         return Response.success(HttpStatus.OK, subPath + "/" + filename);
     }
