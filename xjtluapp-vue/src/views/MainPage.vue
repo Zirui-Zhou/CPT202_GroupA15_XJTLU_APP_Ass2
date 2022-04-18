@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import TopMenu from "@/components/main_page/conmponents/TopMenu";
+import TopMenu from "@/components/TopMenu";
 import {getUserInfo} from "@/scripts/handleUserApi";
 import {onBeforeMount} from "vue";
 import {getAllArticleTypes} from "@/scripts/handleArticleApi";

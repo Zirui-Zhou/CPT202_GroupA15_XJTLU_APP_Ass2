@@ -53,7 +53,7 @@ onMounted(async () =>{
   isLoading.value = true
   await loadGuideOfType(props.type)
   await loadGuideType(props.type)
-  await delay(500)
+  await delay(300)
   isLoading.value = false
 })
 

@@ -1,6 +1,6 @@
 import store from "@/store";
 import router from "@/router"
-import {commonGetData, commonPost, handleResource} from "@/scripts/requestUtils";
+import {commonGetData, commonPost, commonPostData, handleResource} from "@/scripts/requestUtils";
 import {computed, watch} from "vue";
 import {addMessage} from "@/scripts/messageUtils";
 
@@ -61,6 +61,14 @@ async function getIsAuth() {
     return (await commonGetData("/auth", true)).data
 }
 
+async function changePassword(form) {
+    const result = await commonPostData("/user/change_password", form, true)
+    if(result.msg) {
+        addMessage(result.msg, "success")
+    }
+
+}
+
 export {
     getUserInfo,
     getEditorInfo,
@@ -69,4 +77,5 @@ export {
     logout,
     needLogin,
     watchLogin,
+    changePassword,
 }

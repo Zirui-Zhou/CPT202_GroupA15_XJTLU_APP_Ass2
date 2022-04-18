@@ -42,7 +42,7 @@
 
 <script setup>
 import {defineProps} from "vue";
-import AvatarWithCard from "@/components/main_page/conmponents/AvatarWithCard";
+import AvatarWithCard from "@/components/AvatarWithCard";
 import {getFormattedTime} from "@/scripts/commonUtils";
 
 const props = defineProps({

@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import AvatarWithCard from "@/components/main_page/conmponents/AvatarWithCard";
+import AvatarWithCard from "@/components/AvatarWithCard";
 import {
   MoreFilled,
   CirclePlusFilled,

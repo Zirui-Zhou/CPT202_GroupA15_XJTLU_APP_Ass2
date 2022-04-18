@@ -50,7 +50,7 @@ const beforeAvatarUpload = async (rawFile) => {
   //   ElMessage.error('Avatar picture must be JPG format.')
   //   return false
   // } else
-  if (rawFile.size / 1024 / 1024 > 2) {
+  if (rawFile.size / 1024 / 1024 > 10) {
     ElMessage.error('Avatar picture size cannot exceed 2MB.')
     return false
   }

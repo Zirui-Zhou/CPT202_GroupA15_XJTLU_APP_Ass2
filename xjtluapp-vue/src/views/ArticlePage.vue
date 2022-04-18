@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import TopMenu from "@/components/main_page/conmponents/TopMenu";
+import TopMenu from "@/components/TopMenu";
 import ArticleReader from "@/components/article_page/ArticleReader";
 // import ArticleEditor from "@/components/article_page/ArticleEditor";
 </script>

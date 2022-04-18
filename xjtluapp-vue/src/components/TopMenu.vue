@@ -40,23 +40,39 @@
           :is-self="true"
       />
 
+      <el-icon
+          class="align-right moreIcon"
+          style="transform: rotate(90deg)"
+          @click="handleIconClick()"
+      >
+        <MoreFilled/>
+      </el-icon>
     </el-row>
   </el-menu>
+
+  <SettingBox
+      :key="isShowSetting"
+      :is-show-setting="isShowSetting"
+      :close-setting="closeSetting"
+  />
 
 </template>
 
 <script setup>
 import {ref, computed} from "vue"
-import {Search} from "@element-plus/icons-vue";
+import {MoreFilled, Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
-import AvatarWithCard from "@/components/main_page/conmponents/AvatarWithCard";
+import AvatarWithCard from "@/components/AvatarWithCard";
 import {addMessage} from "@/scripts/messageUtils";
+import SettingBox from "@/components/SettingBox";
 
 const router = useRouter()
 const store = useStore()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
+
+const isShowSetting = ref(false)
 
 const input = ref("")
 
@@ -70,6 +86,16 @@ const searchArticle = (keyWord) => {
 
 const handleBannerClick = ()=>{
   router.push("/guide")
+}
+
+const handleIconClick = () => {
+  if(userInfo.value) {
+    isShowSetting.value = true
+  }
+}
+
+const closeSetting = () => {
+  isShowSetting.value = false
 }
 
 </script>
@@ -88,4 +114,14 @@ const handleBannerClick = ()=>{
 .align-right{
   margin: auto 10px auto auto;
 }
+
+.moreIcon{
+  color: var(--el-color-info-dark-2)
+}
+
+.moreIcon:hover{
+  color: var(--el-color-primary-light-3);
+  cursor: v-bind("userInfo ? 'pointer' : 'not-allowed'");
+}
+
 </style>
