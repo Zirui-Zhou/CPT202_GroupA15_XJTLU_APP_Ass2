@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.groupa15.common.dto.LoginDto;
+import com.groupa15.common.dto.PasswordChangeDto;
 import com.groupa15.entity.User;
 import com.groupa15.entity.vo.UserInfoVO;
 import com.groupa15.mapper.UserMapper;
@@ -87,6 +88,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getUserId, user.getUserId());
         this.update(user, wrapper);
+    }
+
+    @Override
+    public void changePassword(PasswordChangeDto passDto, Long userId) {
+
+        User user = this.getUserByUserId(userId);
+        String hashedOldPassword = secureUtils.getHashedPassword(passDto.getOldPassword(), user.getSalt());
+        if(!user.getPassword().equals(hashedOldPassword)) {
+            throw new IncorrectCredentialsException("Old password is not correct.");
+        }
+
+        String salt = secureUtils.getSalt();
+        String hashedNewPassword = secureUtils.getHashedPassword(passDto.getNewPassword(), salt);
+        User newUser = new User()
+                .setUserId(userId)
+                .setPassword(hashedNewPassword)
+                .setSalt(salt);
+       this.updateUser(newUser);
     }
 
 }

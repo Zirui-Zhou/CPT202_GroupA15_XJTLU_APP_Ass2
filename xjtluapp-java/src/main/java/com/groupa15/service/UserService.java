@@ -3,6 +3,7 @@ package com.groupa15.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import com.groupa15.common.dto.LoginDto;
+import com.groupa15.common.dto.PasswordChangeDto;
 import com.groupa15.entity.User;
 import com.groupa15.entity.vo.UserInfoVO;
 
@@ -25,4 +26,5 @@ public interface UserService extends IService<User> {
 
     void updateUser(User user);
 
+    void changePassword(PasswordChangeDto passDto, Long userId);
 }

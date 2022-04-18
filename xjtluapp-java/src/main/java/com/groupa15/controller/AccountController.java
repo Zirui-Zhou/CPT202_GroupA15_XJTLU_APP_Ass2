@@ -2,6 +2,7 @@ package com.groupa15.controller;
 
 import com.groupa15.common.dto.LoginDto;
 import com.groupa15.common.Response;
+import com.groupa15.common.dto.PasswordChangeDto;
 import com.groupa15.entity.User;
 import com.groupa15.entity.vo.UserInfoVO;
 import com.groupa15.service.UserService;
@@ -69,9 +70,15 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public Response register(@Validated @RequestBody LoginDto loginDto, HttpServletResponse httpServletResponse) {
+    public Response register(@Validated @RequestBody LoginDto loginDto) {
         userService.registerUser(loginDto.getUsername(), loginDto.getPassword());
         return Response.success(HttpStatus.OK, loginDto.getUsername());
+    }
+
+    @PostMapping("/user/change_password")
+    public Response changePassword(@RequestHeader(value = "Authorization") String token, @Validated @RequestBody PasswordChangeDto passDto) {
+        userService.changePassword(passDto, jwtUtils.getUserIdByToken(token));
+        return Response.success(HttpStatus.OK, "Change password successfully");
     }
 
 }
