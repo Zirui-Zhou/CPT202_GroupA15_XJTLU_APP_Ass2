@@ -39,8 +39,6 @@ public class AccountController {
         response.setHeader(jwtUtils.getHeader(), jwt);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
         UserInfoVO userInfoVO = userService.getUserInfoByUserId(user.getUserId());
-//        UserInfoVO userInfoVO = new UserInfoVO();
-//        BeanUtils.copyProperties(user, userInfoVO);
         return Response.success(HttpStatus.OK, "Login Successfully", userInfoVO);
     }
 

@@ -1,27 +1,17 @@
 <template>
   <div style="margin-left: 32px">
+
     <h1>
       {{ article.title }}
     </h1>
-    <span>
+    <p>
       {{ getFormattedTime(article.createTime) }}
-    </span>
-    <br/><br/>
-  <!--  <div class="text" style="inline-size: auto">-->
-  <!--    <el-row >-->
-  <!--      <el-col :span="3">Tag</el-col>-->
-  <!--      <el-col :span="3">Date</el-col>-->
-  <!--      <el-col :span="3">Read</el-col>-->
-  <!--      <el-col :span="3">Like</el-col>-->
-  <!--      <el-col :span="3">Comment</el-col>-->
-  <!--    </el-row>-->
-  <!--  </div>-->
-    <el-row>
+    </p>
 
+    <el-row>
       <AvatarWithCard
           :user-info="editorInfo"
       />
-
       <div style="margin-left: 20px">
         <span class="name">
           {{ editorInfo.realName }}
@@ -30,13 +20,8 @@
           {{ editorInfo.email }}
         </span>
       </div>
-
     </el-row>
 
-  <!--    <el-descriptions  direction="vertical" :column="1" class="align-right">-->
-  <!--      <el-descriptions-item label="Name"></el-descriptions-item>-->
-  <!--      <el-descriptions-item label="ArticleNumber"></el-descriptions-item>-->
-  <!--    </el-descriptions>-->
   </div>
 </template>
 

@@ -2,7 +2,7 @@
   <el-container>
 
     <el-header class="deep-color center">
-      <img src="../../assets/xjtlu_icon.png" alt="app">
+      <img src="../../assets/xjtlu_badge.png" alt="app" class="xjtlu_badge">
       <span class="banner">Student App</span>
     </el-header>
 
@@ -108,6 +108,10 @@ const submitForm = () => {
 
 .button{
   width: 100%;
+}
+
+.xjtlu_badge{
+  width: 40px
 }
 
 </style>

@@ -22,25 +22,10 @@
       </el-button>
     </el-row>
 
-<!--            <el-dropdown trigger="click" class="more">-->
-<!--              <span class="el-dropdown-link"><el-icon><more-filled /></el-icon></span>-->
-<!--              <template #dropdown>-->
-<!--                <el-dropdown-menu>-->
-<!--                  <el-dropdown-item :icon="WarningFilled">Report</el-dropdown-item>-->
-<!--                  <el-dropdown-item :icon="CirclePlusFilled">Join Blacklist</el-dropdown-item>-->
-<!--                </el-dropdown-menu>-->
-<!--              </template>-->
-<!--            </el-dropdown>-->
-
 </template>
 
 <script setup>
 import AvatarWithCard from "@/components/AvatarWithCard";
-import {
-  MoreFilled,
-  CirclePlusFilled,
-  WarningFilled,
-} from '@element-plus/icons-vue'
 import { ref, computed } from 'vue'
 import {useStore} from "vuex";
 

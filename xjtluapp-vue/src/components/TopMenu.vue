@@ -1,6 +1,6 @@
 <template>
 
-  <img src="@/assets/xjtlu_banner.svg" class="banner" @click="handleBannerClick()">
+  <img src="@/assets/xjtlu_name.svg" class="banner" @click="handleBannerClick()">
 
   <el-menu
       :default-active="router.currentRoute.value.path"
@@ -8,6 +8,7 @@
       mode="horizontal"
       router
   >
+
     <el-menu-item index="/student">
       <template #title>Student</template>
     </el-menu-item>

@@ -1,9 +1,9 @@
 <template>
-  <v-md-editor v-model="MdTest"></v-md-editor>
+  <br/>
+<!--  <v-md-editor></v-md-editor>-->
 </template>
 
 <script setup>
-import MdTest from '@/assets/test/md_test.md'
 
 </script>
 

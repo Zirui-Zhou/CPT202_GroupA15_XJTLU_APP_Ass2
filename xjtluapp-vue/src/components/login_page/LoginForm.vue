@@ -2,12 +2,12 @@
   <el-container>
 
     <el-header class="deep-color center">
-        <img src="../../assets/xjtlu_icon.png" alt="app">
+        <img src="../../assets/xjtlu_badge.png" alt="app" class="xjtlu_badge">
         <span class="banner">Student App</span>
     </el-header>
 
     <el-main class="light-color center">
-      <el-form style="width: 80%" :rules="rules" :model="ruleForm" ref="ruleFormDom">
+      <el-form style="width: 80%" :rules="rules" :model="ruleForm" ref="ruleFormRef">
         <el-form-item prop="username">
           <el-input
               :prefix-icon="Avatar"
@@ -51,7 +51,7 @@
               size="large"
               class="button"
               type="default"
-              @click="router.push('/user/register')"
+              @click="handleNoAccountClick"
           >
             Have no account?
           </el-button>
@@ -73,25 +73,44 @@
     </el-main>
 
   </el-container>
+
+  <NoRegisterDialog
+    :is-show="isShowNoRegister"
+    :close-dialog="closeDislog"
+    :fill-input-func="fillInputFunc"
+  />
+
 </template>
 
 <script setup>
   import {ref, unref, reactive} from 'vue'
-  import {ElNotification} from 'element-plus'
   import {Avatar, Key, ArrowLeft} from "@element-plus/icons-vue"
   import {login} from "@/scripts/handleUserApi";
   import {useRouter} from "vue-router";
   import {delay} from "@/scripts/commonUtils";
+  import {addMessage} from "@/scripts/messageUtils";
+  import NoRegisterDialog from "@/components/login_page/NoRegisterDialog"
 
   const router = useRouter()
 
+  const isShowNoRegister = ref(false)
+
+  const closeDislog = () => {
+    isShowNoRegister.value = false
+  }
+
+  const fillInputFunc = () => {
+    ruleForm.username = "zirui.zhou"
+    ruleForm.password = "zirui.zhou"
+  }
+
   const ruleForm = reactive({
-    userName: '',
+    username: '',
     password: '',
     isRemember: false,
   })
 
-  const ruleFormDom = ref(null)
+  const ruleFormRef = ref(null)
 
   const rules = reactive({
     username: [
@@ -103,20 +122,20 @@
   })
 
   const submitForm = () => {
-    const form = unref(ruleFormDom)
+    const form = unref(ruleFormRef)
     form.validate(async (valid) => {
       if (!valid) {
-        ElNotification({
-          title: "Error",
-          message: 'Please input the correct info.',
-          type: 'error',
-        })
+        addMessage("Please input the correct info.", "error")
         return false;
       }
       await login(ruleForm)
       await delay(500)
       await router.replace('/home')
     })
+  }
+
+  const handleNoAccountClick = () => {
+    isShowNoRegister.value = true
   }
 
   const handlePrevClick = () => {
@@ -127,28 +146,32 @@
 
 <style scoped>
 
-  .deep-color{
-    background-color: rgba(255,255,255,0.8);
-  }
+.deep-color{
+  background-color: rgba(255,255,255,0.8);
+}
 
-  .light-color{
-    background-color: rgba(255,255,255,0.5);
-  }
+.light-color{
+  background-color: rgba(255,255,255,0.5);
+}
 
-  .center{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .banner{
-    font-size: 200%;
-    font-weight: bold;
-    margin: 10px;
-  }
+.banner{
+  font-size: 200%;
+  font-weight: bold;
+  margin: 10px;
+}
 
-  .button{
-    width: 100%;
-  }
+.button{
+  width: 100%;
+}
+
+.xjtlu_badge{
+  width: 40px
+}
 
 </style>
