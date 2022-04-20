@@ -1,7 +1,7 @@
 <template>
   <el-upload
       class="avatar-uploader"
-      action="http://localhost:8081/upload"
+      :action="store.getters.getServerUrl + '/upload'"
       :headers="{Authorization: store.getters.getToken}"
       list-type="picture-card"
       :file-list="fileList"
@@ -27,8 +27,10 @@ import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import {useStore} from "vuex";
 import {handleResourceUrl} from "@/scripts/requestUtils";
+import {useI18n} from "vue-i18n"
 
 const store = useStore()
+const {t} = useI18n()
 
 const fileList = reactive([])
 const isUploadShow = ref(true)
@@ -47,11 +49,11 @@ const handleAvatarSuccess = (
 
 const beforeAvatarUpload = async (rawFile) => {
   // if (rawFile.type !== 'image/jpeg') {
-  //   ElMessage.error('Avatar picture must be JPG format.')
+  //   ElMessage.error(t('message.upload_image.error_image_wrong_format', {format: "JPG"}))
   //   return false
   // } else
   if (rawFile.size / 1024 / 1024 > 10) {
-    ElMessage.error('Avatar picture size cannot exceed 2MB.')
+    ElMessage.error(t('message.upload_image.error_image_oversize', {size: 2}))
     return false
   }
   isUploadShow.value = false

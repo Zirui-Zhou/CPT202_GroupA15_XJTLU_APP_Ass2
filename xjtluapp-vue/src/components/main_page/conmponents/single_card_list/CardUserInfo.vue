@@ -6,9 +6,13 @@
         :icon="UserFilled"
     />
     <br/>
-    <span style="font-weight: bold">{{item.editorName}}</span>
+    <span style="font-weight: bold">
+      {{item.editorName}}
+    </span>
     <br/>
-    <span style="font-size: 12px">{{getFormattedDate(item.createTime)}}</span>
+    <span style="font-size: 12px">
+      {{getFormattedDate(item.createTime)}}
+    </span>
   </div>
 </template>
 

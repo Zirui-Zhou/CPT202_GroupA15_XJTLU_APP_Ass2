@@ -15,6 +15,7 @@ import App from './App'
 import axios from "axios"
 import router from "@/router";
 import store from "@/store";
+import i18n from "@/i18n"
 
 const app = createApp(App)
 
@@ -32,4 +33,6 @@ app.use(ElementPlus)
     .use(store)
     .use(VMdEditor)
     .use(VMdPreview)
-    .mount('#app')
+    .use(i18n)
+
+app.mount('#app')

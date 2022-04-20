@@ -10,8 +10,13 @@
 <script setup>
 import TopMenu from "@/components/TopMenu";
 import {getUserInfo} from "@/scripts/handleUserApi";
-import {onBeforeMount} from "vue";
+import {onBeforeMount, watch} from "vue";
 import {getAllArticleTypes} from "@/scripts/handleArticleApi";
+import {useStore} from "vuex"
+
+const store = useStore()
+
+watch(()=>store.getters.getLang, async ()=>await getAllArticleTypes())
 
 onBeforeMount(async ()=> {
   await getUserInfo()

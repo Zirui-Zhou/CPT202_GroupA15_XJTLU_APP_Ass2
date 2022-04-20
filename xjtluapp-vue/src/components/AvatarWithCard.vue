@@ -34,7 +34,9 @@
               v-for="([key, value], index) in userInfoList"
               :key="index"
           >
-            <span style="font-weight: bold">{{ key + ":&emsp;" }}</span>
+            <span style="font-weight: bold">
+              {{ key() + $t('message.avatar_with_card.userinfo_label_colon') }}
+            </span>
             <span>{{ value }}</span>
           </li>
         </ul>
@@ -44,13 +46,15 @@
             class="button"
             v-if="isSelf"
         >
-          Logout
+          {{ $t('message.avatar_with_card.button_logout') }}
         </el-button>
 
       </div>
 
       <div v-if="!userInfo">
-        <h2 style="margin: 120px 0; text-align: center">Please&nbsp;login&nbsp;first</h2>
+        <h2 style="margin: 120px 0; text-align: center">
+          {{ $t('message.avatar_with_card.label_no_login') }}
+        </h2>
       </div>
 
     </el-card>
@@ -62,8 +66,10 @@ import {logout, needLogin} from "@/scripts/handleUserApi";
 import {ref, defineProps, reactive, onUpdated, onBeforeMount} from "vue";
 import {useRouter} from "vue-router";
 import {UserFilled} from "@element-plus/icons-vue"
+import {useI18n} from "vue-i18n"
 
 const router = useRouter()
+const {t} = useI18n()
 
 const props = defineProps({
   userInfo: Object,
@@ -93,9 +99,9 @@ const handleInfoList = ()=>{
     Object.assign(
         userInfoList,
         [
-          ["ID", props.userInfo.realId],
-          ["Major", props.userInfo.major],
-          ["Grade", props.userInfo.semester],
+          [()=>t('message.avatar_with_card.userinfo_label_id'), props.userInfo.realId],
+          [()=>t('message.avatar_with_card.userinfo_label_major'), props.userInfo.major],
+          [()=>t('message.avatar_with_card.userinfo_label_grade'), props.userInfo.semester],
         ]
     )
   }

@@ -3,6 +3,9 @@ import router from "@/router"
 import {commonGetData, commonPost, commonPostData, handleResource} from "@/scripts/requestUtils";
 import {computed, watch} from "vue";
 import {addMessage} from "@/scripts/messageUtils";
+import i18n from "@/i18n";
+
+const t = i18n.global.t
 
 async function getUserInfo() {
     let result = (await commonGetData("/user/info", true)).data
@@ -35,11 +38,11 @@ async function login(loginForm) {
 
 async function logout() {
     store.commit("REMOVE_USER")
-    addMessage("Logout successfully", "success")
+    addMessage(t('message.handle_user_api.msg_logout_success'), "success")
     await router.replace("/")
 }
 
-async function needLogin(message="Please login first", url="/user/login") {
+async function needLogin(message=t('message.handle_user_api.msg_no_login'), url="/user/login") {
     if(! await getIsAuth()) {
         if(message.length > 0) {
             addMessage(message, "warning")

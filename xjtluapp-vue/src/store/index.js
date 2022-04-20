@@ -6,11 +6,13 @@ export default createStore({
         .filter((item)=>item)
         .pop(),
     userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
-    serverUrl: "http://localhost:8081",
+    serverUrl: "http://47.110.224.16:8081",
     staticUrl: "/static",
     articleTypeList: [],
     guideTypeList: [],
     selectedTags: [],
+    isDarkMode: Boolean(localStorage.getItem("isDarkMode")),
+    lang: localStorage.getItem("lang")
   },
   mutations: {
     SET_TEMP_TOKEN: (state, token) => {
@@ -47,6 +49,14 @@ export default createStore({
           array.splice(index,1);
         }
       })
+    },
+    SET_DARK_MODE: (state, value) => {
+      state.isDarkMode = value
+      localStorage.setItem("isDarkMode", value)
+    },
+    SET_LANG: (state, value) => {
+      state.lang = value
+      localStorage.setItem("lang", value)
     }
   },
   getters: {
@@ -77,6 +87,14 @@ export default createStore({
 
     getSelectedTags: state => {
       return state.selectedTags
+    },
+
+    getIsDarkMode: state => {
+      return state.isDarkMode
+    },
+
+    getLang: state => {
+      return state.lang
     }
   },
   actions: {

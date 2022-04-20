@@ -1,7 +1,8 @@
 import {commonGetData, handleResource} from "@/scripts/requestUtils";
 
 async function getGuideTypeList() {
-    const result = (await commonGetData("/guide/types",)).data
+    const result =
+        (await commonGetData("/guide/types", false,)).data
 
     if(result) {
         result.forEach((item, index, array) => {array[index] = handleResource(item, "typeImage")})

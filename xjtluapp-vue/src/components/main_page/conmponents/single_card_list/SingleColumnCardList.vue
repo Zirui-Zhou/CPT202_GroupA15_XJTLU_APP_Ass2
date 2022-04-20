@@ -46,7 +46,9 @@
         v-show="isNothing"
         class="card nothingCard"
     >
-      <h1>There is nothing below.</h1>
+      <h1>
+        {{ $t('message.single_column_card.label_nothing_below') }}
+      </h1>
     </el-card>
   </component>
 </template>

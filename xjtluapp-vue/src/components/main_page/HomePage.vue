@@ -7,6 +7,7 @@
   <el-tabs
       v-model="activeTab"
       class="demo-tabs"
+      :key="articleTypeList[0]"
   >
 
     <el-tab-pane
@@ -48,7 +49,7 @@ export default {
 </script>
 
 <script setup>
-import {computed, ref} from 'vue'
+import {ref, watch, reactive} from 'vue'
 import SingleColumnCardList from "@/components/main_page/conmponents/single_card_list/SingleColumnCardList";
 import CarouselList from "@/components/main_page/conmponents/CarouselList";
 import {useStore} from "vuex";
@@ -57,7 +58,14 @@ const store = useStore()
 
 const activeTab = ref(1)
 
-const articleTypeList = computed(()=>store.getters.getArticleTypeList)
+const articleTypeList = reactive(store.getters.getArticleTypeList)
+
+const loadArticleTypeList = () => {
+  articleTypeList.length = 0
+  articleTypeList.push(...store.getters.getArticleTypeList)
+}
+
+watch(()=>store.getters.getArticleTypeList, ()=> loadArticleTypeList())
 
 </script>
 

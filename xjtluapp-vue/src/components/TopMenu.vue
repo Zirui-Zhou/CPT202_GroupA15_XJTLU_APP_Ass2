@@ -4,27 +4,27 @@
 
   <el-menu
       :default-active="router.currentRoute.value.path"
-      class="el-menu-demo"
+      class="topMenu"
       mode="horizontal"
       router
   >
 
     <el-menu-item index="/student">
-      <template #title>Student</template>
+      <template #title>{{ $t('message.top_menu.menu_item_student') }}</template>
     </el-menu-item>
     <el-menu-item index="/home">
-      <template #title>Home</template>
+      <template #title>{{ $t('message.top_menu.menu_item_home') }}</template>
     </el-menu-item>
     <el-menu-item index="/guide">
-      <template #title>Guide</template>
+      <template #title>{{ $t('message.top_menu.menu_item_guide') }}</template>
     </el-menu-item>
     <el-menu-item index="/module">
-      <template #title>Module</template>
+      <template #title>{{ $t('message.top_menu.menu_item_module') }}</template>
     </el-menu-item>
 
     <el-row class="align-right">
       <el-input
-          placeholder="Please input"
+          :placeholder="$t('message.top_menu.input_placeholder_input')"
           v-model="input"
           :disabled="!userInfo"
           style="width: 200px"
@@ -67,9 +67,11 @@ import {useStore} from "vuex";
 import AvatarWithCard from "@/components/AvatarWithCard";
 import {addMessage} from "@/scripts/messageUtils";
 import SettingBox from "@/components/SettingBox";
+import {useI18n} from "vue-i18n"
 
 const router = useRouter()
 const store = useStore()
+const {t} = useI18n()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
 
@@ -79,7 +81,7 @@ const input = ref("")
 
 const searchArticle = (keyWord) => {
   if(keyWord.length === 0) {
-    addMessage("Please input search keyword.")
+    addMessage(t('message.top_menu.input_missing_word_msg'))
     return
   }
   router.push({path: "/search", query: {word: keyWord}})
@@ -90,9 +92,7 @@ const handleBannerClick = ()=>{
 }
 
 const handleIconClick = () => {
-  if(userInfo.value) {
-    isShowSetting.value = true
-  }
+  isShowSetting.value = true
 }
 
 const closeSetting = () => {
@@ -102,6 +102,11 @@ const closeSetting = () => {
 </script>
 
 <style scoped>
+
+.topMenu{
+  border-right: none;
+}
+
 .banner{
   width: 15%;
   height: 15%;
@@ -122,7 +127,7 @@ const closeSetting = () => {
 
 .moreIcon:hover{
   color: var(--el-color-primary-light-3);
-  cursor: v-bind("userInfo ? 'pointer' : 'not-allowed'");
+  cursor: pointer;
 }
 
 </style>

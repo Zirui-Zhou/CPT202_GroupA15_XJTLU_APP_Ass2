@@ -1,13 +1,15 @@
 <template>
 
-    <h1>Comments</h1>
+    <h1>
+      {{ $t('message.article_comment.comments_title') }}
+    </h1>
     <el-row style="display:flex; justify-content:space-between;margin: auto 32px; min-height: 400px">
       <AvatarWithCard :user-info="userInfo"/>
       <el-input
           class="commentInput"
           v-model="textarea"
           type="textarea"
-          placeholder="Please input"
+          :placeholder="$t('message.article_comment.input_placeholder_input')"
           resize="none"
           :autosize="{minRows:3}"
           :maxlength="256"
@@ -18,7 +20,7 @@
           class="commentButton"
           plain
       >
-        Confirm
+        {{ $t('message.article_comment.button_confirm') }}
       </el-button>
     </el-row>
 

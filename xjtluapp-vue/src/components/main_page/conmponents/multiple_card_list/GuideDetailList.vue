@@ -3,12 +3,18 @@
     <div v-show="!isLoading">
       <h1>{{guideType.typeName}}</h1>
       <el-table :data="guideList" table-layout="auto">
-        <el-table-column label="Date" prop="guideDate"/>
-        <el-table-column label="Title" prop="guideTitle"/>
+        <el-table-column
+            :label="$t('message.guide_detail_list.table_label_date')"
+            prop="guideDate"
+        />
+        <el-table-column
+            :label="$t('message.guide_detail_list.table_label_title')"
+            prop="guideTitle"
+        />
         <el-table-column>
           <template #default="props">
             <el-button type="primary" @click="openUrl(props.row.guideLink)">
-              Link To
+              {{ $t('message.guide_detail_list.button_link_to') }}
             </el-button>
           </template>
         </el-table-column>

@@ -1,7 +1,7 @@
 <template>
   <el-dialog
       :model-value="isShowPassBox"
-      title="Change Password"
+      :title="$t('message.change_password_box.box_title')"
       @close="closePassBox()"
       width="30%"
       ref="passBoxRef"
@@ -13,7 +13,11 @@
         :rules="rules"
         label-width="auto"
     >
-      <el-form-item label="Old Password" prop="oldPass" class="passInput">
+      <el-form-item
+          :label="$t('message.change_password_box.label_old_pass')"
+          prop="oldPass"
+          class="passInput"
+      >
         <el-input
             v-model="ruleForm.oldPass"
             type="password"
@@ -21,7 +25,11 @@
         />
       </el-form-item>
 
-      <el-form-item label="New Password" prop="newPass" class="passInput">
+      <el-form-item
+          :label="$t('message.change_password_box.label_new_pass')"
+          prop="newPass"
+          class="passInput"
+      >
         <el-input
             v-model="ruleForm.newPass"
             type="password"
@@ -29,7 +37,11 @@
         />
       </el-form-item>
 
-      <el-form-item label="Confirm Password" prop="checkPass" class="passInput">
+      <el-form-item
+          :label="$t('message.change_password_box.label_confirm_pass')"
+          prop="checkPass"
+          class="passInput"
+      >
         <el-input
             v-model="ruleForm.checkPass"
             type="password"
@@ -42,9 +54,11 @@
             type="primary"
             @click="submitForm(ruleFormRef)"
         >
-          Submit
+          {{ $t('message.change_password_box.button_submit') }}
         </el-button>
-        <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+        <el-button @click="resetForm(ruleFormRef)">
+          {{ $t('message.change_password_box.button_reset') }}
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -54,6 +68,9 @@
 <script setup>
 import {reactive, defineProps, ref} from "vue";
 import {changePassword} from "@/scripts/handleUserApi";
+import {useI18n} from "vue-i18n"
+
+const {t} = useI18n()
 
 const props = defineProps({
   isShowPassBox: Boolean,
@@ -65,9 +82,7 @@ const passBoxRef = ref(null)
 
 const validateOldPass = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('Please input the old password'))
-  } else if (value === ruleForm.newPass) {
-    callback(new Error('Please input a different password'))
+    callback(new Error(t('message.change_password_box.msg_missing_old_pass')))
   } else {
     callback()
   }
@@ -75,7 +90,9 @@ const validateOldPass = (rule, value, callback) => {
 
 const validateNewPass = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('Please input the new password'))
+    callback(new Error(t('message.change_password_box.msg_missing_new_pass')))
+  } else if (value === ruleForm.oldPass) {
+    callback(new Error(t('message.change_password_box.msg_same_new_pass')))
   } else {
     if (ruleForm.checkPass !== '') {
       if (!ruleFormRef.value) return
@@ -87,9 +104,9 @@ const validateNewPass = (rule, value, callback) => {
 
 const validateCheckPass = (rule, value, callback) => {
   if (value === '') {
-    callback(new Error('Please input the new password again'))
+    callback(new Error(t('message.change_password_box.msg_missing_check_pass')))
   } else if (value !== ruleForm.newPass) {
-    callback(new Error("Two inputs don't match!"))
+    callback(new Error(t('message.change_password_box.msg_different_check_pass')))
   } else {
     callback()
   }

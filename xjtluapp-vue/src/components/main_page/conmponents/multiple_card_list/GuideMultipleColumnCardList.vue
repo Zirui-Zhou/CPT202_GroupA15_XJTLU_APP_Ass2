@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {getGuideTypeList} from "@/scripts/handleGuideApi";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
@@ -38,6 +38,8 @@ const loadGuideType = async () => {
 const clickCard = (type) => {
   router.push({path: "/guide/detail", query: {type: type}})
 }
+
+watch(()=>store.getters.getLang, ()=>loadGuideType())
 
 onMounted(async () => await loadGuideType())
 

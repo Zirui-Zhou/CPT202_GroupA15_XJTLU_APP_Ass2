@@ -9,13 +9,16 @@
         :column="2"
         border
         style="margin: auto"
+        class="userInfoForm"
     >
       <el-descriptions-item
-          v-for="([key, value], index) in Object.entries(unref(userInfoList))"
+          v-for="([key, value], index) in unref(userInfoList)"
           :key="index"
       >
         <template #label>
-          <div class="label" style="text-transform: capitalize">{{ key }}</div>
+          <div class="label" style="text-transform: capitalize">
+            {{ key() }}
+          </div>
         </template>
         <div class="content" style="display: flex">
           <span>{{ value }}</span>
@@ -30,19 +33,30 @@
 import UploadImage from "@/components/main_page/conmponents/UploadImage"
 import {computed, reactive, unref} from "vue";
 import {useStore} from "vuex";
+import {useI18n} from "vue-i18n"
 
 const store = useStore()
+const {t} = useI18n()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
 
-const userInfoList = reactive({
-  Name: userInfo.value.realName,
-  Major: userInfo.value.major,
-  Id: userInfo.value.realId,
-  Grade: userInfo.value.semester,
-})
+const userInfoList = reactive([
+  [()=>t('message.userinfo_form.userinfo_label_name'), userInfo.value.realName],
+  [()=>t('message.userinfo_form.userinfo_label_major'), userInfo.value.major],
+  [()=>t('message.userinfo_form.userinfo_label_id'), userInfo.value.realId],
+  [()=>t('message.userinfo_form.userinfo_label_grade'), userInfo.value.semester],
+])
 
 </script>
+
+<style>
+
+/* For the dark mode */
+.userInfoForm .el-descriptions__label.el-descriptions__cell.is-bordered-label{
+  background-color: var(--el-color-info-light-9);;
+}
+
+</style>
 
 <style scoped>
 .label{

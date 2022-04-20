@@ -6,10 +6,10 @@
   <UserInfoForm/>
 
   <div>
-    <el-tabs v-model="activeTab" class="demo-tabs" >
-      <el-tab-pane label="Mine" name="mine"></el-tab-pane>
-      <el-tab-pane label="History" name="history"></el-tab-pane>
-      <el-tab-pane label="Favourite" name="favourite"></el-tab-pane>
+    <el-tabs v-model="activeTab">
+      <el-tab-pane :label="$t('message.student_page.tab_item_mine')" name="mine"/>
+      <el-tab-pane :label="$t('message.student_page.tab_item_history')" name="history"/>
+      <el-tab-pane :label="$t('message.student_page.tab_item_favourite')" name="favourite"/>
     </el-tabs>
   </div>
 

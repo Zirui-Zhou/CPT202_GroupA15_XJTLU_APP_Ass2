@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import {computed, onBeforeMount, reactive} from "vue";
+import {computed, onBeforeMount, reactive, watch} from "vue";
 import {getAllResourceTags} from "@/scripts/handleResourceApi";
 import {useStore} from "vuex";
 
@@ -63,7 +63,15 @@ const isSelected = (item) => {
   return selectedTags.value.indexOf(item) === -1
 }
 
-onBeforeMount(async ()=> allTagList.push(...await getAllResourceTags()))
+const loadResourceTags = async () => {
+  const result = await getAllResourceTags()
+  allTagList.length = 0
+  allTagList.push(...result)
+}
+
+watch(()=>store.getters.getLang, ()=>loadResourceTags())
+
+onBeforeMount(async ()=> loadResourceTags())
 </script>
 
 <style scoped>

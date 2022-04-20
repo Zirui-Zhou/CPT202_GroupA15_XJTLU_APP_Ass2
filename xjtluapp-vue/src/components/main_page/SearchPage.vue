@@ -1,7 +1,7 @@
 <template>
 
   <h1>
-    Search&nbsp;Result&nbsp;for&nbsp;{{keyWord}}
+    {{ $t('message.search_page.label_search_result', {word: keyWord}) }}
   </h1>
 
   <SingleColumnCardList

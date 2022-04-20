@@ -27,11 +27,13 @@ function handleResource(object, key) {
     return object
 }
 
-function getDefaultConfig(isAuth, extraConfig="") {
+function getDefaultConfig(isAuth, extraConfig= {}) {
     let axiosConfig = {transformResponse: transformBigint}
+    Object.assign(axiosConfig, {headers: {}})
     if(isAuth) {
-        Object.assign(axiosConfig, {headers: {"Authorization": getToken()}})
+        Object.assign(axiosConfig["headers"], {"Authorization": getToken()})
     }
+    Object.assign(axiosConfig["headers"], {"Accept-Language": store.getters.getLang})
     Object.assign(axiosConfig, extraConfig)
     return axiosConfig
 }

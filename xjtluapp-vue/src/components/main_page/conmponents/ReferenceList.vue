@@ -2,7 +2,7 @@
   <div class="space">
     <div
         class="spaceItem"
-        v-for="(item, index) in guideUrl"
+        v-for="(item, index) in referenceList"
         :key="index"
     >
       <el-button
@@ -18,7 +18,7 @@
 
 
 <script setup>
-const guideUrl = [
+const referenceList = [
   {name: "E-bridge", url: "https://ebridge.xjtlu.edu.cn"},
   {name: "Learning Mall", url: "https://learningmall.xjtlu.edu.cn"},
   {name: "Library", url: "https://lib.xjtlu.edu.cn"},
