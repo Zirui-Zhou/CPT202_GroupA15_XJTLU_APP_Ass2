@@ -56,14 +56,14 @@
 
     <select id="selectArticlePageVoOfFavourite" resultMap="ArticleScreenshotMap">
         <include refid="selectArticle"/>
-        INNER JOIN student.article_favourite f
+        INNER JOIN xjtlu_app.article_favourite f
         ON a.id = f.article_id AND f.user_id = #{viewerId}
         ORDER BY a.create_time DESC
     </select>
 
     <select id="selectArticlePageVoOfHistory" resultMap="ArticleScreenshotMap">
         <include refid="selectArticle"/>
-        INNER JOIN student.article_history h
+        INNER JOIN xjtlu_app.article_history h
         ON a.id = h.article_id AND h.user_id = #{viewerId}
         ORDER BY a.create_time DESC
     </select>

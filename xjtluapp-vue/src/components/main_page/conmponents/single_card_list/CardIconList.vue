@@ -89,12 +89,12 @@ const clickStarIcon = async (item, id) => {
 }
 
 .iconFilled{
-  color: var(--el-color-primary-light-1);
+  color: var(--el-color-primary-light-3);
 }
 
 .icon:hover{
   transform: scale(1.2);
-  color: var(--el-color-primary-light-1);
+  color: var(--el-color-primary-light-3);
   transition: transform 0.5s;
 }
 
