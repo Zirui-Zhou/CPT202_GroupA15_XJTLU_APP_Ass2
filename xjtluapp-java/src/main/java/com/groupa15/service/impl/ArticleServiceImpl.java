@@ -108,8 +108,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleTypeVO> getAllArticleTypes() {
-        return articleMapper.selectAllArticleTypes();
+    public List<ArticleTypeVO> getAllArticleTypes(String lang) {
+        return articleMapper.selectAllArticleTypes(lang);
     }
 
     @Override

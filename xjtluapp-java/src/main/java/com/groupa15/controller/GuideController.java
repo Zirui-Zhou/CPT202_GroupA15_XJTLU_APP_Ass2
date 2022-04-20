@@ -28,14 +28,14 @@ public class GuideController {
     }
 
     @GetMapping("/guide/types")
-    public Response getGuideTypeList() {
-        List<GuideTypeVO> guideTypeList = guideService.getGuideType();
+    public Response getGuideTypeList(@RequestHeader(value = "Accept-Language", defaultValue = "en") String lang) {
+        List<GuideTypeVO> guideTypeList = guideService.getGuideType(lang);
         return Response.success(HttpStatus.OK, "Get the guide list", guideTypeList);
     }
 
     @GetMapping(value = "/guide/type", params = "id")
-    public Response getGuideType(@RequestParam(name = "id") Long typeId) {
-        GuideTypeVO guideType = guideService.getGuideTypeById(typeId);
+    public Response getGuideType(@RequestHeader(value = "Accept-Language", defaultValue = "en") String lang, @RequestParam(name = "id") Long typeId) {
+        GuideTypeVO guideType = guideService.getGuideTypeById(typeId, lang);
         return Response.success(HttpStatus.OK, "Get the guide type Info", guideType);
     }
 }

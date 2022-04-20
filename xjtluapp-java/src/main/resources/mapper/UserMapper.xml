@@ -7,8 +7,8 @@
 
         SELECT u.user_id, u.user_name, i.avatar, i.real_name,
                i.major, i.semester, i.real_id, i.email
-        FROM student.user u
-            INNER JOIN student.user_info i
+        FROM xjtlu_app.user u
+            INNER JOIN xjtlu_app.user_info i
             ON u.user_id = i.user_id
         WHERE u.user_id = #{userId}
 

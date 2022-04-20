@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://121.5.190.117:3306/student?serverTimezone=GMT%2b8
-    username: student
-    password: p5ZPWjd8Yjf8pnzE
+    url: jdbc:mysql://localhost:3306/xjtlu_app?serverTimezone=GMT%2b8
+    username: root
+    password: GroupA15
     hikari:
       max-lifetime: 500000
   servlet:

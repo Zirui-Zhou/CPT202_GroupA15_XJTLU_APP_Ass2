@@ -19,9 +19,9 @@ public interface GuideMapper extends BaseMapper<Guide> {
 
     List<GuideVO> selectGuideVoOfType(@Param("typeId")Long typeId);
 
-    List<GuideTypeVO> selectGuideTypeVo();
+    List<GuideTypeVO> selectGuideTypeVo(@Param("lang")String lang);
 
-    GuideTypeVO selectGuideTypeVoById(@Param("typeId")Long typeId);
+    GuideTypeVO selectGuideTypeVoById(@Param("typeId")Long typeId, @Param("lang")String lang);
 
 }
 

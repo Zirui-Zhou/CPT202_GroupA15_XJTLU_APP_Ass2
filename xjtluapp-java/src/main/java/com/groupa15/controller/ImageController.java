@@ -50,16 +50,15 @@ public class ImageController {
             return Response.fail(HttpStatus.BAD_REQUEST, "请选择jpg,jpeg,gif,png格式的图片");
         }
 
-        Path path = Paths.get(System.getProperties().getProperty("user.dir")).getParent();
+        Path path = Paths.get(System.getProperties().getProperty("user.dir"));
         String subPath = "/image/avatar";
-        String resourcePath = Paths.get(path.toString(), "/resource").toString();
-        String avatarPath = Paths.get(resourcePath.toString(), subPath).toString();
+        String resourcePath = Paths.get(path.toString(),  "/resource").toString();
+        String avatarPath = resourcePath + subPath;
 
         File avatarPathFile = new File(avatarPath);
         if (!avatarPathFile.exists()) {
             //若不存在该目录，则创建目录
             System.out.println(avatarPathFile.mkdirs());
-            System.out.println("In");
         }
         //通过UUID生成唯一文件名
         String filename = UUID.randomUUID().toString().replaceAll("-","") + "." + suffix;

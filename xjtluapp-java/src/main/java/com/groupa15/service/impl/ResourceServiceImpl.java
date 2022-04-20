@@ -39,8 +39,8 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     }
 
     @Override
-    public List<ResourceTagListVO> getAllResourceTags() {
-        return resourceMapper.selectAllResourceTypes();
+    public List<ResourceTagListVO> getAllResourceTags(String lang) {
+        return resourceMapper.selectAllResourceTypes(lang);
     }
 
 }

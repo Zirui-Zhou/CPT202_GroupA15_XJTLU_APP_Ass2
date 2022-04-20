@@ -6,6 +6,7 @@ import com.groupa15.entity.vo.GuideTypeVO;
 import com.groupa15.entity.vo.GuideVO;
 import com.groupa15.service.GuideService;
 import com.groupa15.mapper.GuideMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +29,13 @@ public class GuideServiceImpl extends ServiceImpl<GuideMapper, Guide> implements
     }
 
     @Override
-    public List<GuideTypeVO> getGuideType() {
-        return guideMapper.selectGuideTypeVo();
+    public List<GuideTypeVO> getGuideType(String lang) {
+        return guideMapper.selectGuideTypeVo(lang);
     }
 
     @Override
-    public GuideTypeVO getGuideTypeById(Long typeId) {
-        return guideMapper.selectGuideTypeVoById(typeId);
+    public GuideTypeVO getGuideTypeById(Long typeId, @Param("lang")String lang) {
+        return guideMapper.selectGuideTypeVoById(typeId, lang);
     }
 
 }

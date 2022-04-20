@@ -6,19 +6,19 @@
 
     <select id="selectGuideVoOfType" resultType="GuideVO">
         Select *
-        FROM student.guide g
+        FROM xjtlu_app.guide g
         WHERE g.guide_type = #{typeId}
     </select>
 
     <select id="selectGuideTypeVo" resultType="GuideTypeVO">
-        Select *
-        FROM student.guide_type
+        Select g.type_id, IFNULL(g.type_name->>'$.${lang}', g.type_name->>'$.en') as type_name, g.type_image
+        FROM xjtlu_app.guide_type g
     </select>
 
     <select id="selectGuideTypeVoById" resultType="GuideTypeVO">
-        SELECT *
-        FROM student.guide_type
-        WHERE type_id = #{typeId}
+        SELECT g.type_id, IFNULL(g.type_name->>'$.${lang}', g.type_name->>'$.en') as type_name, g.type_image
+        FROM xjtlu_app.guide_type g
+        WHERE g.type_id = #{typeId}
     </select>
 
 </mapper>

@@ -37,8 +37,8 @@ public class ArticleController {
     }
 
     @GetMapping("/article/types")
-    public Response getArticleTypes(HttpServletResponse httpServletRequest) {
-        List<ArticleTypeVO> tags = articleService.getAllArticleTypes();
+    public Response getArticleTypes(@RequestHeader(value = "Accept-Language", defaultValue = "en") String lang, HttpServletResponse httpServletRequest) {
+        List<ArticleTypeVO> tags = articleService.getAllArticleTypes(lang);
         return Response.success(HttpStatus.OK, null, tags);
     }
 

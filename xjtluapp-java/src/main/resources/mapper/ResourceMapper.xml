@@ -26,29 +26,32 @@
     </resultMap>
 
     <select id="selectAllResourceTypes" resultMap="ResourceTagMap">
-        SELECT a.id as tagId, a.name as tagName, b.name as typeName
-        FROM student.resource_tag a
-                 INNER JOIN student.resource_tag_type b
+        SELECT
+               a.id as tagId,
+               IFNULL(a.name->>'$.${lang}', a.name->>'$.en') as tagName,
+               IFNULL(b.name->>'$.${lang}', b.name->>'$.en') as typeName
+        FROM xjtlu_app.resource_tag a
+                 INNER JOIN xjtlu_app.resource_tag_type b
                             on a.type = b.id
     </select>
 
     <select id="selectResourcePageVo" resultMap="ResourceScreenshotMap">
         SELECT DISTINCT s.resource_id, s.resource_name, s.resource_image, s.resource_path
-        FROM student.resource s
-                LEFT JOIN student.resource_tag_list l
+        FROM xjtlu_app.resource s
+                LEFT JOIN xjtlu_app.resource_tag_list l
                         ON s.resource_id = l.resource_id
     </select>
 
     <select id="selectTagsOfResource" resultType="Integer">
         SELECT l.tag_id
-        FROM student.resource_tag_list l
+        FROM xjtlu_app.resource_tag_list l
                 WHERE l.resource_id = #{resource_id}
     </select>
     
     <select id="selectResourcePageVoOfTags" resultMap="ResourceScreenshotMap">
         SELECT DISTINCT s.resource_id, s.resource_name, s.resource_image, s.resource_path
-        FROM student.resource s
-                LEFT JOIN student.resource_tag_list l
+        FROM xjtlu_app.resource s
+                LEFT JOIN xjtlu_app.resource_tag_list l
                         ON s.resource_id = l.resource_id
         <if test="!tagList.isEmpty()">
             WHERE l.tag_id IN

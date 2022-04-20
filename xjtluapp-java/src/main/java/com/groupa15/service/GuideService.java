@@ -16,7 +16,7 @@ public interface GuideService extends IService<Guide> {
 
     List<GuideVO> getGuideOfType(Long typeId);
 
-    List<GuideTypeVO> getGuideType();
+    List<GuideTypeVO> getGuideType(String lang);
 
-    GuideTypeVO getGuideTypeById(Long typeId);
+    GuideTypeVO getGuideTypeById(Long typeId, String lang);
 }

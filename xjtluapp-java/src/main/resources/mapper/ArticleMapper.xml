@@ -12,13 +12,14 @@
     </resultMap>
 
     <select id="selectAllArticleTypes" resultType="ArticleTypeVO">
-        SELECT * FROM student.article_type
+        SELECT t.type_id, IFNULL(t.type_name->>'$.${lang}', t.type_name->>'$.en') as type_name ,t.type_icon
+        FROM xjtlu_app.article_type t
     </select>
 
     <select id="queryIsFavourite" resultType="Boolean">
         SELECT EXISTS(
                 SELECT 1
-                FROM student.article_favourite f
+                FROM xjtlu_app.article_favourite f
                 WHERE f.user_id = #{viewerId}
                 AND f.article_id = #{articleId}
                 )
@@ -27,7 +28,7 @@
     <select id="queryIsHistory" resultType="java.lang.Boolean">
         SELECT EXISTS(
                 SELECT 1
-                FROM student.article_history h
+                FROM xjtlu_app.article_history h
                 WHERE h.user_id = #{viewerId}
                 AND h.article_id = #{articleId}
                 )
@@ -40,11 +41,11 @@
                 Select user_id as editor_id,
                        real_name as editor_name,
                        avatar
-                FROM student.user_info
+                FROM xjtlu_app.user_info
                 ) as u
-                    INNER JOIN student.article a
+                    INNER JOIN xjtlu_app.article a
                     ON a.editor_id = u.editor_id
-                    INNER JOIN student.article_type_list t
+                    INNER JOIN xjtlu_app.article_type_list t
                     ON a.id = t.article_id
     </sql>
 

@@ -20,5 +20,5 @@ public interface ResourceService extends IService<Resource> {
 
     List<ResourceScreenshotVO> getResourcePageOfTags(ResourcePageDto resourcePageDto);
 
-    List<ResourceTagListVO> getAllResourceTags();
+    List<ResourceTagListVO> getAllResourceTags(String lang);
 }

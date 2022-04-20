@@ -35,7 +35,7 @@ public interface ArticleService extends IService<Article> {
 
     Boolean removeHistoryArticle(Long userId, Long articleId);
 
-    List<ArticleTypeVO> getAllArticleTypes();
+    List<ArticleTypeVO> getAllArticleTypes(String lang);
 
     void addArticle(Article article);
 

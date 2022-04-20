@@ -39,8 +39,8 @@ public class ResourceController {
     }
 
     @GetMapping("/resource/tags")
-    public Response getResourceTags(HttpServletResponse httpServletRequest) {
-        List<ResourceTagListVO> tags = resourceService.getAllResourceTags();
+    public Response getResourceTags(@RequestHeader(value = "Accept-Language", defaultValue = "en") String lang) {
+        List<ResourceTagListVO> tags = resourceService.getAllResourceTags(lang);
         return Response.success(HttpStatus.OK, null, tags);
     }
 
