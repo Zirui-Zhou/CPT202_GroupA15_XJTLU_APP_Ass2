@@ -62,8 +62,8 @@
     getArticleListOfMine, getArticleListOfSearch,
     getArticleListOfType,
     linkToArticle
-  } from "@/scripts/handleArticleApi";
-  import {delay, getFormattedTime} from "@/scripts/commonUtils";
+  } from "@/scripts/api/handleArticleApi";
+  import {delay, getFormattedTime} from "@/scripts/utils/commonUtils";
   import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
   import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
   import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";

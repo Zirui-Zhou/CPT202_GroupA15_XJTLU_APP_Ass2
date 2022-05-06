@@ -1,6 +1,6 @@
 const zh = {
     language: "简体中文",
-    message:{
+    message: {
         top_menu: {
             menu_item_student: "学生",
             menu_item_home: "主页",
@@ -100,22 +100,23 @@ const zh = {
         no_register_dialog: {
             information:
                 "<p>对不起，本内部应用不提供自主注册服务</p>\n" +
-                "<p>请前往\n" +
-                "<a class=\"link\" href=\"https://www.learningmall.cn/mod/resource/view.php?id=211163\" target=\"_blank\">" +
-                "这个链接" +
-                "</a>\n" +
-                "来获取账户列表\n" +
+                "<p>" +
+                    "请前往\n" +
+                    "<a class=\"link\" href=\"https://www.learningmall.cn/mod/resource/view.php?id=211163\" target=\"_blank\">" +
+                        "这个链接" +
+                    "</a>\n" +
+                    "来获取账户列表\n" +
                 "</p>\n" +
                 "<p>这里提供一个账户格式的例子：</p>\n" +
                 "<table style=\"border-spacing: 10px\">\n" +
-                "<tr>\n" +
-                "<td>用户名：</td>\n" +
-                "<td>zirui.zhou</td>\n" +
-                "</tr>\n" +
-                "<tr>\n" +
-                "<td>密码：</td>\n" +
-                "<td>zirui.zhou</td>\n" +
-                "</tr>\n" +
+                    "<tr>\n" +
+                        "<td>用户名：</td>\n" +
+                        "<td>zirui.zhou</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                        "<td>密码：</td>\n" +
+                        "<td>zirui.zhou</td>\n" +
+                    "</tr>\n" +
                 "</table>\n" +
                 "<p>点击“确认”按钮来填写表单</p>",
         },

@@ -11,6 +11,7 @@
     <el-row>
       <AvatarWithCard
           :user-info="editorInfo"
+          :is-show-email="true"
       />
       <div style="margin-left: 20px">
         <span class="name">
@@ -28,7 +29,7 @@
 <script setup>
 import {defineProps} from "vue";
 import AvatarWithCard from "@/components/AvatarWithCard";
-import {getFormattedTime} from "@/scripts/commonUtils";
+import {getFormattedTime} from "@/scripts/utils/commonUtils";
 
 const props = defineProps({
   article: Object,

@@ -1,8 +1,8 @@
 import store from "@/store";
 import router from "@/router"
-import {commonGetData, commonPost, commonPostData, handleResource} from "@/scripts/requestUtils";
+import {commonGetData, commonPost, commonPostData, handleResource} from "@/scripts/utils/requestUtils";
 import {computed, watch} from "vue";
-import {addMessage} from "@/scripts/messageUtils";
+import {addMessage} from "@/scripts/utils/messageUtils";
 import i18n from "@/i18n";
 
 const t = i18n.global.t

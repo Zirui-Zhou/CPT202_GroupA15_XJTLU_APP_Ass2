@@ -89,10 +89,10 @@
 <script setup>
 import {ref, unref, reactive} from 'vue'
 import {Avatar, Key, ArrowLeft} from "@element-plus/icons-vue"
-import {login} from "@/scripts/handleUserApi";
+import {login} from "@/scripts/api/handleUserApi";
 import {useRouter} from "vue-router";
-import {delay} from "@/scripts/commonUtils";
-import {addMessage} from "@/scripts/messageUtils";
+import {delay} from "@/scripts/utils/commonUtils";
+import {addMessage} from "@/scripts/utils/messageUtils";
 import NoRegisterDialog from "@/components/login_page/NoRegisterDialog"
 import {useI18n} from "vue-i18n"
 

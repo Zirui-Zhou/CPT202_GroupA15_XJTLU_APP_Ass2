@@ -1,6 +1,6 @@
 const en = {
     language: "English",
-    message:{
+    message: {
         top_menu: {
             menu_item_student: "Student",
             menu_item_home: "Home",
@@ -100,22 +100,23 @@ const en = {
         no_register_dialog: {
             information:
                 "<p>Sorry, this inner app does not provide self registration.</p>\n" +
-                "<p>Please visit\n" +
-                "<a class=\"link\" href=\"https://www.learningmall.cn/mod/resource/view.php?id=211163\" target=\"_blank\">" +
-                "this link" +
-                "</a>\n" +
-                "to acquire the account list.\n" +
+                "<p>" +
+                    "Please visit\n" +
+                    "<a class=\"link\" href=\"https://www.learningmall.cn/mod/resource/view.php?id=211163\" target=\"_blank\">" +
+                        "this link" +
+                    "</a>\n" +
+                    "to acquire the account list.\n" +
                 "</p>\n" +
                 "<p>Here gives an example of the account format:</p>\n" +
                 "<table style=\"border-spacing: 10px\">\n" +
-                "<tr>\n" +
-                "<td>Username:</td>\n" +
-                "<td>zirui.zhou</td>\n" +
-                "</tr>\n" +
-                "<tr>\n" +
-                "<td>Password:</td>\n" +
-                "<td>zirui.zhou</td>\n" +
-                "</tr>\n" +
+                    "<tr>\n" +
+                        "<td>Username:</td>\n" +
+                        "<td>zirui.zhou</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                        "<td>Password:</td>\n" +
+                        "<td>zirui.zhou</td>\n" +
+                    "</tr>\n" +
                 "</table>\n" +
                 "<p>Click the \"Confirm\" button to fill in.</p>",
         },

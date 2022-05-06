@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import UploadImage from "@/components/main_page/conmponents/UploadImage"
+import UploadImage from "@/components/main_page/student_page/UploadImage"
 import {computed, reactive, unref} from "vue";
 import {useStore} from "vuex";
 import {useI18n} from "vue-i18n"

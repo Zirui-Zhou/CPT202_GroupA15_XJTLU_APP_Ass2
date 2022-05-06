@@ -39,7 +39,7 @@
 
 <script setup>
 import {computed, onBeforeMount, reactive, watch} from "vue";
-import {getAllResourceTags} from "@/scripts/handleResourceApi";
+import {getAllResourceTags} from "@/scripts/api/handleResourceApi";
 import {useStore} from "vuex";
 
 const store = useStore()

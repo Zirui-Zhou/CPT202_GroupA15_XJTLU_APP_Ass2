@@ -1,6 +1,6 @@
 const zh = {
     language: "日本語",
-    message:{
+    message: {
         top_menu: {
             menu_item_student: "学生",
             menu_item_home: "ホームページ",
@@ -100,22 +100,23 @@ const zh = {
         no_register_dialog: {
             information:
                 "<p>申し訳ありませんが、この内部アプリケーションは自己登録サービスを提供していません</p>\n" +
-                "<p>アカウントのリストについては、\n" +
-                "<a class=\"link\" href=\"https://www.learningmall.cn/mod/resource/view.php?id=211163\" target=\"_blank\">" +
-                "このリンク" +
-                "</a>\n" +
-                "にアクセスしてください\n" +
+                "<p>" +
+                    "アカウントのリストについては、\n" +
+                    "<a class=\"link\" href=\"https://www.learningmall.cn/mod/resource/view.php?id=211163\" target=\"_blank\">" +
+                        "このリンク" +
+                    "</a>\n" +
+                    "にアクセスしてください\n" +
                 "</p>\n" +
                 "<p>アカウント形式の例を次に示します：</p>\n" +
                 "<table style=\"border-spacing: 10px\">\n" +
-                "<tr>\n" +
-                "<td>ユーザー名：</td>\n" +
-                "<td>zirui.zhou</td>\n" +
-                "</tr>\n" +
-                "<tr>\n" +
-                "<td>パスワード：</td>\n" +
-                "<td>zirui.zhou</td>\n" +
-                "</tr>\n" +
+                    "<tr>\n" +
+                        "<td>ユーザー名：</td>\n" +
+                        "<td>zirui.zhou</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                        "<td>パスワード：</td>\n" +
+                        "<td>zirui.zhou</td>\n" +
+                    "</tr>\n" +
                 "</table>\n" +
                 "<p>「確認」ボタンをクリックしてフォームに記入してください</p>",
         },

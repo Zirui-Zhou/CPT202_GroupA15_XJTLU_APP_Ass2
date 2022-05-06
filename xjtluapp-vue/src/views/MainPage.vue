@@ -9,9 +9,9 @@
 
 <script setup>
 import TopMenu from "@/components/TopMenu";
-import {getUserInfo} from "@/scripts/handleUserApi";
+import {getUserInfo} from "@/scripts/api/handleUserApi";
 import {onBeforeMount, watch} from "vue";
-import {getAllArticleTypes} from "@/scripts/handleArticleApi";
+import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
 import {useStore} from "vuex"
 
 const store = useStore()

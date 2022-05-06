@@ -15,14 +15,14 @@
         @mouseenter="handleCardEnter"
         @mouseleave="handleLeave"
     >
-      <div v-if="userInfo">
+      <slot name="main">
         <h2 class="nameLabel">
           {{ userInfo.realName }}
         </h2>
 
         <span
             class="emailLabel"
-            :class="{email: !isSelf}"
+            :class="{email: isShowEmail}"
             @click="handleEmailClick()"
         >
           {{ userInfo.email }}
@@ -35,45 +35,31 @@
               :key="index"
           >
             <span style="font-weight: bold">
-              {{ key() + $t('message.avatar_with_card.userinfo_label_colon') }}
+              {{ key() + $t('message.avatar_with_card.userinfo_label_colon') + "&ensp;" }}
             </span>
             <span>{{ value }}</span>
           </li>
         </ul>
 
-        <el-button
-            @click="logoutUser"
-            class="button"
-            v-if="isSelf"
-        >
-          {{ $t('message.avatar_with_card.button_logout') }}
-        </el-button>
+        <slot name="extra"/>
 
-      </div>
-
-      <div v-if="!userInfo">
-        <h2 style="margin: 120px 0; text-align: center">
-          {{ $t('message.avatar_with_card.label_no_login') }}
-        </h2>
-      </div>
+      </slot>
 
     </el-card>
   </div>
 </template>
 
 <script setup>
-import {logout, needLogin} from "@/scripts/handleUserApi";
 import {ref, defineProps, reactive, onUpdated, onBeforeMount} from "vue";
-import {useRouter} from "vue-router";
 import {UserFilled} from "@element-plus/icons-vue"
 import {useI18n} from "vue-i18n"
 
-const router = useRouter()
 const {t} = useI18n()
 
 const props = defineProps({
   userInfo: Object,
-  isSelf: {
+  handleAvatarClick: Function,
+  isShowEmail: {
     type: Boolean,
     default: false,
   }
@@ -107,16 +93,9 @@ const handleInfoList = ()=>{
   }
 }
 
-const handleAvatarClick = async () => {
-  if(!props.isSelf) {
-    return
-  }
-  if(await needLogin(""))
-    await router.push("/student")
-}
 
 const handleEmailClick = () => {
-  if(!props.isSelf) {
+  if(props.isShowEmail) {
     window.open("mailto:" + props.userInfo.email)
   }
 }
@@ -138,10 +117,6 @@ const handleLeave = () => {
   hideTimer = setTimeout(()=>showAvatarCard.value = false, 100)
 }
 
-const logoutUser = () => {
-  showAvatarCard.value = false
-  logout()
-}
 </script>
 
 <style scoped>
@@ -173,7 +148,7 @@ const logoutUser = () => {
   }
 
   .nameLabel{
-    margin: 30px 10px 5px 10px;
+    margin: 30px auto 5px auto;
     text-align: center;
   }
 
@@ -190,9 +165,4 @@ const logoutUser = () => {
     cursor: pointer;
   }
 
-  .button{
-    width: calc(100% - 20px);
-    margin: 10px;
-    height: 40px;
-  }
 </style>

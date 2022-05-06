@@ -26,7 +26,7 @@ import {ref, reactive, onMounted, computed} from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import {useStore} from "vuex";
-import {handleResourceUrl} from "@/scripts/requestUtils";
+import {handleResourceUrl} from "@/scripts/utils/requestUtils";
 import {useI18n} from "vue-i18n"
 
 const store = useStore()

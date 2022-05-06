@@ -67,12 +67,12 @@
 
 <script setup>
 import {reactive, defineProps, ref} from "vue";
-import {changePassword} from "@/scripts/handleUserApi";
+import {changePassword} from "@/scripts/api/handleUserApi";
 import {useI18n} from "vue-i18n"
 
 const {t} = useI18n()
 
-const props = defineProps({
+defineProps({
   isShowPassBox: Boolean,
   closePassBox: Function
 })

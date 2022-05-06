@@ -14,11 +14,11 @@
 <script setup>
   import {useRoute} from "vue-router";
   import {onBeforeMount, reactive, ref} from "vue";
-  import {getEditorInfo} from "@/scripts/handleUserApi";
-  import {getArticle, addHistoryArticle} from "@/scripts/handleArticleApi";
+  import {getEditorInfo} from "@/scripts/api/handleUserApi";
+  import {getArticle, addHistoryArticle} from "@/scripts/api/handleArticleApi";
   import ArticleHeader from "@/components/article_page/ArticleHeader";
   import ArticleComment from "@/components/article_page/ArticleComment";
-  import {delay} from "@/scripts/commonUtils";
+  import {delay} from "@/scripts/utils/commonUtils";
 
   const route = useRoute()
 

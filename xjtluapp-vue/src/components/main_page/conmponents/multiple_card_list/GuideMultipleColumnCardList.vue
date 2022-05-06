@@ -21,7 +21,7 @@
 
 <script setup>
 import {computed, onMounted, ref, watch} from "vue";
-import {getGuideTypeList} from "@/scripts/handleGuideApi";
+import {getGuideTypeList} from "@/scripts/api/handleGuideApi";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 

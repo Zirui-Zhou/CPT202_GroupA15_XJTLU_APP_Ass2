@@ -45,8 +45,8 @@ export default {
 
 <script setup>
 import {defineProps, reactive, ref, computed} from "vue";
-import ChangePasswordBox from "@/components/ChangePasswordBox";
-import {logout} from "@/scripts/handleUserApi";
+import ChangePasswordBox from "@/components/setting_box/ChangePasswordBox";
+import {logout} from "@/scripts/api/handleUserApi";
 import {useStore} from "vuex";
 import {useI18n} from "vue-i18n"
 
@@ -55,7 +55,7 @@ const {t, locale, availableLocales} = useI18n()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
 
-const props = defineProps({
+defineProps({
   isShowSetting: Boolean,
   closeSetting: Function
 })

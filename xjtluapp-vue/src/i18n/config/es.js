@@ -2,7 +2,7 @@
 
 const es = {
     language: "Español",
-    message:{
+    message: {
         top_menu: {
             menu_item_student: "Estudiante",
             menu_item_home: "Página de Inicio",
@@ -102,22 +102,23 @@ const es = {
         no_register_dialog: {
             information:
                 "<p>Lo siento, la aplicación interna no permite el auto registro.</p>\n" +
-                "<p>Visite\n" +
-                "<a class=\"link\" href=\"https://www.learningmall.cn/mod/resource/view.php?id=211163\" target=\"_blank\">" +
-                "este enlace" +
-                "</a>\n" +
-                "para adquirir la lista de cuentas.\n" +
+                "<p>" +
+                    "Visite\n" +
+                    "<a class=\"link\" href=\"https://www.learningmall.cn/mod/resource/view.php?id=211163\" target=\"_blank\">" +
+                        "este enlace" +
+                    "</a>\n" +
+                    "para adquirir la lista de cuentas.\n" +
                 "</p>\n" +
                 "<p>Aquí tiene un ejemplo del formato de la cuenta.</p>\n" +
                 "<table style=\"border-spacing: 10px\">\n" +
-                "<tr>\n" +
-                "<td>Nombre de usuario:</td>\n" +
-                "<td>zirui.zhou</td>\n" +
-                "</tr>\n" +
-                "<tr>\n" +
-                "<td>Contraseña:</td>\n" +
-                "<td>zirui.zhou</td>\n" +
-                "</tr>\n" +
+                    "<tr>\n" +
+                        "<td>Nombre de usuario:</td>\n" +
+                        "<td>zirui.zhou</td>\n" +
+                    "</tr>\n" +
+                    "<tr>\n" +
+                        "<td>Contraseña:</td>\n" +
+                        "<td>zirui.zhou</td>\n" +
+                    "</tr>\n" +
                 "</table>\n" +
                 "<p>Pulse el botón \"Confirmar\" para rellenar.</p>",
         },

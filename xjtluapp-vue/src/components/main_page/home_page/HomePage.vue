@@ -7,13 +7,12 @@
   <el-tabs
       v-model="activeTab"
       class="demo-tabs"
-      :key="articleTypeList[0]"
   >
 
     <el-tab-pane
         :name="item.typeId"
         v-for="item in articleTypeList"
-        :key="item.typeId"
+        :key="item.typeName"
     >
       <template #label>
         <span class="custom-tabs-label">
@@ -51,7 +50,7 @@ export default {
 <script setup>
 import {ref, watch, reactive} from 'vue'
 import SingleColumnCardList from "@/components/main_page/conmponents/single_card_list/SingleColumnCardList";
-import CarouselList from "@/components/main_page/conmponents/CarouselList";
+import CarouselList from "@/components/main_page/home_page/CarouselList";
 import {useStore} from "vuex";
 
 const store = useStore()
@@ -60,12 +59,12 @@ const activeTab = ref(1)
 
 const articleTypeList = reactive(store.getters.getArticleTypeList)
 
-const loadArticleTypeList = () => {
+const loadArticleTypeList = () => {``
   articleTypeList.length = 0
   articleTypeList.push(...store.getters.getArticleTypeList)
 }
 
-watch(()=>store.getters.getArticleTypeList, ()=> loadArticleTypeList())
+watch(() => store.getters.getArticleTypeList, () => loadArticleTypeList())
 
 </script>
 

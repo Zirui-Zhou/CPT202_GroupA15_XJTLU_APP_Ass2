@@ -19,9 +19,9 @@
 <script setup>
 import {defineProps} from "vue";
 import {UserFilled} from "@element-plus/icons-vue"
-import {getFormattedDate} from "@/scripts/commonUtils";
+import {getFormattedDate} from "@/scripts/utils/commonUtils";
 
-const props = defineProps({
+defineProps({
   item: Object,
 })
 

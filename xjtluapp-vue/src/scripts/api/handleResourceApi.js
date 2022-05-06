@@ -1,4 +1,4 @@
-import {commonGetData, commonPostData, handleResource} from "@/scripts/requestUtils";
+import {commonGetData, commonPostData, handleResource} from "@/scripts/utils/requestUtils";
 
 async function getResourceList(current, size, tagList=[],  extraUrl="", config={}) {
     const result = (await commonPostData(

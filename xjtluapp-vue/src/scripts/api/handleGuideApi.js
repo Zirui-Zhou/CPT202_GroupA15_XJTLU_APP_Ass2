@@ -1,4 +1,4 @@
-import {commonGetData, handleResource} from "@/scripts/requestUtils";
+import {commonGetData, handleResource} from "@/scripts/utils/requestUtils";
 
 async function getGuideTypeList() {
     const result =

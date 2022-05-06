@@ -1,5 +1,5 @@
 import router from "@/router"
-import {commonGetData, commonPostData, handleResource} from "@/scripts/requestUtils";
+import {commonGetData, commonPostData, handleResource} from "@/scripts/utils/requestUtils";
 import store from "@/store";
 
 async function getArticle(id) {

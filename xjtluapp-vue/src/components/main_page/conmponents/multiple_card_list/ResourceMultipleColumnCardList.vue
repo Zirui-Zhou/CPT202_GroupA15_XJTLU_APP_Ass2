@@ -20,9 +20,9 @@
 </template>
 
 <script setup>
-import {getResourceListOfTags} from "@/scripts/handleResourceApi";
+import {getResourceListOfTags} from "@/scripts/api/handleResourceApi";
 import {computed, onMounted, reactive, ref, watch} from "vue";
-import {delay} from "@/scripts/commonUtils";
+import {delay} from "@/scripts/utils/commonUtils";
 import {useStore} from "vuex";
 
 const store = useStore()
@@ -71,7 +71,7 @@ const clickCard = (url) => {
   window.open(url)
 }
 
-const watchFunc = watch(selectedTags.value, async ()=>{
+watch(selectedTags.value, async ()=>{
   selectedTagIds = []
   selectedTags.value.forEach((item)=>selectedTagIds.push(item.tagId))
   await loadResource(true)

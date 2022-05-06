@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import GuideDetailList from "@/components/main_page/conmponents/multiple_card_list/GuideDetailList";
+import GuideDetailList from "@/components/main_page/guide_page/GuideDetailList";
 import {useRoute} from "vue-router"
 
 const route = useRoute()

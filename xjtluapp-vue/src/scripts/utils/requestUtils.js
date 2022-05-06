@@ -1,7 +1,7 @@
 import store from "@/store";
 import axios from "axios";
 import JSONbig from "json-bigint";
-import {addMessage} from "@/scripts/messageUtils";
+import {addMessage} from "@/scripts/utils/messageUtils";
 
 function getToken() {
     return store.getters.getToken

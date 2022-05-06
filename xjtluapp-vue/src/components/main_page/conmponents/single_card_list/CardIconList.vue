@@ -29,8 +29,8 @@
 </template>
 
 <script setup>
-import {getArticleLink, handleFavouriteArticle, removeHistoryArticle} from "@/scripts/handleArticleApi";
-import {addMessage} from "@/scripts/messageUtils";
+import {getArticleLink, handleFavouriteArticle, removeHistoryArticle} from "@/scripts/api/handleArticleApi";
+import {addMessage} from "@/scripts/utils/messageUtils";
 import {Star, Link, Delete} from "@element-plus/icons-vue";
 import {defineProps} from "vue";
 

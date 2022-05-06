@@ -1,9 +1,9 @@
 <template>
 
-    <h1>
+    <h1 class="commentBanner">
       {{ $t('message.article_comment.comments_title') }}
     </h1>
-    <el-row style="display:flex; justify-content:space-between;margin: auto 32px; min-height: 400px">
+    <el-row class="commentLayout">
       <AvatarWithCard :user-info="userInfo"/>
       <el-input
           class="commentInput"
@@ -41,13 +41,25 @@ const userInfo = computed(()=>store.getters.getUserInfo)
 
 <style scoped>
 
+.commentBanner{
+  margin-left: 32px;
+}
+
+.commentLayout{
+  display:flex;
+  justify-content:space-between;
+  margin: auto 32px;
+  min-height: 400px
+}
+
 .commentButton{
+  width: 100px;
   font-size: 18px;
-  padding:18px;
+  padding: 18px;
 }
 
 .commentInput{
-  width: 75%;
+  width: 70%;
   margin-top: 0;
   margin-bottom: auto;
   font-size: 16px;

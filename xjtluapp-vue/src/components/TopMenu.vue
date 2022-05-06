@@ -38,8 +38,26 @@
       <AvatarWithCard
           class="align-right"
           :user-info="userInfo"
-          :is-self="true"
-      />
+          :handle-avatar-click="handleAvatarClick"
+      >
+        <template #main v-if="!userInfo">
+          <div>
+            <h2 style="margin: 120px 0; text-align: center">
+              {{ $t('message.avatar_with_card.label_no_login') }}
+            </h2>
+          </div>
+        </template>
+
+        <template #extra>
+          <el-button
+              @click="logout"
+              class="logoutButton"
+          >
+            {{ $t('message.avatar_with_card.button_logout') }}
+          </el-button>
+        </template>
+
+      </AvatarWithCard>
 
       <el-icon
           class="align-right moreIcon"
@@ -65,9 +83,10 @@ import {MoreFilled, Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 import AvatarWithCard from "@/components/AvatarWithCard";
-import {addMessage} from "@/scripts/messageUtils";
-import SettingBox from "@/components/SettingBox";
+import {addMessage} from "@/scripts/utils/messageUtils";
+import SettingBox from "@/components/setting_box/SettingBox";
 import {useI18n} from "vue-i18n"
+import {logout, needLogin} from "@/scripts/api/handleUserApi";
 
 const router = useRouter()
 const store = useStore()
@@ -93,6 +112,11 @@ const handleBannerClick = ()=>{
 
 const handleIconClick = () => {
   isShowSetting.value = true
+}
+
+const handleAvatarClick = async () => {
+  if(await needLogin(""))
+    await router.push("/student")
 }
 
 const closeSetting = () => {
@@ -128,6 +152,12 @@ const closeSetting = () => {
 .moreIcon:hover{
   color: var(--el-color-primary-light-3);
   cursor: pointer;
+}
+
+.logoutButton{
+  width: calc(100% - 20px);
+  margin: 10px;
+  height: 40px;
 }
 
 </style>

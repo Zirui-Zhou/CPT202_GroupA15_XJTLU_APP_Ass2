@@ -18,7 +18,7 @@
 
 <script setup>
 import {onMounted, reactive, ref} from "vue";
-import {getArticleList, linkToArticle} from "@/scripts/handleArticleApi";
+import {getArticleList, linkToArticle} from "@/scripts/api/handleArticleApi";
 
 const articleList = reactive([])
 const isLoading = ref(true)

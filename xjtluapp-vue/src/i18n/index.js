@@ -1,9 +1,12 @@
 import { createI18n } from "vue-i18n";
-import en from "@/i18n/config/en"
-import zh from "@/i18n/config/zh"
-import jp from "@/i18n/config/jp"
-import fr from "@/i18n/config/fr"
-import es from "@/i18n/config/es"
+
+const configs = []
+const files = require.context('./config', true, /\.js$/)
+
+files.keys().forEach(file => {
+    const moduleName = file.replace(/(^\.\/)|(.js$)/g, '');
+    configs[moduleName] = files(file).default || files(file);
+});
 
 const i18n = createI18n({
     locale: 'en',
@@ -11,11 +14,7 @@ const i18n = createI18n({
     legacy: false,
     globalInjection: true,
     messages: {
-        en,
-        zh,
-        jp,
-        fr,
-        es,
+        ...configs
     }
 })
 

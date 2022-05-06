@@ -25,8 +25,8 @@
 
 <script setup>
 import {defineProps, reactive, onMounted, ref} from "vue";
-import {getGuideListOfType, getGuideType} from "@/scripts/handleGuideApi";
-import {delay, getFormattedDate} from "@/scripts/commonUtils";
+import {getGuideListOfType, getGuideType} from "@/scripts/api/handleGuideApi";
+import {delay, getFormattedDate} from "@/scripts/utils/commonUtils";
 
 const props = defineProps({
   type: Number
