@@ -4,7 +4,7 @@
     <br/>
     <router-view/>
   </div>
-  <el-backtop :right="100" :bottom="100" />
+  <BackTopButton/>
 </template>
 
 <script setup>
@@ -13,6 +13,7 @@ import {getUserInfo} from "@/scripts/api/handleUserApi";
 import {onBeforeMount, watch} from "vue";
 import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
 import {useStore} from "vuex"
+import BackTopButton from "@/components/BackTopButton";
 
 const store = useStore()
 

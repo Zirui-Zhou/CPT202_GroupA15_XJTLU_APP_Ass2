@@ -43,10 +43,10 @@ export default {
 
   const store = useStore()
 
-  const articleTypeList = computed(()=>store.getters.getArticleTypeList)
+  const articleTypeList = store.getters.getArticleTypeList
 
   const getArticleTypeIcon = (typeId) => {
-    return toRaw(articleTypeList.value).filter((item)=>item.typeId === typeId)[0].typeIcon
+    return articleTypeList.filter((item)=>item.typeId === typeId)[0].typeIcon
   }
 
   const props = defineProps({

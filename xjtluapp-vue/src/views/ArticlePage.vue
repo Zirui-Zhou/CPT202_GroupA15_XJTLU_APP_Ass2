@@ -1,14 +1,15 @@
 <template>
   <div style="width: 900px; margin: auto">
     <TopMenu/>
-    <ArticleReader/>
+    <router-view/>
   </div>
-  <el-backtop :right="100" :bottom="100" />
+  <BackTopButton/>
 </template>
 
 <script setup>
 import TopMenu from "@/components/TopMenu";
 import ArticleReader from "@/components/article_page/ArticleReader";
+import BackTopButton from "@/components/BackTopButton";
 </script>
 
 <style scoped>

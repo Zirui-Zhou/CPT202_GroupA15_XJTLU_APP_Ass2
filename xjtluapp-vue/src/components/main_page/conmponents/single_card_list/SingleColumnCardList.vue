@@ -148,13 +148,19 @@
     item[key] = value
   }
 
+  const initiateArticleList = async () => {
+    do{
+      await loadNewArticle()
+    }while(document.body.scrollHeight <= window.innerHeight && !isLoading.value && !isNothing.value)
+  }
+
   window.onscroll = async () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
       await loadNewArticle()
     }
   }
 
-  onMounted(async () => loadNewArticle())
+  onMounted(async () => initiateArticleList())
 </script>
 
 <style scoped>

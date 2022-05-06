@@ -12,14 +12,14 @@ export default createStore({
   state: {
     // serverUrl: "http://47.110.224.16:8081",
     serverUrl: "http://localhost:8081",
-    staticUrl: "/static",
+    staticUrl: "http://47.110.224.16:8081/static",
   },
   getters: {
     getServerUrl: state => {
       return state.serverUrl
     },
     getStaticUrl: state => {
-      return state.serverUrl + state.staticUrl
+      return state.staticUrl
     },
   },
   modules: {

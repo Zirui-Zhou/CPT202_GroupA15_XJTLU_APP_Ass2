@@ -32,6 +32,8 @@
       :list-func-param="[activeTab]"
   />
 
+  <NewArticleButton/>
+
 </template>
 
 <script>
@@ -52,6 +54,7 @@ import {ref, watch, reactive} from 'vue'
 import SingleColumnCardList from "@/components/main_page/conmponents/single_card_list/SingleColumnCardList";
 import CarouselList from "@/components/main_page/home_page/CarouselList";
 import {useStore} from "vuex";
+import NewArticleButton from "@/components/NewArticleButton";
 
 const store = useStore()
 

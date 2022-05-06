@@ -35,24 +35,16 @@ const isNothing = ref(false)
 
 const moduleList = reactive([])
 const selectedTags = computed(()=>store.getters.getSelectedTags)
-let selectedTagIds = []
+const selectedTagIds = []
 
-const loadResource = async (isReload=false) => {
+const loadResourceList = async () => {
 
   isLoading.value = true
   await delay(500)
 
-  if(isReload) {
-    currentPage.value = 0
-  }
   currentPage.value++
 
   const result = await getResourceListOfTags(currentPage.value, sizePage, selectedTagIds)
-
-  if(isReload){
-    isNothing.value = false
-    clearModuleList()
-  }
 
   moduleList.push(...result)
 
@@ -63,27 +55,33 @@ const loadResource = async (isReload=false) => {
 
 }
 
-const clearModuleList = () => {
-  moduleList.length = 0
-}
 
 const clickCard = (url) => {
   window.open(url)
 }
 
 watch(selectedTags.value, async ()=>{
-  selectedTagIds = []
+  selectedTagIds.length = 0
   selectedTags.value.forEach((item)=>selectedTagIds.push(item.tagId))
-  await loadResource(true)
+  await initiateResourceList()
 })
+
+const initiateResourceList = async () => {
+  moduleList.length = 0
+  currentPage.value = 0
+  isNothing.value = false
+  do{
+    await loadResourceList()
+  }while(document.body.scrollHeight <= window.innerHeight && !isLoading.value && !isNothing.value)
+}
 
 window.onscroll = async () => {
   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
-    await loadResource()
+    await loadResourceList()
   }
 }
 
-onMounted(async () => await loadResource())
+onMounted(async () => await initiateResourceList())
 
 </script>
 
