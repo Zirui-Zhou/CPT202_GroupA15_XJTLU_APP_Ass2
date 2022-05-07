@@ -46,7 +46,8 @@
       size="large"
       :icon="this[item.typeIcon]"
       :type="item.typeId === articleType ? 'primary' : 'default'"
-      round v-for="item in articleTypeList"
+      round
+      v-for="item in articleTypeList"
       :key="item.typeName"
       @click="articleType = item.typeId"
   >
@@ -60,14 +61,18 @@
 
     <CardIconList
         :item="item"
-        listType="common"
+        listType="preview"
         :itemFunc="itemFunc"
     />
 
     <CardArticleInfo
         :item="item"
         :itemFunc="itemFunc"
-    />
+    >
+      <template #image>
+        <UploadArticleImage/>
+      </template>
+    </CardArticleInfo>
 
     <CardUserInfo
         :item="item"
@@ -83,6 +88,7 @@
       Submit
     </el-button>
   </div>
+
 </template>
 
 <script>
@@ -107,7 +113,8 @@ import CardIconList from "@/components/main_page/conmponents/single_card_list/Ca
 import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
 import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
 import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
-import {Search} from "@element-plus/icons-vue";
+import {UploadFilled} from "@element-plus/icons-vue";
+import UploadArticleImage from "@/components/article_page/UploadArticleImage";
 
 const store = useStore()
 
@@ -158,19 +165,22 @@ onBeforeMount(async ()=>{
 
 </script>
 
-<style>
+<style lang="scss">
 
-.title .v-md-editor{
-  border-radius: 4px 4px 0 0;
+.title {
+  .v-md-editor{
+    border-radius: 4px 4px 0 0;
+  }
 }
 
-.content .v-md-editor{
-  box-shadow: 0 8px 10px 0 rgb(0 0 0 / 10%);
-  border-radius: 0 0 4px 4px;
-}
-
-.content .v-md-textarea-editor{
-  background-color: white;
+.content {
+  .v-md-editor{
+    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 4px 4px;
+  }
+  .v-md-textarea-editor{
+    background-color: white;
+  }
 }
 
 </style>
@@ -214,7 +224,7 @@ onBeforeMount(async ()=>{
 }
 
 .card:hover{
-  transform: scale(1.05);
+  transform: scale(1.03);
   position: relative;
   z-index: 1;
   transition: 0.5s;

@@ -2,15 +2,6 @@
   <router-view/>
 </template>
 
-<script>
-export default {
-  name: 'App',
-  mounted(){
-    document.body.style.backgroundColor = "#ffffff"
-  },
-}
-</script>
-
 <script setup>
 import {
   enable as enableDarkMode,
@@ -19,6 +10,8 @@ import {
 import {onBeforeMount, watch} from "vue";
 import {useStore} from "vuex"
 import {useI18n} from "vue-i18n"
+import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
+import {getUserInfo} from "@/scripts/api/handleUserApi";
 
 const store = useStore()
 const {locale, availableLocales} = useI18n()
@@ -40,12 +33,19 @@ const changeLang = () => {
 
 watch(
     ()=>store.getters.getIsDarkMode,
-    changeDarkMode
+    ()=>changeDarkMode()
 )
+
+watch(()=>store.getters.getLang, async ()=>await getAllArticleTypes())
 
 onBeforeMount(()=>{
   changeDarkMode(store.getters.getIsDarkMode)
   changeLang()
+})
+
+onBeforeMount(async ()=> {
+  await getUserInfo()
+  await getAllArticleTypes()
 })
 
 </script>

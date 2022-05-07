@@ -3,7 +3,7 @@
 
     <div style="display: flex">
       <el-icon style="display: inline-block" :size="30">
-        <component :is="getArticleTypeIcon(item.typeId)"/>
+        <component v-if="!isLoadingType" :is="articleTypeIcon"/>
       </el-icon>
 
       <h3 style="margin: auto 10px">{{item.title}}</h3>
@@ -11,16 +11,16 @@
 
     <br/>
 
-    <el-image
-        class="img"
-        style="object-fit: cover"
-        v-loading="item.isLoading"
-        :src="item.image"
-        @load="itemFunc(item, 'isLoading', false)"
-    >
-      <template #error><div/></template>
-    </el-image>
-
+    <slot name="image">
+      <el-image
+          class="img"
+          v-loading="item.isLoading"
+          :src="item.image"
+          @load="itemFunc(item, 'isLoading', false)"
+      >
+        <template #error><div/></template>
+      </el-image>
+    </slot>
   </div>
 </template>
 
@@ -38,26 +38,38 @@ export default {
 </script>
 
 <script setup>
-  import {defineProps, computed, toRaw} from "vue";
-  import {useStore} from "vuex";
+import {computed, defineProps, onBeforeMount, ref} from "vue";
+import {useStore} from "vuex";
+import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
 
-  const store = useStore()
+const store = useStore()
 
-  const articleTypeList = store.getters.getArticleTypeList
+const articleTypeList = computed(()=>store.getters.getArticleTypeList)
+const articleTypeIcon = computed(()=>getArticleTypeIcon(props.item.typeId))
+const isLoadingType = ref(true)
 
-  const getArticleTypeIcon = (typeId) => {
-    return articleTypeList.filter((item)=>item.typeId === typeId)[0].typeIcon
+const getArticleTypeIcon = (typeId) => {
+  return articleTypeList.value.filter((item)=>item.typeId === typeId)[0].typeIcon
+}
+
+const props = defineProps({
+  item: Object,
+  itemFunc: Function,
+})
+
+onBeforeMount(async ()=>{
+  if(Object.keys(articleTypeList.value).length === 0) {
+    await getAllArticleTypes()
   }
+  isLoadingType.value = false
+})
 
-  const props = defineProps({
-    item: Object,
-    itemFunc: Function,
-  })
 </script>
 
 <style scoped>
 .img{
   height: 110px;
   width: 165px;
+  object-fit: cover
 }
 </style>

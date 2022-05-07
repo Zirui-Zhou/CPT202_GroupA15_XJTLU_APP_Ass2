@@ -1,6 +1,6 @@
 <template>
   <el-upload
-      class="avatar-uploader"
+      class="article-uploader"
       :action="store.getters.getServerUrl + '/upload'"
       :headers="{Authorization: store.getters.getToken}"
       list-type="picture-card"
@@ -9,10 +9,12 @@
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove"
       :before-upload="beforeAvatarUpload"
+      drag
   >
-
-    <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
-
+    <el-icon class="el-icon--upload"><UploadFilled/></el-icon>
+    <div class="el-upload__text">
+      Drop file here or <em>click to upload</em>
+    </div>
   </el-upload>
 
   <el-dialog v-model="dialogVisible">
@@ -22,12 +24,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
 import { useStore } from "vuex";
-import { handleResourceUrl } from "@/scripts/utils/requestUtils";
 import { useI18n } from "vue-i18n"
+import { UploadFilled } from "@element-plus/icons-vue"
 
 const store = useStore()
 const {t} = useI18n()
@@ -35,16 +36,10 @@ const {t} = useI18n()
 const fileList = reactive([])
 const isUploadShow = ref(true)
 
-const userInfo = computed(()=>store.getters.getUserInfo)
-
 const handleAvatarSuccess = (
     response,
     uploadFile
 ) => {
-  const newUserInfo = userInfo.value
-  newUserInfo["avatar"] = handleResourceUrl(response.msg)
-  uploadFile.url = newUserInfo["avatar"]
-  store.commit("SET_USERINFO", newUserInfo)
 }
 
 const beforeAvatarUpload = async (rawFile) => {
@@ -73,61 +68,50 @@ const handleRemove = () => {
   isUploadShow.value = true
 }
 
-onMounted(async ()=>{
-  if(userInfo.value) {
-    if(userInfo.value.avatar) {
-      fileList.push({url: userInfo.value.avatar})
-      isUploadShow.value = false
-    }
-  }
-})
-
 </script>
 
 <style scoped>
 .avatar-uploader .avatar {
-  width: 100px;
-  height: 100px;
+  height: 110px;
+  width: 165px;
   display: block;
 }
 </style>
 
 <style lang="scss">
-.avatar-uploader {
-  .el-upload {
-    width: 100px;
-    height: 100px;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: var(--el-transition-duration-fast);
-    transition-delay: 0.5s;
+.article-uploader {
+  .el-upload:hover {
+    border-color: var(--el-color-primary);
+  }
+  .el-upload{
+    height: 110px;
+    width: 165px;
+    border: none;
     display: v-bind("isUploadShow === true ? 'block' : 'none'");
   }
-  .el-upload:hover {
-     border-color: var(--el-color-primary);
+  .el-upload-dragger{
+    height: 110px;
+    width: 165px;
   }
-}
-
-.el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 100px;
-  height: 100px;
-  text-align: center;
-}
-
-.el-upload-list--picture-card  {
-  margin: 0;
-  display: block;
-  --el-upload-list-picture-card-size: 100px;
-  .el-upload-list__item-thumbnail {
-    object-fit: cover;
+  .el-icon--upload{
+    margin: 0;
+    font-size: 60px;
+    z-index: 100;
   }
-  .el-upload-list__item {
-     margin: 0;
+  .el-upload__text{
+    font-size: 10px;
+  }
+  .el-upload-list--picture-card  {
+    margin: 0;
+    border: none;
+    .el-upload-list__item {
+      height: 110px;
+      width: 165px;
+      margin: 0;
+    }
+    .el-upload-list__item-thumbnail {
+      object-fit: cover;
+    }
   }
 }
 

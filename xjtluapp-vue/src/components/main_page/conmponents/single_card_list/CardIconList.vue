@@ -41,16 +41,22 @@ const props = defineProps({
   listType: String,
 })
 
+const isShowDelete = () => {
+  return ["mime", "history", "preview"].indexOf(props.listType) !== -1
+}
+
 const clickDeleteIcon = async (item) => {
+  if(props.listType === "preview") {
+    return
+  }
   await removeHistoryArticle(item.id)
   await props.removeFunc(item)
 }
 
-const isShowDelete = () => {
-  return ["mime", "history"].indexOf(props.listType) !== -1
-}
-
 const clickLinkIcon = async (id) => {
+  if(props.listType === "preview") {
+    return
+  }
   const link = getArticleLink(id)
   try {
     await navigator.clipboard.writeText(link);
@@ -61,10 +67,15 @@ const clickLinkIcon = async (id) => {
 }
 
 const clickStarIcon = async (item, id) => {
-  await handleFavouriteArticle(id)
+  if(props.listType !== "preview") {
+    await handleFavouriteArticle(id)
+  }
   props.itemFunc(item, "isFavourite", !item.isFavourite)
   if(props.listType === "favourite") {
     props.removeFunc(item)
+  }
+  if(props.listType === "preview") {
+    return
   }
   if(item.isFavourite) {
     addMessage("Add favourite successfully", "success")
