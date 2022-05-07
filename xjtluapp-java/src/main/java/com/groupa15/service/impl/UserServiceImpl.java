@@ -3,8 +3,8 @@ package com.groupa15.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.groupa15.common.dto.LoginDto;
-import com.groupa15.common.dto.PasswordChangeDto;
+import com.groupa15.entity.dto.LoginDto;
+import com.groupa15.entity.dto.PasswordChangeDto;
 import com.groupa15.entity.User;
 import com.groupa15.entity.vo.UserInfoVO;
 import com.groupa15.mapper.UserMapper;

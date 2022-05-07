@@ -1,15 +1,14 @@
 package com.groupa15.controller;
 
-import com.groupa15.common.dto.LoginDto;
+import com.groupa15.entity.dto.LoginDto;
 import com.groupa15.common.Response;
-import com.groupa15.common.dto.PasswordChangeDto;
+import com.groupa15.entity.dto.PasswordChangeDto;
 import com.groupa15.entity.User;
 import com.groupa15.entity.vo.UserInfoVO;
 import com.groupa15.service.UserService;
 import com.groupa15.utils.JwtUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;

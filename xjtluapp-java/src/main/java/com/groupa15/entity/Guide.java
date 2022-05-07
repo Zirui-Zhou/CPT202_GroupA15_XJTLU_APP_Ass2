@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author Zirui Zhou
@@ -12,7 +13,8 @@ import lombok.Data;
  */
 
 @Data
-public class Guide implements Serializable {
+@Accessors(chain = true)
+public class Guide {
 
     @TableId
     private Long guideId;

@@ -1,11 +1,10 @@
 package com.groupa15.controller;
 
-import com.groupa15.common.dto.ArticlePageDto;
+import com.groupa15.entity.dto.ArticlePageDto;
 import com.groupa15.common.Response;
 import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
-import com.groupa15.entity.vo.ResourceTagVO;
 import com.groupa15.service.ArticleService;
 import com.groupa15.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;

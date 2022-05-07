@@ -14,18 +14,20 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 public class Article {
-        @TableId
-        private Long id;
 
-        private String title;
+    @TableId
+    private Long id;
 
-        private String image;
+    private String title;
 
-        private String content;
+    private String image;
 
-        private LocalDateTime createTime;
+    private String content;
 
-        private LocalDateTime editTime;
+    private LocalDateTime createTime;
 
-        private Long editorId;
+    private LocalDateTime editTime;
+
+    private Long editorId;
+
 }

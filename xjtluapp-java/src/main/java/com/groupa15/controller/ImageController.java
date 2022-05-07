@@ -4,6 +4,7 @@ import com.groupa15.common.Response;
 import com.groupa15.entity.UserInfo;
 import com.groupa15.service.UserInfoService;
 import com.groupa15.service.UserService;
+import com.groupa15.utils.ImageUtils;
 import com.groupa15.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,9 @@ public class ImageController {
     JwtUtils jwtUtils;
 
     @Autowired
+    ImageUtils imageUtils;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -38,39 +42,20 @@ public class ImageController {
 
     @PostMapping("/upload")
     public Response upload(@RequestHeader(name="Authorization") String token, @RequestParam(name = "file", required = false) MultipartFile file) {
-        if (file == null) {
-            return Response.fail(HttpStatus.BAD_REQUEST, "Please select a image to upload.");
-        }
-        if (file.getSize() > 1024 * 1024 * 10) {
-            return Response.fail(HttpStatus.BAD_REQUEST, "The size of the image cannot exceed 10Mb.");
-        }
+
         //获取文件后缀
-        String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-        if (!"jpg,jpeg,gif,png".toUpperCase().contains(suffix.toUpperCase())) {
-            return Response.fail(HttpStatus.BAD_REQUEST, "请选择jpg,jpeg,gif,png格式的图片");
-        }
+        Response preHandleResult = preHandleImage(file);
+        if(preHandleResult != null)
+            return preHandleResult;
 
-        Path path = Paths.get(System.getProperties().getProperty("user.dir"));
-        String subPath = "/image/avatar";
-        String resourcePath = Paths.get(path.toString(),  "/resource").toString();
-        String avatarPath = resourcePath + subPath;
+        String avatarPath = "";
 
-        File avatarPathFile = new File(avatarPath);
-        if (!avatarPathFile.exists()) {
-            //若不存在该目录，则创建目录
-            System.out.println(avatarPathFile.mkdirs());
-        }
-        //通过UUID生成唯一文件名
-        String filename = UUID.randomUUID().toString().replaceAll("-","") + "." + suffix;
-        try {
-            //将文件保存指定目录
-            file.transferTo(new File(avatarPath + "/" + filename));
-        } catch (Exception e) {
-            e.printStackTrace();
+        try{
+            avatarPath = imageUtils.saveFile(file, "/image/avatar");
+        }catch (Exception e) {
             return Response.fail(HttpStatus.FORBIDDEN, "保存文件异常");
         }
-        //返回文件名称
-        // TODO(Zirui): Convert the constant into a configuration variable.
+
         Long userId = jwtUtils.getUserIdByToken(token);
 
         String oldFilename = userService.getUserInfoByUserId(userId).getAvatar();
@@ -85,4 +70,18 @@ public class ImageController {
 
         return Response.success(HttpStatus.OK, subPath + "/" + filename);
     }
+
+    private Response preHandleImage(MultipartFile file) {
+        if (file == null) {
+            return Response.fail(HttpStatus.BAD_REQUEST, "Please select a image to upload.");
+        }
+        if (file.getSize() > 1024 * 1024 * 10) {
+            return Response.fail(HttpStatus.BAD_REQUEST, "The size of the image cannot exceed 10Mb.");
+        }
+        if (!"jpg,jpeg,gif,png".toUpperCase().contains(imageUtils.getFileSuffix(file.getOriginalFilename()).toUpperCase())) {
+            return Response.fail(HttpStatus.BAD_REQUEST, "请选择jpg,jpeg,gif,png格式的图片");
+        }
+        return null;
+    }
+
 }

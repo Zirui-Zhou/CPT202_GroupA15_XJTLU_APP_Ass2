@@ -1,7 +1,7 @@
 package com.groupa15.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.groupa15.common.dto.ArticlePageDto;
+import com.groupa15.entity.dto.ArticlePageDto;
 import com.groupa15.entity.Article;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;

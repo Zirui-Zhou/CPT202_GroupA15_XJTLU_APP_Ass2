@@ -2,7 +2,7 @@ package com.groupa15.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.groupa15.common.dto.ResourcePageDto;
+import com.groupa15.entity.dto.ResourcePageDto;
 import com.groupa15.entity.Resource;
 import com.groupa15.entity.vo.ResourceScreenshotVO;
 import com.groupa15.entity.vo.ResourceTagListVO;

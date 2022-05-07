@@ -1,8 +1,7 @@
-package com.groupa15.common.dto;
+package com.groupa15.entity.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
