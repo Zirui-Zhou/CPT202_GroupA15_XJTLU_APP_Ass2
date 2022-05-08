@@ -12,12 +12,14 @@ import java.io.Serializable;
 @Data
 public class EditArticleDto implements Serializable {
 
+    private Long id;
+
     private String title;
 
     private String image;
 
     private String content;
 
-    private Long editorId;
+    private int typeId;
 
 }

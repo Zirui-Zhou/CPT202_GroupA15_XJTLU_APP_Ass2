@@ -32,6 +32,10 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     Page<ArticleScreenshotVO> selectArticlePageVoOfKeyword(Page<ArticleScreenshotVO> page, @Param("viewerId") Long viewerId, @Param("keyWord")String keyWord);
 
+    void insertArticleType(@Param("articleId") Long articleId, @Param("typeId") Integer typeId);
+
+    void updateArticleType(@Param("articleId") Long articleId, @Param("typeId") Integer typeId);
+
     @Insert("INSERT INTO xjtlu_app.article_favourite(user_id, article_id) values(#{userId}, #{articleId})")
     Boolean insertFavouriteArticle(Long userId, Long articleId);
 
@@ -49,5 +53,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     Boolean queryIsHistory(@Param("viewerId") Long userId, @Param("articleId") Long articleId);
 
     List<ArticleTypeVO> selectAllArticleTypes(@Param("lang") String lang);
+
+    Void deleteArticle(@Param("articleId") Long articleId);
 
 }

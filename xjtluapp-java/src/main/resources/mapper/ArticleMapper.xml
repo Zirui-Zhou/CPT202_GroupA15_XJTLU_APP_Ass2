@@ -11,6 +11,26 @@
                      column="{viewerId=viewer_id, articleId=id}"/>
     </resultMap>
 
+    <insert id="insertArticleType">
+        INSERT INTO xjtlu_app.article_type_list
+            (article_id, type_id)
+        VALUES
+            (#{articleId}, #{typeId})
+    </insert>
+
+    <update id="updateArticleType">
+        UPDATE xjtlu_app.article_type_list
+        SET type_id = #{typeId}
+        WHERE article_id = #{articleId}
+    </update>
+
+    <delete id="deleteArticle">
+        DELETE FROM xjtlu_app.article WHERE id = #{articleId};
+        DELETE FROM xjtlu_app.article_favourite WHERE article_id = #{articleId};
+        DELETE FROM xjtlu_app.article_history WHERE article_id = #{articleId};
+        DELETE FROM xjtlu_app.article_type_list WHERE article_id = #{articleId};
+    </delete>
+
     <select id="selectAllArticleTypes" resultType="ArticleTypeVO">
         SELECT t.type_id, IFNULL(t.type_name->>'$.${lang}', t.type_name->>'$.en') as type_name ,t.type_icon
         FROM xjtlu_app.article_type t

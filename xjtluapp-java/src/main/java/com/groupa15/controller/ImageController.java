@@ -40,18 +40,17 @@ public class ImageController {
     @Autowired
     UserInfoService userInfoService;
 
-    @PostMapping("/upload")
+    @PostMapping("/user/avatar/upload")
     public Response upload(@RequestHeader(name="Authorization") String token, @RequestParam(name = "file", required = false) MultipartFile file) {
+        String resourcePath = "/image/avatar";
+        String avatarPath = "";
 
-        //获取文件后缀
         Response preHandleResult = preHandleImage(file);
         if(preHandleResult != null)
             return preHandleResult;
 
-        String avatarPath = "";
-
         try{
-            avatarPath = imageUtils.saveFile(file, "/image/avatar");
+            avatarPath = imageUtils.saveFile(file, resourcePath);
         }catch (Exception e) {
             return Response.fail(HttpStatus.FORBIDDEN, "保存文件异常");
         }
@@ -59,23 +58,39 @@ public class ImageController {
         Long userId = jwtUtils.getUserIdByToken(token);
 
         String oldFilename = userService.getUserInfoByUserId(userId).getAvatar();
-        if(StringUtils.hasLength(oldFilename)){
-            new File(resourcePath + oldFilename).delete();
-        }
+        imageUtils.deleteFile(oldFilename, resourcePath);
 
         UserInfo userInfo = new UserInfo()
                 .setUserId(userId)
-                .setAvatar(subPath + "/" + filename);
+                .setAvatar(avatarPath);
         userInfoService.updateUserInfo(userInfo);
 
-        return Response.success(HttpStatus.OK, subPath + "/" + filename);
+        return Response.success(HttpStatus.OK, avatarPath);
+    }
+
+    @PostMapping("/article/image/upload")
+    public Response uploadArticleImage(@RequestParam(name = "file", required = false) MultipartFile file) {
+        String targetPath = "/image/article/screenshot";
+        String imagePath = "";
+
+        Response preHandleResult = preHandleImage(file);
+        if(preHandleResult != null)
+            return preHandleResult;
+
+        try{
+            imagePath = imageUtils.saveFile(file, targetPath);
+        }catch (Exception e) {
+            return Response.fail(HttpStatus.FORBIDDEN, "保存文件异常");
+        }
+
+        return Response.success(HttpStatus.OK, imagePath);
     }
 
     private Response preHandleImage(MultipartFile file) {
         if (file == null) {
             return Response.fail(HttpStatus.BAD_REQUEST, "Please select a image to upload.");
         }
-        if (file.getSize() > 1024 * 1024 * 10) {
+        if (file.getSize() > 1024 * 1024 * 5) {
             return Response.fail(HttpStatus.BAD_REQUEST, "The size of the image cannot exceed 10Mb.");
         }
         if (!"jpg,jpeg,gif,png".toUpperCase().contains(imageUtils.getFileSuffix(file.getOriginalFilename()).toUpperCase())) {

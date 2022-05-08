@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.groupa15.entity.dto.ArticlePageDto;
 import com.groupa15.entity.Article;
+import com.groupa15.entity.dto.EditArticleDto;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
 import com.groupa15.mapper.ArticleMapper;
@@ -12,6 +13,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -112,10 +114,39 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public void addArticle(Article article) {
-        article.setId(null)
-                .setCreateTime(null);
+    public Long addArticle(Long userId, EditArticleDto articleDto) {
+        Article article = new Article();
+        article.setTitle(articleDto.getTitle())
+                .setImage(articleDto.getImage())
+                .setContent(articleDto.getContent())
+                .setEditorId(userId)
+                .setEditTime(LocalDateTime.now());
         this.save(article);
+        articleMapper.insertArticleType(article.getId(), articleDto.getTypeId());
+        return article.getId();
+    }
+
+    @Override
+    public Boolean editArticle(Long userId, EditArticleDto articleDto) {
+        Article article = this.getArticleById(articleDto.getId());
+        if(article.getEditorId().equals(userId))
+            return false;
+        article.setTitle(articleDto.getTitle())
+                .setImage(articleDto.getImage())
+                .setContent(articleDto.getContent())
+                .setEditTime(LocalDateTime.now());
+        articleMapper.updateById(article);
+        articleMapper.updateArticleType(article.getId(), articleDto.getTypeId());
+        return true;
+    }
+
+    @Override
+    public Boolean removeArticle(Long userId, Long articleId) {
+        Article article = this.getArticleById(articleId);
+        if(article.getEditorId().equals(userId))
+            return false;
+        articleMapper.deleteArticle(articleId);
+        return true;
     }
 
 }

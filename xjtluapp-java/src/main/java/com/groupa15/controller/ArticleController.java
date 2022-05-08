@@ -3,6 +3,7 @@ package com.groupa15.controller;
 import com.groupa15.entity.dto.ArticlePageDto;
 import com.groupa15.common.Response;
 import com.groupa15.entity.Article;
+import com.groupa15.entity.dto.EditArticleDto;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
 import com.groupa15.service.ArticleService;
@@ -11,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Zirui Zhou
@@ -30,21 +31,31 @@ public class ArticleController {
     JwtUtils jwtUtils;
 
     @GetMapping(value = "/article")
-    public Response getArticle(@RequestParam(name = "id") Long id, HttpServletResponse httpServletRequest) {
+    public Response getArticle(@RequestParam(name = "id") Long id) {
         Article article = articleService.getArticleById(id);
         return Response.success(HttpStatus.OK, null, article);
     }
 
     @GetMapping("/article/types")
-    public Response getArticleTypes(@RequestHeader(value = "Accept-Language", defaultValue = "en") String lang, HttpServletResponse httpServletRequest) {
+    public Response getArticleTypes(@RequestHeader(value = "Accept-Language", defaultValue = "en") String lang) {
         List<ArticleTypeVO> tags = articleService.getAllArticleTypes(lang);
         return Response.success(HttpStatus.OK, null, tags);
     }
 
+    @PostMapping("/article/edit")
+    public Response editArticle(@RequestHeader(value = "Authorization") String token, @RequestBody EditArticleDto articleDto) {
+        Long userId = jwtUtils.getUserIdByToken(token);
+        articleService.editArticle(userId, articleDto);
+        return Response.success(HttpStatus.OK, "Edit article successfully");
+    }
+
     @PostMapping("/article/add")
-    public Response addArticle(@RequestBody Article article, HttpServletRequest httpServletRequest) {
-        articleService.addArticle(article);
-        return Response.success(HttpStatus.OK, article.getTitle());
+    public Response addArticle(@RequestHeader(value = "Authorization") String token, @RequestBody EditArticleDto articleDto) {
+        Long userId = jwtUtils.getUserIdByToken(token);
+        Long articleId = articleService.addArticle(userId, articleDto);
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", articleId);
+        return Response.success(HttpStatus.OK, "Add article successfully", data);
     }
 
     @PostMapping("/article/list")
@@ -98,6 +109,12 @@ public class ArticleController {
     @GetMapping("article/history/remove")
     public Response removeHistoryArticle(@RequestHeader(value = "Authorization") String token, @RequestParam(name = "id") Long id) {
         Boolean result = articleService.removeHistoryArticle(jwtUtils.getUserIdByToken(token), id);
+        return Response.success(HttpStatus.OK, null, result);
+    }
+
+    @GetMapping("article/remove")
+    public Response removeArticle(@RequestHeader(value = "Authorization") String token, @RequestParam(name = "id") Long id) {
+        Boolean result = articleService.removeArticle(jwtUtils.getUserIdByToken(token), id);
         return Response.success(HttpStatus.OK, null, result);
     }
 

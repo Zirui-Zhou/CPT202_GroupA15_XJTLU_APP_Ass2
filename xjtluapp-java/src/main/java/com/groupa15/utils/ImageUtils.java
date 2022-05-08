@@ -20,24 +20,33 @@ import java.util.UUID;
 @Component
 public class ImageUtils {
 
+    public String getResourcePath() {
+        Path path = Paths.get(System.getProperties().getProperty("user.dir"));
+        return Paths.get(path.toString(),  "/resource").toString();
+    }
+
     public String getFileSuffix(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public String saveFile(MultipartFile file, String targetPath) throws Exception{
-
-        Path path = Paths.get(System.getProperties().getProperty("user.dir"));
-        String resourcePath = Paths.get(path.toString(),  "/resource").toString();
-        String imagePath = resourcePath + targetPath;
+        String imagePath = this.getResourcePath() + targetPath;
 
         File avatarPathFile = new File(imagePath);
         if (!avatarPathFile.exists()) {
             avatarPathFile.mkdirs();
         }
+
         String filename = UUID.randomUUID() + "." + getFileSuffix(file.getOriginalFilename());
         file.transferTo(new File(imagePath + "/" + filename));
 
         return targetPath + "/" + filename;
+    }
+
+    public void deleteFile(String fileName, String targetPath){
+        if(StringUtils.hasLength(fileName)){
+            new File(this.getResourcePath() + targetPath + fileName).delete();
+        }
     }
 
 }
