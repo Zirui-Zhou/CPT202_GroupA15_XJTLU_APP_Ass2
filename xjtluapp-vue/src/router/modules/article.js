@@ -12,7 +12,7 @@ export default [
             {
                 path: 'add',
                 name: 'addArticle',
-                component: () => import("@/components/article_page/ArticleEditor")
+                component: () => import("@/components/article_page/NewArticleEditor")
             },
         ]
     },

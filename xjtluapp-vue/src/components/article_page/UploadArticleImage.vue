@@ -1,7 +1,7 @@
 <template>
   <el-upload
       class="article-uploader"
-      :action="store.getters.getServerUrl + '/upload'"
+      :action="store.getters.getServerUrl + '/article/image/upload'"
       :headers="{Authorization: store.getters.getToken}"
       list-type="picture-card"
       :file-list="fileList"
@@ -24,11 +24,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, defineProps, onMounted, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n"
 import { UploadFilled } from "@element-plus/icons-vue"
+import { handleResourceUrl } from "@/scripts/utils/requestUtils";
 
 const store = useStore()
 const {t} = useI18n()
@@ -36,10 +37,16 @@ const {t} = useI18n()
 const fileList = reactive([])
 const isUploadShow = ref(true)
 
+const props = defineProps({
+  item: Object,
+  handleImage: Function
+})
+
 const handleAvatarSuccess = (
-    response,
-    uploadFile
+    response
 ) => {
+  const imagePath = response.msg
+  props.handleImage(imagePath)
 }
 
 const beforeAvatarUpload = async (rawFile) => {
@@ -65,8 +72,24 @@ const handlePictureCardPreview = (file) => {
 
 const handleRemove = () => {
   fileList.pop()
+  props.handleImage(null)
   isUploadShow.value = true
 }
+
+watch(()=>props.item.image, ()=>{
+  if(props.item.image === null && fileList.length !== 0) {
+    handleRemove()
+  }
+})
+
+onMounted( ()=>{
+  if(props.item) {
+    if(props.item.image) {
+      fileList.push({url: handleResourceUrl(props.item.image)})
+      isUploadShow.value = false
+    }
+  }
+})
 
 </script>
 

@@ -22,7 +22,7 @@
 
         <span
             class="emailLabel"
-            :class="{email: isShowEmail}"
+            :class="{email: isLinkEmail}"
             @click="handleEmailClick()"
         >
           {{ userInfo.email }}
@@ -59,7 +59,7 @@ const {t} = useI18n()
 const props = defineProps({
   userInfo: Object,
   handleAvatarClick: Function,
-  isShowEmail: {
+  isLinkEmail: {
     type: Boolean,
     default: false,
   }
@@ -95,7 +95,7 @@ const handleInfoList = ()=>{
 
 
 const handleEmailClick = () => {
-  if(props.isShowEmail) {
+  if(props.isLinkEmail) {
     window.open("mailto:" + props.userInfo.email)
   }
 }

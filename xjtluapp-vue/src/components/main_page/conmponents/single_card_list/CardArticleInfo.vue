@@ -24,41 +24,29 @@
   </div>
 </template>
 
-<script>
-import {DataAnalysis, Document, Medal, OfficeBuilding} from "@element-plus/icons-vue";
-
-export default {
-  components: {
-    Document: Document,
-    Medal: Medal,
-    OfficeBuilding: OfficeBuilding,
-    DataAnalysis: DataAnalysis
-  }
-}
-</script>
-
 <script setup>
 import {computed, defineProps, onBeforeMount, ref} from "vue";
 import {useStore} from "vuex";
 import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
+import {delay} from "@/scripts/utils/commonUtils";
 
 const store = useStore()
-
-const articleTypeList = computed(()=>store.getters.getArticleTypeList)
-const articleTypeIcon = computed(()=>getArticleTypeIcon(props.item.typeId))
-const isLoadingType = ref(true)
-
-const getArticleTypeIcon = (typeId) => {
-  return articleTypeList.value.filter((item)=>item.typeId === typeId)[0].typeIcon
-}
 
 const props = defineProps({
   item: Object,
   itemFunc: Function,
 })
 
+const articleTypeList = computed(()=>store.getters.getArticleTypeList)
+const articleTypeIcon = computed(()=>getArticleTypeIcon())
+const isLoadingType = ref(true)
+
+const getArticleTypeIcon = () => {
+  return articleTypeList.value.filter((item)=>item.typeId === props.item.typeId)[0].typeIcon
+}
+
 onBeforeMount(async ()=>{
-  if(Object.keys(articleTypeList.value).length === 0) {
+  if(!articleTypeList.value || Object.keys(articleTypeList.value).length === 0) {
     await getAllArticleTypes()
   }
   isLoadingType.value = false

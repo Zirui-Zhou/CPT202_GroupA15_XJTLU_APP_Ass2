@@ -33,7 +33,7 @@ const changeLang = () => {
 
 watch(
     ()=>store.getters.getIsDarkMode,
-    ()=>changeDarkMode()
+    changeDarkMode
 )
 
 watch(()=>store.getters.getLang, async ()=>await getAllArticleTypes())

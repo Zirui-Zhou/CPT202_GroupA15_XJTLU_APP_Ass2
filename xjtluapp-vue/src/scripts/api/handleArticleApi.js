@@ -1,10 +1,47 @@
 import router from "@/router"
-import {commonGetData, commonPostData, handleResource} from "@/scripts/utils/requestUtils";
 import store from "@/store";
+import { commonGetData, commonPostData, handleResource } from "@/scripts/utils/requestUtils";
+import {addMessage} from "@/scripts/utils/messageUtils";
 
 async function getArticle(id) {
     const idn = BigInt(id)
     return (await commonGetData("/article", true, {params: {id: idn}})).data
+}
+
+async function addArticle(title, image, content, typeId) {
+    const result = await commonPostData(
+        "/article/add",
+        {
+            title: title,
+            image: image,
+            content: content,
+            typeId: typeId
+        },
+        true
+    )
+    addMessage(result.msg, "success")
+    return result.data
+}
+
+async function editArticle(id, title, image, content, typeId) {
+    const result = await commonPostData(
+        "/article/edit",
+        {
+            id: id,
+            title: title,
+            image: image,
+            content: content,
+            typeId: typeId
+        },
+        true
+    )
+    addMessage(result.msg, "success")
+    return result.data
+}
+
+async function removeArticle(id) {
+    const idn = BigInt(id)
+    return (await commonGetData("/article/remove", true, {params: {id: idn}})).data
 }
 
 async function getArticleListOfMine(current, size) {
@@ -36,7 +73,14 @@ async function getArticleList(current, size, extraUrl="", config={}) {
     )).data
 
     if(result) {
-        result.forEach((item, index, array) => {array[index] = handleResource(item, "avatar")})
+        result.forEach(
+            (item, index, array) => {
+                array[index] = handleResource(item, "avatar")
+                if(!item.image.startsWith("http")) {
+                    array[index] = handleResource(item, "image")
+                }
+            }
+        )
     }
 
     return result
@@ -79,6 +123,9 @@ function linkToArticle(id){
 
 export {
     getArticle,
+    addArticle,
+    editArticle,
+    removeArticle,
     getArticleList,
     getArticleListOfMine,
     getArticleListOfFavourite,

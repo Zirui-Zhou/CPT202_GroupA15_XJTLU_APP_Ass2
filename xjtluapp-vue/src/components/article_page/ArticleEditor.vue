@@ -4,7 +4,7 @@
     <div class="v-md-editor" style="border-bottom: 1px solid #ddd; flex-flow: row wrap;">
       <textarea
           id="textarea"
-          v-model="articleTitle"
+          v-model="article.title.value"
           spellcheck="false"
           class="titleInput"
           placeholder="Please input the title"
@@ -16,27 +16,17 @@
 
         <p>{{ getFormattedTime(editTime) }}</p>
 
-        <el-row>
-          <AvatarWithCard
-              :user-info="userInfo"
-              :is-show-email="false"
-          />
-          <div style="margin-left: 20px">
-            <span class="name">
-              {{ userInfo.realName }}
-            </span>
-              <span class="email">
-              {{ userInfo.email }}
-            </span>
-          </div>
-        </el-row>
+        <ArticleHeaderUserInfo
+          :user-info="userInfo"
+          :is-link-email="false"
+        />
 
       </div>
     </div>
   </div>
 
   <div class="content">
-    <v-md-editor v-model="articleContent" height="600px"/>
+    <v-md-editor v-model="article.content.value" height="600px"/>
   </div>
 
   <br/>
@@ -44,12 +34,12 @@
 
   <el-button
       size="large"
-      :icon="this[item.typeIcon]"
-      :type="item.typeId === articleType ? 'primary' : 'default'"
+      :icon="item.typeIcon"
+      :type="item.typeId === article.typeId.value ? 'primary' : 'default'"
       round
       v-for="item in articleTypeList"
       :key="item.typeName"
-      @click="articleType = item.typeId"
+      @click="article.typeId.value = item.typeId"
   >
     {{ item.typeName }}
   </el-button>
@@ -70,7 +60,10 @@
         :itemFunc="itemFunc"
     >
       <template #image>
-        <UploadArticleImage/>
+        <UploadArticleImage
+            :item="item"
+            :handle-image="handleImage"
+        />
       </template>
     </CardArticleInfo>
 
@@ -81,67 +74,137 @@
   </el-card>
 
   <div style="display: flex; justify-content: flex-end">
-    <el-button type="default" class="submitButton">
+    <el-button
+        type="danger"
+        class="submitButton"
+        @click="handleDeleteButtonClick"
+        plain
+    >
+      Delete
+    </el-button>
+    <el-button
+        type="default"
+        class="submitButton"
+        @click="handleDraftButtonClick"
+    >
       Draft
     </el-button>
-    <el-button type="primary" class="submitButton">
+    <el-button
+        type="primary"
+        class="submitButton"
+        @click="handleSubmitButtonClick"
+    >
       Submit
     </el-button>
   </div>
 
 </template>
 
-<script>
-import {DataAnalysis, Document, Medal, OfficeBuilding} from "@element-plus/icons-vue";
-
-export default {
-  components: {
-    Document: Document,
-    Medal: Medal,
-    OfficeBuilding: OfficeBuilding,
-    DataAnalysis: DataAnalysis
-  }
-}
-</script>
-
 <script setup>
-import {onMounted, ref, computed, reactive, onBeforeMount} from "vue";
+import {onMounted, ref, computed, reactive, onBeforeMount, defineProps, defineExpose} from "vue";
 import {useStore} from "vuex"
 import {getFormattedTime} from "@/scripts/utils/commonUtils";
-import AvatarWithCard from "@/components/AvatarWithCard"
 import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
 import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
 import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
-import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
-import {UploadFilled} from "@element-plus/icons-vue";
+import {
+  addArticle,
+  editArticle,
+  getAllArticleTypes,
+  linkToArticle,
+  removeArticle
+} from "@/scripts/api/handleArticleApi";
 import UploadArticleImage from "@/components/article_page/UploadArticleImage";
+import { useRouter } from "vue-router";
+import ArticleHeaderUserInfo from "@/components/article_page/ArticleHeaderUserInfo";
 
 const store = useStore()
+const router = useRouter()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
 const editTime = ref(new Date().getTime())
-const articleTitle = ref("")
-const articleContent = ref("")
-const articleType = ref(1)
+
+const article = {
+  id: ref(null),
+  title: ref(""),
+  content: ref(""),
+  typeId: ref(1),
+  image: ref(null),
+}
 
 const articleTypeList = computed(()=>store.getters.getArticleTypeList)
+
+const props = defineProps({
+  rawArticle: Object,
+  handleDeleteButtonClick: Function,
+  handleDraftButtonClick: Function,
+  handleSubmitButtonClick: Function,
+})
 
 setInterval(() => {
   editTime.value = new Date().getTime()
 }, 1000)
 
 const item = reactive({
-  title: articleTitle,
-  image: null,
-  editorTime: editTime,
+  id: article.id,
+  title: article.title,
+  image: article.image,
+  typeId: article.typeId,
+  createTime: editTime,
   editorName: userInfo.value.realName,
   avatar: userInfo.value.avatar,
   isFavourite: false,
-  typeId: articleType,
 })
 
 const itemFunc = async (item, key, value) => {
   item[key] = value
+}
+
+const handleImage = (image) => {
+  article.image.value = image
+}
+
+const addCurrentArticle = async () => {
+  const data = await addArticle(article.title, article.image, article.content, article.typeId)
+  linkToArticle(data.id)
+}
+
+const editCurrentArticle = async () => {
+  await editArticle(article.id, article.title, article.image, article.content, article.typeId)
+  linkToArticle(article.id)
+}
+
+const draftCurrentArticle = async () => {
+  store.commit("SET_ARTICLE_DRAFT", article)
+}
+
+const resetCurrentArticle = () => {
+  article.title.value = ""
+  article.image.value = null
+  article.content.value = ""
+  article.typeId.value = 1
+}
+
+const removeCurrentArticle = async () => {
+  await removeArticle(article.id)
+  router.back()
+}
+
+defineExpose({
+  addCurrentArticle,
+  editCurrentArticle,
+  draftCurrentArticle,
+  resetCurrentArticle,
+  removeCurrentArticle,
+})
+
+function preHandleArticle() {
+  if(props.rawArticle) {
+    article.title.value = props.rawArticle.title
+    article.content.value = props.rawArticle.content
+    article.typeId.value = props.rawArticle.typeId
+    article.image.value = props.rawArticle.image
+  }
 }
 
 onMounted(()=>{
@@ -157,9 +220,12 @@ onMounted(()=>{
       .item(0)
       .setAttribute("style", "background-color: white")
 
+  window.scrollTo(0,0);
+
 })
 
 onBeforeMount(async ()=>{
+  preHandleArticle()
   await getAllArticleTypes()
 })
 
@@ -197,18 +263,6 @@ onBeforeMount(async ()=>{
   margin: 24px 32px 0 32px;
   overflow-y: hidden;
   background-color: white;
-}
-
-.name{
-  position: absolute;
-  top: 0;
-  font-weight: bold;
-  font-size: 20px
-}
-
-.email{
-  position: absolute;
-  bottom: 0;
 }
 
 .submitButton{

@@ -11,7 +11,7 @@
     </span>
     <br/>
     <span style="font-size: 12px">
-      {{getFormattedDate(item.createTime)}}
+      {{ getFormattedDate(item.createTime )}}
     </span>
   </div>
 </template>

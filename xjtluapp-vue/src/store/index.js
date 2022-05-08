@@ -10,8 +10,8 @@ files.keys().forEach(file => {
 
 export default createStore({
   state: {
-    // serverUrl: "http://47.110.224.16:8081",
-    serverUrl: "http://localhost:8081",
+    serverUrl: "http://47.110.224.16:8081",
+    // serverUrl: "http://localhost:8081",
     staticUrl: "http://47.110.224.16:8081/static",
   },
   getters: {

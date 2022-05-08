@@ -1,7 +1,7 @@
 <template>
   <el-upload
       class="avatar-uploader"
-      :action="store.getters.getServerUrl + '/upload'"
+      :action="store.getters.getServerUrl + '/user/avatar/upload'"
       :headers="{Authorization: store.getters.getToken}"
       list-type="picture-card"
       :file-list="fileList"
