@@ -1,5 +1,10 @@
 <template>
-  <el-backtop class="topButton" :bottom="100" :right="120">
+  <el-backtop
+      class="topButton"
+      :bottom="100"
+      :right="120"
+      :visibility-height="100"
+  >
     <div
         style="
         height: 100%;

@@ -1,7 +1,9 @@
 <template>
 
   <div class="tagList" v-show="selectedTags.length > 0">
-    <span class="tagTitle">Classification:</span>
+    <span class="tagTitle">
+      {{ $t("message.resource_tag_list.label_classification") }}
+    </span>
     <div class="tagBlock">
       <el-tag
           class="tagItem"
@@ -41,8 +43,10 @@
 import {computed, onBeforeMount, reactive, watch} from "vue";
 import {getAllResourceTags} from "@/scripts/api/handleResourceApi";
 import {useStore} from "vuex";
+import {useI18n} from "vue-i18n";
 
 const store = useStore()
+const {t} = useI18n()
 
 const selectedTags = computed(()=>store.getters.getSelectedTags)
 const allTagList = reactive([])

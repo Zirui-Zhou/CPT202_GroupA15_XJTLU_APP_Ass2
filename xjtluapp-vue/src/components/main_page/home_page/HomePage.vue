@@ -32,7 +32,7 @@
       :list-func-param="[activeTab]"
   />
 
-  <NewArticleButton/>
+  <AddNewArticleButton/>
 
 </template>
 
@@ -54,7 +54,7 @@ import {ref, computed} from 'vue'
 import SingleColumnCardList from "@/components/main_page/conmponents/single_card_list/SingleColumnCardList";
 import CarouselList from "@/components/main_page/home_page/CarouselList";
 import {useStore} from "vuex";
-import NewArticleButton from "@/components/NewArticleButton";
+import AddNewArticleButton from "@/components/AddNewArticleButton";
 
 const store = useStore()
 

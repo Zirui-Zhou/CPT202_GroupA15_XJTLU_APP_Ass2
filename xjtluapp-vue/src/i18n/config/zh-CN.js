@@ -1,5 +1,6 @@
-const zh = {
+const zhCN = {
     language: "简体中文",
+    localization_acknowledgement: "中文本地化翻译由 Zirui Zhou 贡献",
     message: {
         top_menu: {
             menu_item_student: "学生",
@@ -15,6 +16,7 @@ const zh = {
             item_change_password: "更改密码",
             item_logout: "登出",
             item_language: "语言：",
+            item_about: "关于",
         },
         change_password_box: {
             box_title: "更改密码",
@@ -28,6 +30,10 @@ const zh = {
             msg_same_new_pass: "请输入不同的密码",
             msg_missing_check_pass: "请再次输入新密码",
             msg_different_check_pass: "两个新密码不符",
+        },
+        about_dialog: {
+            dialog_title: "关于",
+            button_submit: "确认",
         },
         avatar_with_card: {
             userinfo_label_colon: "：",
@@ -94,9 +100,40 @@ const zh = {
         handle_user_api: {
             msg_no_login: "请先登录",
             msg_logout_success: "登出成功",
+        },
+        resource_tag_list: {
+            label_classification: "类别：",
+        },
+        article_editor: {
+            input_placeholder_title: "请输入标题",
+            label_select_type: "请选择类型：",
+            label_preview: "预览：",
+            button_delete: "删除",
+            button_draft: "草稿",
+            button_submit: "提交",
+            current: {
+                label_delete_confirm: "确认要删除这篇文章？",
+                button_confirm: "确认",
+                button_cancel: "取消",
+                msg_draft_warn: "不支持为发表了的文章保存草稿。",
+            },
+            new: {
+                label_reset_confirm: "确认要重置这篇文章？",
+                button_confirm: "确认",
+                button_cancel: "取消",
+                msg_reset_success: "重置文章成功。",
+                msg_draft_success: "保存草稿成功。",
+            },
         }
     },
-    html:{
+    extra: {
+        internationale: {
+            title: "国际歌",
+            author: "—欧仁·鲍狄埃，",
+            lyric: "英特纳雄耐尔\n就一定要实现！",
+        }
+    },
+    html: {
         no_register_dialog: {
             information:
                 "<p>对不起，本内部应用不提供自主注册服务</p>\n" +
@@ -120,7 +157,7 @@ const zh = {
                 "</table>\n" +
                 "<p>点击“确认”按钮来填写表单</p>",
         },
-    }
+    },
 }
 
-export default zh
+export default zhCN

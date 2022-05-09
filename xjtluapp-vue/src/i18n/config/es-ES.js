@@ -1,7 +1,6 @@
-// Contributed by Qianchao Sun
-
-const es = {
+const esES = {
     language: "Español",
+    localization_acknowledgement: "Qianchao Sun contribuye a la localización en español",
     message: {
         top_menu: {
             menu_item_student: "Estudiante",
@@ -17,6 +16,7 @@ const es = {
             item_change_password: "Cambiar la contraseña",
             item_logout: "Cerrar sesión",
             item_language: "Idioma: ",
+            item_about: "Acerca de",
         },
         change_password_box: {
             box_title: "Cambiar la contraseña",
@@ -30,6 +30,10 @@ const es = {
             msg_same_new_pass: "Por favor, introduzca una contraseña diferente",
             msg_missing_check_pass: "Por favor, introduzca la nueva contraseña otra vez",
             msg_different_check_pass: "Dos contraseñas no coinciden.",
+        },
+        about_dialog: {
+            dialog_title: "Acerca de",
+            button_submit: "Confirmar",
         },
         avatar_with_card: {
             userinfo_label_colon: ": ",
@@ -96,9 +100,40 @@ const es = {
         handle_user_api: {
             msg_no_login: "Por favor, inicie sesión primero",
             msg_logout_success: "Cierre de sesión con éxito",
-        }
+        },
+        resource_tag_list: {
+            label_classification: "Clasificación:",
+        },
+        article_editor: {
+            input_placeholder_title: "Please input the title",
+            label_select_type: "Please select type:",
+            label_preview: "Preview:",
+            button_delete: "Delete",
+            button_draft: "Draft",
+            button_submit: "Submit",
+            current: {
+                label_delete_confirm: "Confirm to delete the article?",
+                button_confirm: "Confirm",
+                button_cancel: "Cancel",
+                msg_draft_warn: "Do not support drafting for posted article.",
+            },
+            new: {
+                label_reset_confirm: "Confirm to reset the article?",
+                button_confirm: "Confirm",
+                button_cancel: "Cancel",
+                msg_reset_success: "Reset the article successfully.",
+                msg_draft_success: "Save the draft successfully.",
+            },
+        },
     },
-    html:{
+    extra: {
+        internationale: {
+            title: "La Internacional",
+            author: "—Eugène Pottier, ",
+            lyric: "El género humano\nes la internacional.",
+        },
+    },
+    html: {
         no_register_dialog: {
             information:
                 "<p>Lo siento, la aplicación interna no permite el auto registro.</p>\n" +
@@ -125,4 +160,4 @@ const es = {
     }
 }
 
-export default es
+export default esES

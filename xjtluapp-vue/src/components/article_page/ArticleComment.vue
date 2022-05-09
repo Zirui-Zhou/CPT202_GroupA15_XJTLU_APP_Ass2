@@ -29,7 +29,7 @@
 <script setup>
 import AvatarWithCard from "@/components/AvatarWithCard";
 import { ref, computed } from 'vue'
-import {useStore} from "vuex";
+import { useStore } from "vuex";
 
 const store = useStore()
 

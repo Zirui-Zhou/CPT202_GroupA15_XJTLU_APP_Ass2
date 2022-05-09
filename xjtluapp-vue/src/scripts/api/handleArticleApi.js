@@ -41,7 +41,9 @@ async function editArticle(id, title, image, content, typeId) {
 
 async function removeArticle(id) {
     const idn = BigInt(id)
-    return (await commonGetData("/article/remove", true, {params: {id: idn}})).data
+    const result = await commonGetData("/article/remove", true, {params: {id: idn}})
+    addMessage(result.msg, "success")
+    return result.data
 }
 
 async function getArticleListOfMine(current, size) {
@@ -76,7 +78,7 @@ async function getArticleList(current, size, extraUrl="", config={}) {
         result.forEach(
             (item, index, array) => {
                 array[index] = handleResource(item, "avatar")
-                if(!item.image.startsWith("http")) {
+                if(item.image && !item.image.startsWith("http")) {
                     array[index] = handleResource(item, "image")
                 }
             }
@@ -117,7 +119,14 @@ function getArticleLink(id) {
 function linkToArticle(id){
     router.push({
         path: '/article',
-        query:{id: id}
+        query: {id: id}
+    })
+}
+
+function linkToEditArticle(id) {
+    router.push({
+        path: '/article/edit',
+        query: {id: id}
     })
 }
 
@@ -137,5 +146,6 @@ export {
     removeHistoryArticle,
     getAllArticleTypes,
     linkToArticle,
+    linkToEditArticle,
     getArticleLink
 }

@@ -7,7 +7,7 @@
           v-model="article.title.value"
           spellcheck="false"
           class="titleInput"
-          placeholder="Please input the title"
+          :placeholder="$t('message.article_editor.input_placeholder_title')"
           maxlength="64"
           rows="1"
       />
@@ -30,7 +30,9 @@
   </div>
 
   <br/>
-  <h2>Please select type:</h2>
+  <h2>
+    {{ $t('message.article_editor.label_select_type') }}
+  </h2>
 
   <el-button
       size="large"
@@ -45,7 +47,9 @@
   </el-button>
 
   <br/>
-  <h2>Preview:</h2>
+  <h2>
+    {{ $t('message.article_editor.label_preview') }}
+  </h2>
 
   <el-card class="card">
 
@@ -80,21 +84,21 @@
         @click="handleDeleteButtonClick"
         plain
     >
-      Delete
+      {{ $t('message.article_editor.button_delete') }}
     </el-button>
     <el-button
         type="default"
         class="submitButton"
         @click="handleDraftButtonClick"
     >
-      Draft
+      {{ $t('message.article_editor.button_draft') }}
     </el-button>
     <el-button
         type="primary"
         class="submitButton"
         @click="handleSubmitButtonClick"
     >
-      Submit
+      {{ $t('message.article_editor.button_submit') }}
     </el-button>
   </div>
 
@@ -165,13 +169,24 @@ const handleImage = (image) => {
 }
 
 const addCurrentArticle = async () => {
-  const data = await addArticle(article.title, article.image, article.content, article.typeId)
+  const data = await addArticle(
+      article.title.value,
+      article.image.value,
+      article.content.value,
+      article.typeId.value
+  )
   linkToArticle(data.id)
 }
 
 const editCurrentArticle = async () => {
-  await editArticle(article.id, article.title, article.image, article.content, article.typeId)
-  linkToArticle(article.id)
+  await editArticle(
+      article.id.value,
+      article.title.value,
+      article.image.value,
+      article.content.value,
+      article.typeId.value
+  )
+  linkToArticle(article.id.value)
 }
 
 const draftCurrentArticle = async () => {
@@ -186,7 +201,7 @@ const resetCurrentArticle = () => {
 }
 
 const removeCurrentArticle = async () => {
-  await removeArticle(article.id)
+  await removeArticle(article.id.value)
   router.back()
 }
 
@@ -200,6 +215,9 @@ defineExpose({
 
 function preHandleArticle() {
   if(props.rawArticle) {
+    if(props.rawArticle.id) {
+      article.id.value =props.rawArticle.id
+    }
     article.title.value = props.rawArticle.title
     article.content.value = props.rawArticle.content
     article.typeId.value = props.rawArticle.typeId

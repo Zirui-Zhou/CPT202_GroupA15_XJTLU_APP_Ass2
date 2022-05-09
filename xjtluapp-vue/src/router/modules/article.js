@@ -14,6 +14,11 @@ export default [
                 name: 'addArticle',
                 component: () => import("@/components/article_page/NewArticleEditor")
             },
+            {
+                path: 'edit',
+                name: 'editArticle',
+                component: () => import("@/components/article_page/CurrentArticleEditor")
+            }
         ]
     },
 ]

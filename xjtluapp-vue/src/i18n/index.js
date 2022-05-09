@@ -9,8 +9,8 @@ files.keys().forEach(file => {
 });
 
 const i18n = createI18n({
-    locale: 'en',
-    fallbackLocale: 'en',
+    locale: 'en-US',
+    fallbackLocale: 'en-US',
     legacy: false,
     globalInjection: true,
     messages: {

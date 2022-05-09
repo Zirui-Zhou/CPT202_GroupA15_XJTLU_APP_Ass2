@@ -3,6 +3,15 @@
     <el-icon
         class="icon"
         :size="30"
+        @click.stop="clickEditIcon(item)"
+        v-if="isShowEdit()"
+    >
+      <Edit/>
+    </el-icon>
+
+    <el-icon
+        class="icon"
+        :size="30"
         @click.stop="clickDeleteIcon(item)"
         v-if="isShowDelete()"
     >
@@ -29,10 +38,18 @@
 </template>
 
 <script setup>
-import {getArticleLink, handleFavouriteArticle, removeHistoryArticle} from "@/scripts/api/handleArticleApi";
+import {
+  getArticleLink,
+  handleFavouriteArticle,
+  linkToEditArticle,
+  removeHistoryArticle
+} from "@/scripts/api/handleArticleApi";
 import {addMessage} from "@/scripts/utils/messageUtils";
-import {Star, Link, Delete} from "@element-plus/icons-vue";
-import {defineProps} from "vue";
+import {Star, Link, Delete, Edit} from "@element-plus/icons-vue";
+import { computed, defineProps } from "vue";
+import { useStore } from "vuex"
+
+const store = useStore()
 
 const props = defineProps({
   removeFunc: Function,
@@ -41,8 +58,21 @@ const props = defineProps({
   listType: String,
 })
 
+const userInfo = computed(()=>store.getters.getUserInfo)
+
 const isShowDelete = () => {
   return ["mime", "history", "preview"].indexOf(props.listType) !== -1
+}
+
+const isShowEdit = () => {
+  if(["preview"].indexOf(props.listType) !== -1){
+    return false
+  }
+  return userInfo.value.userId.toString() === props.item.editorId.toString()
+}
+
+const clickEditIcon = (item) => {
+  linkToEditArticle(item.id)
 }
 
 const clickDeleteIcon = async (item) => {

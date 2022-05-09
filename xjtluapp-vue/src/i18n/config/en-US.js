@@ -1,5 +1,6 @@
-const en = {
+const enUS = {
     language: "English",
+    localization_acknowledgement: "English Localization is Contributed by Zirui Zhou",
     message: {
         top_menu: {
             menu_item_student: "Student",
@@ -15,6 +16,7 @@ const en = {
             item_change_password: "Change Password",
             item_logout: "Logout",
             item_language: "Language: ",
+            item_about: "About",
         },
         change_password_box: {
             box_title: "Change Password",
@@ -28,6 +30,10 @@ const en = {
             msg_same_new_pass: "Please input a different password",
             msg_missing_check_pass: "Please input the new password again",
             msg_different_check_pass: "Two inputs don't match!",
+        },
+        about_dialog: {
+            dialog_title: "About",
+            button_submit: "Confirm",
         },
         avatar_with_card: {
             userinfo_label_colon: ": ",
@@ -94,9 +100,40 @@ const en = {
         handle_user_api: {
             msg_no_login: "Please login first",
             msg_logout_success: "Logout successfully",
-        }
+        },
+        resource_tag_list: {
+            label_classification: "Classification:",
+        },
+        article_editor: {
+            input_placeholder_title: "Please input the title",
+            label_select_type: "Please select type:",
+            label_preview: "Preview:",
+            button_delete: "Delete",
+            button_draft: "Draft",
+            button_submit: "Submit",
+            current: {
+                label_delete_confirm: "Confirm to delete the article?",
+                button_confirm: "Confirm",
+                button_cancel: "Cancel",
+                msg_draft_warn: "Do not support drafting for posted article.",
+            },
+            new: {
+                label_reset_confirm: "Confirm to reset the article?",
+                button_confirm: "Confirm",
+                button_cancel: "Cancel",
+                msg_reset_success: "Reset the article successfully.",
+                msg_draft_success: "Save the draft successfully.",
+            },
+        },
     },
-    html:{
+    extra: {
+        internationale: {
+            title: "The Internationale",
+            author: "—Eugène Pottier, ",
+            lyric: "The Internationale\nWill be the human race",
+        },
+    },
+    html: {
         no_register_dialog: {
             information:
                 "<p>Sorry, this inner app does not provide self registration.</p>\n" +
@@ -123,4 +160,4 @@ const en = {
     }
 }
 
-export default en
+export default enUS

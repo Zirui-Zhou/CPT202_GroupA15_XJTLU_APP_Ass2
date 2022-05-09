@@ -14,8 +14,10 @@ import { useStore } from "vuex"
 import { ElMessageBox } from "element-plus";
 import { addMessage } from "@/scripts/utils/messageUtils";
 import ArticleEditor from "@/components/article_page/ArticleEditor";
+import {useI18n} from "vue-i18n";
 
 const store = useStore()
+const {t} = useI18n()
 
 const editor = ref(null)
 const articleDraft = store.getters.getArticleDraft
@@ -23,17 +25,17 @@ const articleDraft = store.getters.getArticleDraft
 const handleDeleteButtonClick = () => {
   ElMessageBox
       .confirm(
-          'Confirm to reset the article?',
-          'Warning',
+          t('message.article_editor.new.label_reset_confirm'),
+          t('message.message_utils.msg_title_warning'),
           {
-            confirmButtonText: 'OK',
-            cancelButtonText: 'Cancel',
+            confirmButtonText: t('message.article_editor.new.button_confirm'),
+            cancelButtonText: t('message.article_editor.new.button_cancel'),
             type: 'warning',
           }
       )
       .then(() => {
         editor.value.resetCurrentArticle()
-        addMessage("Reset the article successfully", "success")
+        addMessage(t('message.article_editor.new.msg_reset_success'), "success")
       })
       .catch(() => {
 
@@ -42,7 +44,7 @@ const handleDeleteButtonClick = () => {
 
 const handleDraftButtonClick = () => {
   editor.value.draftCurrentArticle()
-  addMessage("Save the draft successfully", "success")
+  addMessage(t('message.article_editor.new.msg_draft_success'), "success")
 }
 
 const handleSubmitButtonClick = () => {

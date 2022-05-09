@@ -1,7 +1,6 @@
-// Contributed by Yi Shen
-
-const fr = {
+const frFR = {
     language: "Français",
+    localization_acknowledgement: "La localisation française est fournie par Yi Shen",
     message: {
         top_menu: {
             menu_item_student: "Étudiant",
@@ -17,6 +16,7 @@ const fr = {
             item_change_password: "Remplacez le mode nuit.",
             item_logout: "Quitter",
             item_language: "Langue: ",
+            item_about: "à propos",
         },
         change_password_box: {
             box_title: "Remplacez le mode nuit",
@@ -30,6 +30,10 @@ const fr = {
             msg_same_new_pass: "Veuillez entrer un mot de passe différent.",
             msg_missing_check_pass: "Veuillez saisir à nouveau le nouveau mot de passe.",
             msg_different_check_pass: "Les deux nouveaux mots de passe ne correspondent pas.",
+        },
+        about_dialog: {
+            dialog_title: "à propos",
+            button_submit: "Confirmer",
         },
         avatar_with_card: {
             userinfo_label_colon: ": ",
@@ -96,9 +100,40 @@ const fr = {
         handle_user_api: {
             msg_no_login: "Veuillez d’abord vous connecter",
             msg_logout_success: "Déconnexion réussie",
-        }
+        },
+        resource_tag_list: {
+            label_classification: "Classification: ",
+        },
+        article_editor: {
+            input_placeholder_title: "Please input the title",
+            label_select_type: "Please select type:",
+            label_preview: "Preview:",
+            button_delete: "Delete",
+            button_draft: "Draft",
+            button_submit: "Submit",
+            current: {
+                label_delete_confirm: "Confirm to delete the article?",
+                button_confirm: "Confirm",
+                button_cancel: "Cancel",
+                msg_draft_warn: "Do not support drafting for posted article.",
+            },
+            new: {
+                label_reset_confirm: "Confirm to reset the article?",
+                button_confirm: "Confirm",
+                button_cancel: "Cancel",
+                msg_reset_success: "Reset the article successfully.",
+                msg_draft_success: "Save the draft successfully.",
+            },
+        },
     },
-    html:{
+    extra: {
+        internationale: {
+            title: "L'Internationale",
+            author: "—Eugène Pottier, ",
+            lyric: "L’Internationale,\nSera le genre humain.",
+        },
+    },
+    html: {
         no_register_dialog: {
             information:
                 "<p>Désolé, cette application interne ne fournit pas de service d’auto-inscription</p>\n" +
@@ -125,4 +160,4 @@ const fr = {
     }
 }
 
-export default fr
+export default frFR

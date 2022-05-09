@@ -1,8 +1,7 @@
 <template>
   <el-dialog
-      :model-value="isShowPassBox"
+      v-model="isShowDialog"
       :title="$t('message.change_password_box.box_title')"
-      @close="closePassBox()"
       width="30%"
       ref="passBoxRef"
   >
@@ -66,15 +65,20 @@
 </template>
 
 <script setup>
-import {reactive, defineProps, ref} from "vue";
+import {reactive, defineExpose, ref} from "vue";
 import {changePassword} from "@/scripts/api/handleUserApi";
 import {useI18n} from "vue-i18n"
 
 const {t} = useI18n()
 
-defineProps({
-  isShowPassBox: Boolean,
-  closePassBox: Function
+const isShowDialog = ref(false)
+
+const openDialog = () => {
+  isShowDialog.value = true
+}
+
+defineExpose({
+  openDialog
 })
 
 const ruleFormRef = ref(null)

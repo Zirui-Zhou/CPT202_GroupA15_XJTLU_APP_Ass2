@@ -28,7 +28,6 @@
 import {computed, defineProps, onBeforeMount, ref} from "vue";
 import {useStore} from "vuex";
 import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
-import {delay} from "@/scripts/utils/commonUtils";
 
 const store = useStore()
 

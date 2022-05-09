@@ -17,7 +17,7 @@
 
   <TimeLineList :key="activeTab" :list-type="activeTab"/>
 
-  <NewArticleButton/>
+  <AddNewArticleButton/>
 
 </template>
 
@@ -25,7 +25,7 @@
 import {ref} from "vue";
 import TimeLineList from "@/components/main_page/conmponents/single_card_list/TimeLineCardList";
 import UserInfoForm from "@/components/main_page/student_page/UserInfoForm";
-import NewArticleButton from "@/components/NewArticleButton";
+import AddNewArticleButton from "@/components/AddNewArticleButton";
 
 const activeTab = ref("mine")
 

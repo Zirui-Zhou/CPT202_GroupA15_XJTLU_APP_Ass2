@@ -1,6 +1,11 @@
 <template>
-  <el-backtop class="topButton" :bottom="160" :right="120">
-    <div class="newButton" @click.stop="editNewArticle">
+  <el-backtop
+      class="topButton"
+      :bottom="160"
+      :right="120"
+      :visibility-height="100"
+  >
+    <div class="newButton" @click.stop="handleClick">
       <el-icon :size="30" class="editIcon">
         <Edit/>
       </el-icon>
@@ -9,14 +14,12 @@
 </template>
 
 <script setup>
+import { defineProps } from "vue";
 import {Edit} from "@element-plus/icons-vue";
-import {useRouter} from "vue-router";
 
-const router = useRouter()
-
-const editNewArticle = () => {
-  router.push("/article/add")
-}
+defineProps({
+  handleClick: Function,
+})
 
 </script>
 

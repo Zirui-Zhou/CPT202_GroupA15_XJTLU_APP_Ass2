@@ -1,5 +1,6 @@
 const zh = {
     language: "日本語",
+    localization_acknowledgement: "日本語のローカリゼーションは Google翻訳 によって提供されます",
     message: {
         top_menu: {
             menu_item_student: "学生",
@@ -15,6 +16,7 @@ const zh = {
             item_change_password: "パスワードを変更する",
             item_logout: "ログアウト",
             item_language: "言語：",
+            item_about: "ついて",
         },
         change_password_box: {
             box_title: "パスワードの変更",
@@ -28,6 +30,10 @@ const zh = {
             msg_same_new_pass: "別のパスワードを入力してください",
             msg_missing_check_pass: "新しいパスワードをもう一度入力してください",
             msg_different_check_pass: "2つのパスワードが一致しません",
+        },
+        about_dialog: {
+            dialog_title: "ついて",
+            button_submit: "確認",
         },
         avatar_with_card: {
             userinfo_label_colon: "：",
@@ -94,9 +100,40 @@ const zh = {
         handle_user_api: {
             msg_no_login: "最初にログインしてください",
             msg_logout_success: "ログアウトに成功しました",
-        }
+        },
+        resource_tag_list: {
+            label_classification: "分類：",
+        },
+        article_editor: {
+            input_placeholder_title: "Please input the title",
+            label_select_type: "Please select type:",
+            label_preview: "Preview:",
+            button_delete: "Delete",
+            button_draft: "Draft",
+            button_submit: "Submit",
+            current: {
+                label_delete_confirm: "Confirm to delete the article?",
+                button_confirm: "Confirm",
+                button_cancel: "Cancel",
+                msg_draft_warn: "Do not support drafting for posted article.",
+            },
+            new: {
+                label_reset_confirm: "Confirm to reset the article?",
+                button_confirm: "Confirm",
+                button_cancel: "Cancel",
+                msg_reset_success: "Reset the article successfully.",
+                msg_draft_success: "Save the draft successfully.",
+            },
+        },
     },
-    html:{
+    extra: {
+        internationale: {
+            title: "インターナショナル",
+            author: "—ウジェーヌ・ポティエ，",
+            lyric: "あぁ\nインターナショナル\n我等がもの",
+        },
+    },
+    html: {
         no_register_dialog: {
             information:
                 "<p>申し訳ありませんが、この内部アプリケーションは自己登録サービスを提供していません</p>\n" +

@@ -69,10 +69,8 @@
     </el-row>
   </el-menu>
 
-  <SettingBox
-      :key="isShowSetting"
-      :is-show-setting="isShowSetting"
-      :close-setting="closeSetting"
+  <SettingDrawer
+      ref="SettingDrawerRef"
   />
 
 </template>
@@ -84,19 +82,17 @@ import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 import AvatarWithCard from "@/components/AvatarWithCard";
 import {addMessage} from "@/scripts/utils/messageUtils";
-import SettingBox from "@/components/setting_box/SettingBox";
 import {useI18n} from "vue-i18n"
 import {logout, needLogin} from "@/scripts/api/handleUserApi";
+import SettingDrawer from "@/components/setting_box/SettingDrawer";
 
 const router = useRouter()
 const store = useStore()
 const {t} = useI18n()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
-
-const isShowSetting = ref(false)
-
 const input = ref("")
+const SettingDrawerRef = ref(null)
 
 const searchArticle = (keyWord) => {
   if(keyWord.length === 0) {
@@ -111,16 +107,12 @@ const handleBannerClick = ()=>{
 }
 
 const handleIconClick = () => {
-  isShowSetting.value = true
+  SettingDrawerRef.value.openSetting()
 }
 
 const handleAvatarClick = async () => {
   if(await needLogin(""))
     await router.push("/student")
-}
-
-const closeSetting = () => {
-  isShowSetting.value = false
 }
 
 </script>
