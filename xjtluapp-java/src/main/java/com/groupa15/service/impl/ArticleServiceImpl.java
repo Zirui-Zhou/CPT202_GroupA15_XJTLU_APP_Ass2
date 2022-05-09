@@ -7,6 +7,7 @@ import com.groupa15.entity.Article;
 import com.groupa15.entity.dto.EditArticleDto;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
+import com.groupa15.entity.vo.ArticleVO;
 import com.groupa15.mapper.ArticleMapper;
 import com.groupa15.service.ArticleService;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -26,6 +27,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Autowired
     private ArticleMapper articleMapper;
+
+    @Override
+    public ArticleVO getArticleVoById(Long id) {
+        ArticleVO article = articleMapper.selectArticleById(id);
+        if(article == null) {
+            // TODO(Zirui): Attempt to define a custom exception to inform this.
+            throw new UnknownAccountException("The article does not exist.");
+        }
+        return article;
+    }
 
     @Override
     public Article getArticleById(Long id) {
@@ -129,7 +140,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Boolean editArticle(Long userId, EditArticleDto articleDto) {
         Article article = this.getArticleById(articleDto.getId());
-        if(article.getEditorId().equals(userId))
+        if(!article.getEditorId().equals(userId))
             return false;
         article.setTitle(articleDto.getTitle())
                 .setImage(articleDto.getImage())
@@ -143,7 +154,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Boolean removeArticle(Long userId, Long articleId) {
         Article article = this.getArticleById(articleId);
-        if(article.getEditorId().equals(userId))
+        if(!article.getEditorId().equals(userId))
             return false;
         articleMapper.deleteArticle(articleId);
         return true;

@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/xjtlu_app?serverTimezone=GMT%2b8
+    url: jdbc:mysql://localhost:3306/xjtlu_app?serverTimezone=GMT%2b8&allowMultiQueries=true
     username: root
     password: GroupA15
     hikari:

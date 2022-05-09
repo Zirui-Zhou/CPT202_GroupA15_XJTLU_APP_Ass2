@@ -32,7 +32,7 @@
     </delete>
 
     <select id="selectAllArticleTypes" resultType="ArticleTypeVO">
-        SELECT t.type_id, IFNULL(t.type_name->>'$.${lang}', t.type_name->>'$.en') as type_name ,t.type_icon
+        SELECT t.type_id, IFNULL(t.type_name->>'$."${lang}"', t.type_name->>'$."en-US"') as type_name ,t.type_icon
         FROM xjtlu_app.article_type t
     </select>
 
@@ -54,8 +54,15 @@
                 )
     </select>
 
+    <select id="selectArticleById" resultType="articleVO">
+        SELECT id, title, content, edit_time, create_time, editor_id, image, type_id
+        FROM xjtlu_app.article a
+        INNER JOIN xjtlu_app.article_type_list t ON a.id = t.article_id
+        WHERE id = #{articleId}
+    </select>
+
     <sql id="selectArticle">
-        SELECT id, title, content, edit_time, create_time, a.editor_id, image,
+        SELECT id, title, content, edit_time, create_time, a.editor_id as editor_id, image,
                editor_name, avatar, type_id, #{viewerId} as viewer_id
         FROM (
                 Select user_id as editor_id,

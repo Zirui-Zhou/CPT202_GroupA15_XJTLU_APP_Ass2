@@ -6,6 +6,7 @@ import com.groupa15.entity.Article;
 import com.groupa15.entity.dto.EditArticleDto;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
+import com.groupa15.entity.vo.ArticleVO;
 import com.groupa15.service.ArticleService;
 import com.groupa15.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ArticleController {
 
     @GetMapping(value = "/article")
     public Response getArticle(@RequestParam(name = "id") Long id) {
-        Article article = articleService.getArticleById(id);
+        ArticleVO article = articleService.getArticleVoById(id);
         return Response.success(HttpStatus.OK, null, article);
     }
 
@@ -115,7 +116,7 @@ public class ArticleController {
     @GetMapping("article/remove")
     public Response removeArticle(@RequestHeader(value = "Authorization") String token, @RequestParam(name = "id") Long id) {
         Boolean result = articleService.removeArticle(jwtUtils.getUserIdByToken(token), id);
-        return Response.success(HttpStatus.OK, null, result);
+        return Response.success(HttpStatus.OK, "Remove article successfully", result);
     }
 
 }

@@ -11,12 +11,12 @@
     </select>
 
     <select id="selectGuideTypeVo" resultType="GuideTypeVO">
-        Select g.type_id, IFNULL(g.type_name->>'$.${lang}', g.type_name->>'$.en') as type_name, g.type_image
+        Select g.type_id, IFNULL(g.type_name->>'$."${lang}"', g.type_name->>'$."en-US"') as type_name, g.type_image
         FROM xjtlu_app.guide_type g
     </select>
 
     <select id="selectGuideTypeVoById" resultType="GuideTypeVO">
-        SELECT g.type_id, IFNULL(g.type_name->>'$.${lang}', g.type_name->>'$.en') as type_name, g.type_image
+        SELECT g.type_id, IFNULL(g.type_name->>'$."${lang}"', g.type_name->>'$."en-US"') as type_name, g.type_image
         FROM xjtlu_app.guide_type g
         WHERE g.type_id = #{typeId}
     </select>

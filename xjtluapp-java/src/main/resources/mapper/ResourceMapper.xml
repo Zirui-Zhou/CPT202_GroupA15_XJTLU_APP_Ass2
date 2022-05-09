@@ -28,8 +28,8 @@
     <select id="selectAllResourceTypes" resultMap="ResourceTagMap">
         SELECT
                a.id as tagId,
-               IFNULL(a.name->>'$.${lang}', a.name->>'$.en') as tagName,
-               IFNULL(b.name->>'$.${lang}', b.name->>'$.en') as typeName
+               IFNULL(a.name->>'$."${lang}"', a.name->>'$."en-US"') as tagName,
+               IFNULL(b.name->>'$."${lang}"', b.name->>'$."en-US"') as typeName
         FROM xjtlu_app.resource_tag a
                  INNER JOIN xjtlu_app.resource_tag_type b
                             on a.type = b.id

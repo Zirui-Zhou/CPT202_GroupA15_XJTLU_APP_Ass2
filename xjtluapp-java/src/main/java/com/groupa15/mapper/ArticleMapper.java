@@ -9,6 +9,7 @@ import com.groupa15.entity.Article;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.groupa15.entity.vo.ArticleTypeVO;
+import com.groupa15.entity.vo.ArticleVO;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,6 +20,8 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
+
+    ArticleVO selectArticleById(@Param("articleId") Long articleId);
 
     Page<ArticleScreenshotVO> selectArticlePageVo(Page<ArticleScreenshotVO> iPage, @Param("viewerId") Long viewerId);
 
@@ -54,6 +57,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     List<ArticleTypeVO> selectAllArticleTypes(@Param("lang") String lang);
 
-    Void deleteArticle(@Param("articleId") Long articleId);
+    Boolean deleteArticle(@Param("articleId") Long articleId);
 
 }

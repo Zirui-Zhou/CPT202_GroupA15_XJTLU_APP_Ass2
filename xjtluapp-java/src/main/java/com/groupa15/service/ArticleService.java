@@ -6,6 +6,7 @@ import com.groupa15.entity.Article;
 import com.groupa15.entity.dto.EditArticleDto;
 import com.groupa15.entity.vo.ArticleScreenshotVO;
 import com.groupa15.entity.vo.ArticleTypeVO;
+import com.groupa15.entity.vo.ArticleVO;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ import java.util.List;
  */
 
 public interface ArticleService extends IService<Article> {
+
+    ArticleVO getArticleVoById(Long id);
 
     Article getArticleById(Long id);
 
