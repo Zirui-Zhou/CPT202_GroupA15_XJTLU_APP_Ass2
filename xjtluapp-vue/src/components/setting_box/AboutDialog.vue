@@ -2,7 +2,7 @@
   <el-dialog
       v-model="isShowDialog"
       :title="$t('message.about_dialog.dialog_title')"
-      width="35%"
+      width="500px"
   >
     <h4 style="text-align: center;">
       {{ $t('localization_acknowledgement') }}
@@ -10,7 +10,7 @@
 
     <figure>
       <blockquote>
-        <p style="white-space: pre-line">
+        <p style="white-space: pre-line;">
           {{ $t('extra.internationale.lyric') }}
         </p>
       </blockquote>
@@ -21,7 +21,7 @@
     </figure>
 
     <template #footer>
-      <span class="dialog-footer" style="text-align: center">
+      <span class="dialog-footer">
         <el-button
             type="primary"
             @click="isShowDialog = false"
@@ -34,10 +34,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { defineExpose } from "vue";
+import { ref, defineExpose } from 'vue'
 
-const isShowDialog =ref(false)
+const isShowDialog = ref(false)
 
 const openDialog = () => {
   isShowDialog.value = true
@@ -48,25 +47,23 @@ defineExpose({
 })
 
 </script>
-<style scoped>
-.dialog-footer button:first-child {
-  margin-right: 10px;
+<style lang="scss" scoped>
+.dialog-footer {
+  text-align: center;
 }
+
 blockquote {
   margin: 0;
-}
-
-blockquote p {
-  padding: 15px;
-  background: #eee;
-  border-radius: 5px;
-}
-
-blockquote p::before {
-  content: '\201C';
-}
-
-blockquote p::after {
-  content: '\201D';
+  p {
+    padding: 15px;
+    background: #eee;
+    border-radius: 5px;
+  }
+  p::before {
+     content: '\201C';
+  }
+  p::after {
+    content: '\201D';
+  }
 }
 </style>

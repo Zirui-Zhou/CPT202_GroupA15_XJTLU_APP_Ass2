@@ -11,31 +11,38 @@
       :before-upload="beforeAvatarUpload"
   >
 
-    <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
+    <el-icon class="avatar-uploader-icon">
+      <Plus/>
+    </el-icon>
 
   </el-upload>
 
   <el-dialog v-model="dialogVisible">
-    <img :src="dialogImageUrl" alt="Preview Image" style="width:100%; object-fit: contain"/>
+    <img
+        class="imagePreview"
+        :src="dialogImageUrl"
+        alt="Preview Image"
+    />
   </el-dialog>
 
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
-import { ElMessage } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
-import { useStore } from "vuex";
-import { handleResourceUrl } from "@/scripts/utils/requestUtils";
 import { useI18n } from "vue-i18n"
+import { useStore } from "vuex";
+import { Plus } from '@element-plus/icons-vue'
+import { handleResourceUrl } from "@/scripts/utils/requestUtils";
+import  {addMessage } from "@/scripts/utils/messageUtils";
 
-const store = useStore()
 const {t} = useI18n()
-
-const fileList = reactive([])
-const isUploadShow = ref(true)
+const store = useStore()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
+const fileList = reactive([])
+const isUploadShow = ref(true)
+const dialogImageUrl = ref('')
+const dialogVisible = ref(false)
 
 const handleAvatarSuccess = (
     response,
@@ -49,19 +56,16 @@ const handleAvatarSuccess = (
 
 const beforeAvatarUpload = async (rawFile) => {
   // if (rawFile.type !== 'image/jpeg') {
-  //   ElMessage.error(t('message.upload_image.error_image_wrong_format', {format: "JPG"}))
+  //   addMessage(t('message.upload_image.error_image_wrong_format', {format: "JPG"}), 'warning')
   //   return false
   // } else
   if (rawFile.size / 1024 / 1024 > 10) {
-    ElMessage.error(t('message.upload_image.error_image_oversize', {size: 2}))
+    addMessage(t('message.upload_image.error_image_oversize', {size: 2}), 'warning')
     return false
   }
   isUploadShow.value = false
   return true
 }
-
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
 
 const handlePictureCardPreview = (file) => {
   dialogImageUrl.value = file.url
@@ -81,16 +85,7 @@ onMounted(async ()=>{
     }
   }
 })
-
 </script>
-
-<style scoped>
-.avatar-uploader .avatar {
-  width: 100px;
-  height: 100px;
-  display: block;
-}
-</style>
 
 <style lang="scss">
 .avatar-uploader {
@@ -119,7 +114,7 @@ onMounted(async ()=>{
   text-align: center;
 }
 
-.el-upload-list--picture-card  {
+.el-upload-list--picture-card {
   margin: 0;
   display: block;
   --el-upload-list-picture-card-size: 100px;
@@ -134,5 +129,17 @@ onMounted(async ()=>{
 .el-upload-list__item.is-success .el-upload-list__item-status-label {
   display: none;
 }
+</style>
 
+<style scoped>
+.avatar-uploader .avatar {
+  width: 100px;
+  height: 100px;
+  display: block;
+}
+
+.imagePreview {
+  width:100%;
+  object-fit: contain;
+}
 </style>

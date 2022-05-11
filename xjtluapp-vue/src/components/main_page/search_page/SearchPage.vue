@@ -13,14 +13,13 @@
 </template>
 
 <script setup>
-import SingleColumnCardList from "@/components/main_page/conmponents/single_card_list/SingleColumnCardList";
-import {useRoute} from "vue-router";
 import {computed} from "vue";
+import {useRoute} from "vue-router";
+import SingleColumnCardList from "@/components/main_page/conmponents/single_card_list/SingleColumnCardList";
 
 const route = useRoute()
 
 const keyWord = computed(()=>route.query.word)
-
 </script>
 
 <style scoped>

@@ -1,6 +1,10 @@
 <template>
 
-  <img src="@/assets/xjtlu_name.svg" class="banner" @click="handleBannerClick()">
+  <img
+      class="banner"
+      src="@/assets/xjtlu_name.svg"
+      @click="handleBannerClick()"
+  >
 
   <el-menu
       :default-active="router.currentRoute.value.path"
@@ -27,13 +31,16 @@
           :placeholder="$t('message.top_menu.input_placeholder_input')"
           v-model="input"
           :disabled="!userInfo"
-          style="width: 200px"
-          class="align-right"
+          class="align-right input"
           :suffix-icon="Search"
           maxlength="32"
           @keydown.enter="searchArticle(input)"
       />
-      <el-divider class="align-right" direction="vertical"/>
+
+      <el-divider
+          class="align-right"
+          direction="vertical"
+      />
 
       <AvatarWithCard
           class="align-right"
@@ -42,7 +49,7 @@
       >
         <template #main v-if="!userInfo">
           <div>
-            <h2 style="margin: 120px 0; text-align: center">
+            <h2 class="noLoginBanner">
               {{ $t('message.avatar_with_card.label_no_login') }}
             </h2>
           </div>
@@ -61,8 +68,7 @@
 
       <el-icon
           class="align-right moreIcon"
-          style="transform: rotate(90deg)"
-          @click="handleIconClick()"
+          @click="handleMoreIconClick"
       >
         <MoreFilled/>
       </el-icon>
@@ -76,22 +82,23 @@
 </template>
 
 <script setup>
-import {ref, computed} from "vue"
-import {MoreFilled, Search} from "@element-plus/icons-vue";
-import {useRouter} from "vue-router";
-import {useStore} from "vuex";
+import { ref, computed } from "vue"
+import { useI18n } from "vue-i18n"
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { MoreFilled, Search } from "@element-plus/icons-vue";
+import { addMessage } from "@/scripts/utils/messageUtils";
+import { logout, needLogin } from "@/scripts/api/handleUserApi";
 import AvatarWithCard from "@/components/AvatarWithCard";
-import {addMessage} from "@/scripts/utils/messageUtils";
-import {useI18n} from "vue-i18n"
-import {logout, needLogin} from "@/scripts/api/handleUserApi";
 import SettingDrawer from "@/components/setting_box/SettingDrawer";
 
+const {t} = useI18n()
 const router = useRouter()
 const store = useStore()
-const {t} = useI18n()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
 const input = ref("")
+
 const SettingDrawerRef = ref(null)
 
 const searchArticle = (keyWord) => {
@@ -106,7 +113,7 @@ const handleBannerClick = ()=>{
   router.push("/guide")
 }
 
-const handleIconClick = () => {
+const handleMoreIconClick = () => {
   SettingDrawerRef.value.openSetting()
 }
 
@@ -114,42 +121,49 @@ const handleAvatarClick = async () => {
   if(await needLogin(""))
     await router.push("/student")
 }
-
 </script>
 
 <style scoped>
+.align-right {
+  margin: auto 10px auto auto;
+}
 
-.topMenu{
+.topMenu {
   border-right: none;
 }
 
-.banner{
+.banner {
   width: 15%;
   height: 15%;
   margin: 10px;
 }
 
-.banner:hover{
+.banner:hover {
   cursor: pointer;
 }
 
-.align-right{
-  margin: auto 10px auto auto;
+.input {
+  width: 200px
 }
 
-.moreIcon{
-  color: var(--el-color-info-dark-2)
+.moreIcon {
+  color: var(--el-color-info-dark-2);
+  transform: rotate(90deg);
 }
 
-.moreIcon:hover{
+.moreIcon:hover {
   color: var(--el-color-primary-light-3);
   cursor: pointer;
 }
 
-.logoutButton{
+.logoutButton {
   width: calc(100% - 20px);
   margin: 10px;
   height: 40px;
 }
 
+.noLoginBanner {
+  margin: 120px 0;
+  text-align: center;
+}
 </style>

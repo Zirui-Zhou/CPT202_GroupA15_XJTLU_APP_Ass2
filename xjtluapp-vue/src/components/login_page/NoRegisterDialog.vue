@@ -1,26 +1,25 @@
 <template>
   <el-dialog
       :title="$t('message.no_register_dialog.dialog_title')"
-      width="35%"
-      :model-value="isShow"
-      @close="closeDialog()"
+      width="550px"
+      v-model="isShowDialog"
   >
     <div class="content">
-      <div
-          v-html="$t('html.no_register_dialog.information')"
-      />
+      <div style="margin: auto" v-html="$t('html.no_register_dialog.information')"/>
     </div>
+
     <template #footer>
       <span class="dialog-footer">
         <el-button
             size="large"
-            @click="closeDialog">
+            type="default"
+            @click="isShowDialog=false">
           {{ $t('message.no_register_dialog.button_cancel') }}
         </el-button>
         <el-button
             size="large"
             type="primary"
-            @click="()=>{closeDialog(); fillInputFunc()}">
+            @click="fillInputFunc(); isShowDialog=false">
           {{ $t('message.no_register_dialog.button_confirm') }}
         </el-button>
       </span>
@@ -29,19 +28,26 @@
 </template>
 
 <script setup>
-import {defineProps} from "vue";
+import { defineProps, ref, defineExpose } from "vue";
 
-const props = defineProps({
-  isShow: Boolean,
-  closeDialog: Function,
+const isShowDialog = ref(false)
+
+const openDialog = () => {
+  isShowDialog.value = true
+}
+
+defineProps({
   fillInputFunc: Function,
+})
+
+defineExpose({
+  openDialog,
 })
 
 </script>
 
 <style scoped>
-
-.content{
+.content {
   display: flex;
   justify-content: center;
   font-size: 18px;
@@ -50,5 +56,4 @@ const props = defineProps({
 .link{
   color: #0000FF
 }
-
 </style>

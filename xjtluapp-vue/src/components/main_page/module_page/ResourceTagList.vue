@@ -22,7 +22,9 @@
       v-for="(tags, index) in allTagList"
       :key="index"
   >
-    <span class="tagTitle">{{ tags.typeName + ":" }}</span>
+    <span class="tagTitle">
+      {{ tags.typeName + ":" }}
+    </span>
     <div class="tagBlock">
       <el-link
           class="linkItem"
@@ -40,13 +42,11 @@
 </template>
 
 <script setup>
-import {computed, onBeforeMount, reactive, watch} from "vue";
-import {getAllResourceTags} from "@/scripts/api/handleResourceApi";
-import {useStore} from "vuex";
-import {useI18n} from "vue-i18n";
+import { computed, onBeforeMount, reactive, watch } from "vue";
+import { useStore } from "vuex";
+import { getAllResourceTags } from "@/scripts/api/handleResourceApi";
 
 const store = useStore()
-const {t} = useI18n()
 
 const selectedTags = computed(()=>store.getters.getSelectedTags)
 const allTagList = reactive([])
@@ -73,9 +73,9 @@ const loadResourceTags = async () => {
   allTagList.push(...result)
 }
 
-watch(()=>store.getters.getLang, ()=>loadResourceTags())
+watch(() => store.getters.getLang, () => loadResourceTags())
 
-onBeforeMount(async ()=> loadResourceTags())
+onBeforeMount(async () => loadResourceTags())
 </script>
 
 <style scoped>

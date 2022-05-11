@@ -38,24 +38,24 @@
 </template>
 
 <script setup>
+import { computed, defineProps } from "vue";
+import { useStore } from "vuex"
+import { Star, Link, Delete, Edit } from "@element-plus/icons-vue";
 import {
   getArticleLink,
   handleFavouriteArticle,
   linkToEditArticle,
   removeHistoryArticle
 } from "@/scripts/api/handleArticleApi";
-import {addMessage} from "@/scripts/utils/messageUtils";
-import {Star, Link, Delete, Edit} from "@element-plus/icons-vue";
-import { computed, defineProps } from "vue";
-import { useStore } from "vuex"
+import { addMessage } from "@/scripts/utils/messageUtils";
 
 const store = useStore()
 
 const props = defineProps({
-  removeFunc: Function,
-  itemFunc: Function,
   item: Object,
+  itemFunc: Function,
   listType: String,
+  removeFunc: Function,
 })
 
 const userInfo = computed(()=>store.getters.getUserInfo)
@@ -89,7 +89,7 @@ const clickLinkIcon = async (id) => {
   }
   const link = getArticleLink(id)
   try {
-    await navigator.clipboard.writeText(link);
+    await navigator.clipboard.writeText(link)
     addMessage("Copy link to clipboard successfully", "success")
   } catch(e) {
     addMessage("Cannot copy the link to clipboard", "error")
@@ -117,7 +117,7 @@ const clickStarIcon = async (item, id) => {
 </script>
 
 <style scoped>
-.iconList{
+.iconList {
   display: inline-block;
   position:absolute;
   right: var(--el-card-padding);
@@ -125,18 +125,17 @@ const clickStarIcon = async (item, id) => {
   text-align: center
 }
 
-.icon{
+.icon {
   margin-left: 10px;
 }
 
-.iconFilled{
-  color: var(--el-color-primary-light-3);
-}
-
-.icon:hover{
+.icon:hover {
   transform: scale(1.2);
   color: var(--el-color-primary-light-3);
   transition: transform 0.5s;
 }
 
+.iconFilled {
+  color: var(--el-color-primary-light-3);
+}
 </style>

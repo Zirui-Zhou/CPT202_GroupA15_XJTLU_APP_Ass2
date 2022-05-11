@@ -24,9 +24,12 @@
 </template>
 
 <script setup>
-import {defineProps, reactive, onMounted, ref} from "vue";
-import {getGuideListOfType, getGuideType} from "@/scripts/api/handleGuideApi";
-import {delay, getFormattedDate} from "@/scripts/utils/commonUtils";
+import { defineProps, reactive, onMounted, ref, watch } from "vue";
+import { useStore } from "vuex";
+import { getGuideListOfType, getGuideType } from "@/scripts/api/handleGuideApi";
+import { delay, getFormattedDate } from "@/scripts/utils/commonUtils";
+
+const store = useStore()
 
 const props = defineProps({
   type: Number
@@ -38,13 +41,11 @@ const guideType = reactive([])
 const isLoading = ref(true)
 
 const loadGuideOfType = async (type) => {
-
   Object.assign(guideList, await getGuideListOfType(type))
   guideList.forEach((item, index, array)=>{
     item.guideDate = getFormattedDate(item.guideDate)
     array[index] = item
   })
-
 }
 
 const openUrl = (url) => {
@@ -52,8 +53,11 @@ const openUrl = (url) => {
 }
 
 const loadGuideType = async (type) => {
+  guideType.length = 0
   Object.assign(guideType, await getGuideType(type))
 }
+
+watch(()=>store.getters.getLang, ()=>loadGuideType(props.type))
 
 onMounted(async () =>{
   isLoading.value = true
@@ -62,7 +66,6 @@ onMounted(async () =>{
   await delay(300)
   isLoading.value = false
 })
-
 </script>
 
 <style scoped>

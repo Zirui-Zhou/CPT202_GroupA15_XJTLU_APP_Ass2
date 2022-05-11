@@ -1,7 +1,7 @@
 <template>
   <br/>
   <div class="title">
-    <div class="v-md-editor" style="border-bottom: 1px solid #ddd; flex-flow: row wrap;">
+    <div class="v-md-editor titleInputContainer">
       <textarea
           id="textarea"
           v-model="article.title.value"
@@ -12,21 +12,21 @@
           rows="1"
       />
 
-      <div style="width: 100%; margin: 0 32px 24px 32px;">
-
+      <div class="userInfoContainer">
         <p>{{ getFormattedTime(editTime) }}</p>
-
         <ArticleHeaderUserInfo
           :user-info="userInfo"
           :is-link-email="false"
         />
-
       </div>
     </div>
   </div>
 
   <div class="content">
-    <v-md-editor v-model="article.content.value" height="600px"/>
+    <v-md-editor
+        v-model="article.content.value"
+        height="600px"
+    />
   </div>
 
   <br/>
@@ -105,12 +105,10 @@
 </template>
 
 <script setup>
-import {onMounted, ref, computed, reactive, onBeforeMount, defineProps, defineExpose} from "vue";
-import {useStore} from "vuex"
-import {getFormattedTime} from "@/scripts/utils/commonUtils";
-import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
-import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
-import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
+import { onMounted, ref, computed, reactive, onBeforeMount, defineProps, defineExpose } from "vue";
+import { useRouter } from "vue-router";
+import { useStore} from "vuex"
+import { getFormattedTime } from "@/scripts/utils/commonUtils";
 import {
   addArticle,
   editArticle,
@@ -119,11 +117,13 @@ import {
   removeArticle
 } from "@/scripts/api/handleArticleApi";
 import UploadArticleImage from "@/components/article_page/UploadArticleImage";
-import { useRouter } from "vue-router";
 import ArticleHeaderUserInfo from "@/components/article_page/ArticleHeaderUserInfo";
+import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
+import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
+import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
 
-const store = useStore()
 const router = useRouter()
+const store = useStore()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
 const editTime = ref(new Date().getTime())
@@ -239,38 +239,39 @@ onMounted(()=>{
       .setAttribute("style", "background-color: white")
 
   window.scrollTo(0,0);
-
 })
 
 onBeforeMount(async ()=>{
   preHandleArticle()
   await getAllArticleTypes()
 })
-
 </script>
 
 <style lang="scss">
-
 .title {
-  .v-md-editor{
+  .v-md-editor {
     border-radius: 4px 4px 0 0;
   }
 }
 
 .content {
-  .v-md-editor{
+  .v-md-editor {
     box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.1);
     border-radius: 0 0 4px 4px;
   }
-  .v-md-textarea-editor{
+  .v-md-textarea-editor {
     background-color: white;
   }
 }
-
 </style>
 
 <style scoped>
-.titleInput{
+.titleInputContainer {
+  border-bottom: 1px solid #ddd;
+  flex-flow: row wrap;
+}
+
+.titleInput {
   width: 100%;
   border: none;
   outline: none;
@@ -283,19 +284,24 @@ onBeforeMount(async ()=>{
   background-color: white;
 }
 
-.submitButton{
+.userInfoContainer {
+  width: 100%;
+  margin: 0 32px 24px 32px;
+}
+
+.submitButton {
   width: 130px;
   font-size: 20px;
   padding: 20px;
   margin: 32px 32px 32px 0;
 }
 
-.card{
+.card {
   position: relative;
   height: 200px;
 }
 
-.card:hover{
+.card:hover {
   transform: scale(1.03);
   position: relative;
   z-index: 1;
@@ -303,5 +309,4 @@ onBeforeMount(async ()=>{
 
   cursor: pointer;
 }
-
 </style>

@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-  import {onMounted, reactive, ref, defineProps} from "vue";
+  import { onMounted, reactive, ref, defineProps  } from "vue";
   import {
     getArticleList,
     getArticleListOfFavourite,
@@ -63,7 +63,7 @@
     getArticleListOfType,
     linkToArticle
   } from "@/scripts/api/handleArticleApi";
-  import {delay, getFormattedTime} from "@/scripts/utils/commonUtils";
+  import { delay, getFormattedTime } from "@/scripts/utils/commonUtils";
   import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
   import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
   import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
@@ -164,12 +164,12 @@
 </script>
 
 <style scoped>
-.card{
+.card {
   position: relative;
   height: 200px;
 }
 
-.card:hover{
+.card:hover {
   transform: scale(v-bind(cardScale));
   position: relative;
   z-index: 1;
@@ -178,15 +178,14 @@
   cursor: pointer;
 }
 
-.cardRemove{
+.cardRemove {
   opacity: 0;
   transition: opacity 0.5s;
 }
 
-.nothingCard{
+.nothingCard {
   display: flex;
   align-items: center;
   justify-content: center
 }
-
 </style>

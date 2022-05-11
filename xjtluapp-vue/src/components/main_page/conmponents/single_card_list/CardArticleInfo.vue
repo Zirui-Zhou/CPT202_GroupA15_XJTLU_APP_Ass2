@@ -1,33 +1,37 @@
 <template>
-  <div style="display: block;">
 
-    <div style="display: flex">
-      <el-icon style="display: inline-block" :size="30">
-        <component v-if="!isLoadingType" :is="articleTypeIcon"/>
-      </el-icon>
+  <div style="display: flex">
+    <el-icon :size="30">
+      <component
+          v-if="!isLoadingType"
+          :is="articleTypeIcon"
+      />
+    </el-icon>
 
-      <h3 style="margin: auto 10px">{{item.title}}</h3>
-    </div>
-
-    <br/>
-
-    <slot name="image">
-      <el-image
-          class="img"
-          v-loading="item.isLoading"
-          :src="item.image"
-          @load="itemFunc(item, 'isLoading', false)"
-      >
-        <template #error><div/></template>
-      </el-image>
-    </slot>
+    <h3 style="margin: auto 10px">
+      {{item.title}}
+    </h3>
   </div>
+
+  <br/>
+
+  <slot name="image">
+    <el-image
+        class="articleImage"
+        v-loading="item.isLoading"
+        :src="item.image"
+        @load="itemFunc(item, 'isLoading', false)"
+        fit="cover"
+    >
+    </el-image>
+  </slot>
+
 </template>
 
 <script setup>
-import {computed, defineProps, onBeforeMount, ref} from "vue";
-import {useStore} from "vuex";
-import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
+import { computed, defineProps, onBeforeMount, ref } from "vue";
+import { useStore  } from "vuex";
+import { getAllArticleTypes } from "@/scripts/api/handleArticleApi";
 
 const store = useStore()
 
@@ -50,13 +54,11 @@ onBeforeMount(async ()=>{
   }
   isLoadingType.value = false
 })
-
 </script>
 
 <style scoped>
-.img{
+.articleImage {
   height: 110px;
   width: 165px;
-  object-fit: cover
 }
 </style>

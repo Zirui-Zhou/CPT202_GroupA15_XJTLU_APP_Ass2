@@ -1,12 +1,22 @@
 <template>
   <div class="articleReaderContent" v-loading="isLoading">
     <div v-show="!isLoading">
-      <ArticleHeader :article="article" :editor-info="editorInfo"/>
+      <ArticleHeader
+          :article="article"
+          :editor-info="editorInfo"
+      />
+
       <el-divider class="divider" direction="horizontal"/>
-      <v-md-preview :text="article.content" style="background-color: white"></v-md-preview>
-    <!--  <ArticleBottom/>-->
+
+      <v-md-preview
+          :text="article.content"
+          style="background-color: white"
+      />
+
       <el-divider class="divider" direction="horizontal"/>
+
       <ArticleComment/>
+
       <EditCurrentArticleButton
           v-if="isShowEditButton()"
           :id="article.id"
@@ -16,15 +26,15 @@
 </template>
 
 <script setup>
-import {useRoute} from "vue-router";
-import {computed, onBeforeMount, reactive, ref} from "vue";
-import {getEditorInfo} from "@/scripts/api/handleUserApi";
-import {getArticle, addHistoryArticle} from "@/scripts/api/handleArticleApi";
+import { computed, onBeforeMount, reactive, ref } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import { getEditorInfo } from "@/scripts/api/handleUserApi";
+import { getArticle, addHistoryArticle } from "@/scripts/api/handleArticleApi";
+import { delay } from "@/scripts/utils/commonUtils";
 import ArticleHeader from "@/components/article_page/ArticleHeader";
 import ArticleComment from "@/components/article_page/ArticleComment";
-import {delay} from "@/scripts/utils/commonUtils";
 import EditCurrentArticleButton from "@/components/EditCurrentArticleButton";
-import {useStore} from "vuex";
 
 const route = useRoute()
 const store = useStore()
@@ -49,19 +59,15 @@ onBeforeMount(async () => {
   isLoading.value = false
   await addHistoryArticle(id)
 })
-
 </script>
 
 <style>
-
 /* Attention: the style here is not scoped to overwrite the spinner style */
-
-.articleReaderContent .el-loading-spinner{
+.articleReaderContent .el-loading-spinner {
   top: 60%;
   left: 0;
   position: fixed;
 }
-
 </style>
 
 <style scoped>

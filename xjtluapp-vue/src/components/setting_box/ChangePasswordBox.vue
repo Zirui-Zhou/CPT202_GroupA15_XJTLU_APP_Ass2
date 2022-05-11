@@ -2,7 +2,7 @@
   <el-dialog
       v-model="isShowDialog"
       :title="$t('message.change_password_box.box_title')"
-      width="30%"
+      width="450px"
       ref="passBoxRef"
   >
     <el-form
@@ -55,7 +55,10 @@
         >
           {{ $t('message.change_password_box.button_submit') }}
         </el-button>
-        <el-button @click="resetForm(ruleFormRef)">
+        <el-button
+            type="default"
+            @click="resetForm(ruleFormRef)"
+        >
           {{ $t('message.change_password_box.button_reset') }}
         </el-button>
       </el-form-item>
@@ -65,13 +68,16 @@
 </template>
 
 <script setup>
-import {reactive, defineExpose, ref} from "vue";
-import {changePassword} from "@/scripts/api/handleUserApi";
-import {useI18n} from "vue-i18n"
+import { reactive, defineExpose, ref } from "vue";
+import { useI18n } from "vue-i18n"
+import { changePassword } from "@/scripts/api/handleUserApi";
 
 const {t} = useI18n()
 
 const isShowDialog = ref(false)
+
+const ruleFormRef = ref(null)
+const passBoxRef = ref(null)
 
 const openDialog = () => {
   isShowDialog.value = true
@@ -80,9 +86,6 @@ const openDialog = () => {
 defineExpose({
   openDialog
 })
-
-const ruleFormRef = ref(null)
-const passBoxRef = ref(null)
 
 const validateOldPass = (rule, value, callback) => {
   if (value === '') {
@@ -129,7 +132,8 @@ const rules = reactive({
 })
 
 const submitForm = (formEl) => {
-  if (!formEl) return
+  if (!formEl)
+    return
   formEl.validate((valid) => {
     if (valid) {
       changePassword({
@@ -148,11 +152,10 @@ const resetForm = (formEl) => {
   if (!formEl) return
   formEl.resetFields()
 }
-
 </script>
 
 <style scoped>
-.passInput{
+.passInput {
   margin-bottom: 30px
 }
 </style>

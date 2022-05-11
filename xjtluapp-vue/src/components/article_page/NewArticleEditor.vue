@@ -10,14 +10,14 @@
 
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useStore } from "vuex"
 import { ElMessageBox } from "element-plus";
 import { addMessage } from "@/scripts/utils/messageUtils";
 import ArticleEditor from "@/components/article_page/ArticleEditor";
-import {useI18n} from "vue-i18n";
 
-const store = useStore()
 const {t} = useI18n()
+const store = useStore()
 
 const editor = ref(null)
 const articleDraft = store.getters.getArticleDraft
@@ -50,7 +50,6 @@ const handleDraftButtonClick = () => {
 const handleSubmitButtonClick = () => {
   editor.value.addCurrentArticle()
 }
-
 </script>
 
 <style scoped>

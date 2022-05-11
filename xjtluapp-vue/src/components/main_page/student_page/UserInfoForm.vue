@@ -12,16 +12,16 @@
         class="userInfoForm"
     >
       <el-descriptions-item
-          v-for="([key, value], index) in unref(userInfoList)"
+          v-for="([key, value], index) in userInfoList"
           :key="index"
       >
         <template #label>
-          <div class="label" style="text-transform: capitalize">
+          <div class="label">
             {{ key() }}
           </div>
         </template>
-        <div class="content" style="display: flex">
-          <span>{{ value }}</span>
+        <div class="content">
+          {{ value }}
         </div>
       </el-descriptions-item>
     </el-descriptions>
@@ -30,13 +30,13 @@
 </template>
 
 <script setup>
+import { computed, reactive } from "vue";
+import { useI18n } from "vue-i18n"
+import { useStore } from "vuex";
 import UploadImage from "@/components/main_page/student_page/UploadImage"
-import {computed, reactive, unref} from "vue";
-import {useStore} from "vuex";
-import {useI18n} from "vue-i18n"
 
-const store = useStore()
 const {t} = useI18n()
+const store = useStore()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
 
@@ -50,31 +50,20 @@ const userInfoList = reactive([
 </script>
 
 <style>
-
 /* For the dark mode */
-.userInfoForm .el-descriptions__label.el-descriptions__cell.is-bordered-label{
+.userInfoForm .el-descriptions__label.el-descriptions__cell.is-bordered-label {
   background-color: var(--el-color-info-light-9);;
 }
-
 </style>
 
 <style scoped>
-.label{
+.label {
   min-width: 50px;
+  text-transform: capitalize;
 }
 
-.content{
+.content {
   min-width: 240px;
-}
-
-.editIcon{
-  margin: auto 0 auto auto;
-  color: var(--el-color-info-light-3)
-}
-
-.editIcon:hover{
-  margin: auto 0 auto auto;
-  color: var(--el-color-primary-light-3);
-  cursor: pointer;
+  display: flex;
 }
 </style>

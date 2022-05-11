@@ -25,14 +25,14 @@
 
 <script setup>
 import { ref, reactive, defineProps, onMounted, watch } from 'vue'
-import { ElMessage } from 'element-plus'
-import { useStore } from "vuex";
 import { useI18n } from "vue-i18n"
+import { useStore } from "vuex";
 import { UploadFilled } from "@element-plus/icons-vue"
 import { handleResourceUrl } from "@/scripts/utils/requestUtils";
+import { addMessage } from "@/scripts/utils/messageUtils";
 
-const store = useStore()
 const {t} = useI18n()
+const store = useStore()
 
 const fileList = reactive([])
 const isUploadShow = ref(true)
@@ -51,11 +51,11 @@ const handleAvatarSuccess = (
 
 const beforeAvatarUpload = async (rawFile) => {
   // if (rawFile.type !== 'image/jpeg') {
-  //   ElMessage.error(t('message.upload_image.error_image_wrong_format', {format: "JPG"}))
+  //   addMessage(t('message.upload_image.error_image_wrong_format', {format: "JPG"}), 'warning')
   //   return false
   // } else
   if (rawFile.size / 1024 / 1024 > 10) {
-    ElMessage.error(t('message.upload_image.error_image_oversize', {size: 2}))
+    addMessage(t('message.upload_image.error_image_oversize', {size: 2}), 'warning')
     return false
   }
   isUploadShow.value = false
@@ -90,7 +90,6 @@ onMounted( ()=>{
     }
   }
 })
-
 </script>
 
 <style scoped>
@@ -106,25 +105,25 @@ onMounted( ()=>{
   .el-upload:hover {
     border-color: var(--el-color-primary);
   }
-  .el-upload{
+  .el-upload {
     height: 110px;
     width: 165px;
     border: none;
     display: v-bind("isUploadShow === true ? 'block' : 'none'");
   }
-  .el-upload-dragger{
+  .el-upload-dragger {
     height: 110px;
     width: 165px;
   }
-  .el-icon--upload{
+  .el-icon--upload {
     margin: 0;
     font-size: 60px;
     z-index: 100;
   }
-  .el-upload__text{
+  .el-upload__text {
     font-size: 10px;
   }
-  .el-upload-list--picture-card  {
+  .el-upload-list--picture-card {
     margin: 0;
     border: none;
     .el-upload-list__item {
@@ -141,5 +140,4 @@ onMounted( ()=>{
 .el-upload-list__item.is-success .el-upload-list__item-status-label {
   display: none;
 }
-
 </style>

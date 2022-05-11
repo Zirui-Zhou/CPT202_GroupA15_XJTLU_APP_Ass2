@@ -8,14 +8,13 @@
       <el-button
           type="default"
           class="button"
-          @click="openurl(item.url)"
+          @click="openUrl(item.url)"
       >
         {{ item.name }}
       </el-button>
     </div>
   </div>
 </template>
-
 
 <script setup>
 const referenceList = [
@@ -28,17 +27,18 @@ const referenceList = [
   {name: "Email", url: "https://mail.xjtlu.edu.cn"},
 ]
 
-const openurl = (url) => {
+const openUrl = (url) => {
   window.open(url)
 }
 </script>
 
 <style scoped>
-.button{
+.button {
   display: block;
   width: 70%;
   margin: 10px auto;
 }
+
 .space {
   display: flex;
   flex-flow: row wrap;

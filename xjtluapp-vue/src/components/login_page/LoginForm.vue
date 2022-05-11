@@ -2,14 +2,22 @@
   <el-container>
 
     <el-header class="deep-color center">
-        <img src="../../assets/xjtlu_badge.png" alt="app" class="xjtlu_badge">
+        <el-image
+            :src="require('@/assets/xjtlu_badge.png')"
+            class="xjtlu_badge"
+        />
         <span class="banner">
           {{ $t('message.login_form.form_title') }}
         </span>
     </el-header>
 
     <el-main class="light-color center">
-      <el-form style="width: 80%" :rules="rules" :model="ruleForm" ref="ruleFormRef">
+      <el-form
+          style="width: 80%"
+          :rules="rules"
+          :model="ruleForm"
+          ref="ruleFormRef"
+      >
         <el-form-item prop="username">
           <el-input
               :prefix-icon="Avatar"
@@ -32,7 +40,7 @@
 
         <el-form-item>
           <div style="margin-left: auto; margin-right: 0;">
-            <el-switch  v-model="ruleForm.isRemember"/>
+            <el-switch v-model="ruleForm.isRemember"/>
             <span style="margin-left: 10px">
               {{ $t('message.login_form.switch_remember_me') }}
             </span>
@@ -79,36 +87,24 @@
   </el-container>
 
   <NoRegisterDialog
-    :is-show="isShowNoRegister"
-    :close-dialog="closeDislog"
-    :fill-input-func="fillInputFunc"
+      ref="NoRegDialogRef"
+      :fill-input-func="fillInputFunc"
   />
 
 </template>
 
 <script setup>
 import {ref, unref, reactive} from 'vue'
+import {useRouter} from "vue-router";
+import {useI18n} from "vue-i18n"
 import {Avatar, Key, ArrowLeft} from "@element-plus/icons-vue"
 import {login} from "@/scripts/api/handleUserApi";
-import {useRouter} from "vue-router";
 import {delay} from "@/scripts/utils/commonUtils";
 import {addMessage} from "@/scripts/utils/messageUtils";
 import NoRegisterDialog from "@/components/login_page/NoRegisterDialog"
-import {useI18n} from "vue-i18n"
 
-const router = useRouter()
 const {t} = useI18n()
-
-const isShowNoRegister = ref(false)
-
-const closeDislog = () => {
-  isShowNoRegister.value = false
-}
-
-const fillInputFunc = () => {
-  ruleForm.username = "zirui.zhou"
-  ruleForm.password = "zirui.zhou"
-}
+const router = useRouter()
 
 const ruleForm = reactive({
   username: '',
@@ -117,6 +113,7 @@ const ruleForm = reactive({
 })
 
 const ruleFormRef = ref(null)
+const NoRegDialogRef = ref(null)
 
 const rules = reactive({
   username: [
@@ -150,7 +147,12 @@ const submitForm = () => {
 }
 
 const handleNoAccountClick = () => {
-  isShowNoRegister.value = true
+  NoRegDialogRef.value.openDialog()
+}
+
+const fillInputFunc = () => {
+  ruleForm.username = "zirui.zhou"
+  ruleForm.password = "zirui.zhou"
 }
 
 const handlePrevClick = () => {
@@ -161,32 +163,31 @@ const handlePrevClick = () => {
 
 <style scoped>
 
-.deep-color{
+.deep-color {
   background-color: rgba(255,255,255,0.8);
 }
 
-.light-color{
+.light-color {
   background-color: rgba(255,255,255,0.5);
 }
 
-.center{
+.center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.banner{
+.banner {
   font-size: 200%;
   font-weight: bold;
   margin: 10px;
 }
 
-.button{
+.button {
   width: 100%;
 }
 
-.xjtlu_badge{
+.xjtlu_badge {
   width: 40px
 }
-
 </style>

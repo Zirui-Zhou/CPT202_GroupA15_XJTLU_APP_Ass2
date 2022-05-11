@@ -15,7 +15,7 @@
 
 <script setup>
 import { defineProps } from "vue";
-import {Edit} from "@element-plus/icons-vue";
+import { Edit } from "@element-plus/icons-vue";
 
 defineProps({
   handleClick: Function,
@@ -31,7 +31,7 @@ defineProps({
 </style>
 
 <style scoped>
-.newButton{
+.newButton {
   display: flex;
   position: fixed;
   height: 50px;
@@ -45,13 +45,13 @@ defineProps({
   color: var(--el-bg-color-overlay);
 }
 
-.newButton:hover{
+.newButton:hover {
   transform: scale(1.1);
   transition: transform 0.3s;
   cursor: pointer;
 }
 
-.editIcon{
+.editIcon {
   margin: auto;
 }
 </style>

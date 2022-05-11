@@ -27,42 +27,39 @@
 </template>
 
 <script setup>
-import AvatarWithCard from "@/components/AvatarWithCard";
 import { ref, computed } from 'vue'
 import { useStore } from "vuex";
+import AvatarWithCard from "@/components/AvatarWithCard";
 
 const store = useStore()
 
 const textarea = ref('')
 
 const userInfo = computed(()=>store.getters.getUserInfo)
-
 </script>
 
 <style scoped>
-
-.commentBanner{
+.commentBanner {
   margin-left: 32px;
 }
 
-.commentLayout{
+.commentLayout {
   display:flex;
   justify-content:space-between;
   margin: auto 32px;
   min-height: 400px
 }
 
-.commentButton{
+.commentButton {
   width: 100px;
   font-size: 18px;
   padding: 18px;
 }
 
-.commentInput{
+.commentInput {
   width: 70%;
   margin-top: 0;
   margin-bottom: auto;
   font-size: 16px;
 }
-
 </style>

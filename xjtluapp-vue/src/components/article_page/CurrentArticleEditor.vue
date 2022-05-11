@@ -15,17 +15,17 @@
 </template>
 
 <script setup>
-import ArticleEditor from "@/components/article_page/ArticleEditor"
+import { ref, onBeforeMount, reactive } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router"
 import { ElMessageBox } from "element-plus";
 import { addMessage } from "@/scripts/utils/messageUtils";
 import { getArticle } from "@/scripts/api/handleArticleApi";
-import { useRoute } from "vue-router"
-import { ref, onBeforeMount, reactive } from "vue";
 import { delay } from "@/scripts/utils/commonUtils";
-import { useI18n } from "vue-i18n";
+import ArticleEditor from "@/components/article_page/ArticleEditor"
 
-const route = useRoute()
 const {t} = useI18n()
+const route = useRoute()
 
 const id = route.query.id
 const articleEditor = ref(null)
@@ -65,11 +65,10 @@ onBeforeMount(async ()=>{
   await delay(500)
   isLoading.value = false
 })
-
 </script>
 
 <style>
-.articleCurrentEditorContent .el-loading-spinner{
+.articleCurrentEditorContent .el-loading-spinner {
   top: 60%;
   left: 0;
   position: fixed;

@@ -33,23 +33,22 @@ const handleEmailClick = () => {
     window.open("mailto:" + props.userInfo.email)
   }
 }
-
 </script>
 
 <style scoped>
-.name{
+.name {
   position: absolute;
   top: 0;
   font-weight: bold;
   font-size: 20px
 }
 
-.email{
+.email {
   position: absolute;
   bottom: 0;
 }
 
-.email-link:hover{
+.email-link:hover {
   color: var(--el-color-primary-light-3);
   cursor: pointer;
 }

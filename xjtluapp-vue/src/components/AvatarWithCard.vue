@@ -15,6 +15,7 @@
         @mouseenter="handleCardEnter"
         @mouseleave="handleLeave"
     >
+
       <slot name="main">
         <h2 class="nameLabel">
           {{ userInfo.realName }}
@@ -42,7 +43,6 @@
         </ul>
 
         <slot name="extra"/>
-
       </slot>
 
     </el-card>
@@ -50,9 +50,9 @@
 </template>
 
 <script setup>
-import {ref, defineProps, reactive, onUpdated, onBeforeMount} from "vue";
-import {UserFilled} from "@element-plus/icons-vue"
-import {useI18n} from "vue-i18n"
+import { ref, defineProps, reactive, onUpdated, onBeforeMount } from "vue";
+import { useI18n } from "vue-i18n"
+import { UserFilled } from "@element-plus/icons-vue"
 
 const {t} = useI18n()
 
@@ -67,10 +67,10 @@ const props = defineProps({
 
 const avatarSize = 50
 
+const userInfoList = reactive({})
+
 const showAvatarCard = ref(false)
 let hideTimer = null
-
-const userInfoList = reactive({})
 
 onBeforeMount(()=>{
   handleInfoList()
@@ -92,7 +92,6 @@ const handleInfoList = ()=>{
     )
   }
 }
-
 
 const handleEmailClick = () => {
   if(props.isLinkEmail) {
@@ -120,7 +119,7 @@ const handleLeave = () => {
 </script>
 
 <style scoped>
-  .avatar{
+  .avatar {
     position: relative;
     z-index: 12;
     cursor: pointer;
@@ -133,7 +132,7 @@ const handleLeave = () => {
     --el-avatar-icon-size: 25px;
   }
 
-  .card{
+  .card {
     --el-card-padding: 0;
 
     width: 250px;
@@ -147,12 +146,12 @@ const handleLeave = () => {
     transition-delay: 0.1s;
   }
 
-  .nameLabel{
+  .nameLabel {
     margin: 30px auto 5px auto;
     text-align: center;
   }
 
-  .emailLabel{
+  .emailLabel {
     display:block;
     margin-bottom:10px;
     font-size: 5px;
@@ -160,7 +159,7 @@ const handleLeave = () => {
     color: var(--el-color-info-light-3);
   }
 
-  .email:hover{
+  .email:hover {
     color: var(--el-color-primary-light-3);
     cursor: pointer;
   }

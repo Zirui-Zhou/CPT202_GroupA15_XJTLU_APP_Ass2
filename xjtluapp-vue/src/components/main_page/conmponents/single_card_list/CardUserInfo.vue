@@ -7,7 +7,7 @@
     />
     <br/>
     <span style="font-weight: bold">
-      {{item.editorName}}
+      {{ item.editorName }}
     </span>
     <br/>
     <span style="font-size: 12px">
@@ -17,18 +17,17 @@
 </template>
 
 <script setup>
-import {defineProps} from "vue";
-import {UserFilled} from "@element-plus/icons-vue"
-import {getFormattedDate} from "@/scripts/utils/commonUtils";
+import { defineProps } from "vue";
+import { UserFilled } from "@element-plus/icons-vue"
+import { getFormattedDate } from "@/scripts/utils/commonUtils";
 
 defineProps({
   item: Object,
 })
-
 </script>
 
 <style scoped>
-.userinfo{
+.userinfo {
   display: inline-block;
   position:absolute;
   right: var(--el-card-padding);

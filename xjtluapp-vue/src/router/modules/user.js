@@ -11,13 +11,5 @@ export default [{
             },
             component: () => import("@/components/login_page/LoginForm")
         },
-        {
-            path: 'register',
-            name: 'Register',
-            meta: {
-                requireNoAuth: true
-            },
-            component: () => import("@/components/login_page/RegisterForm")
-        },
     ]
 }]

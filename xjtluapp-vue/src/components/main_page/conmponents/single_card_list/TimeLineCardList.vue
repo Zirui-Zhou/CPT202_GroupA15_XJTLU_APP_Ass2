@@ -1,6 +1,5 @@
 <template>
   <el-timeline>
-
     <SingleColumnCardList
       rootType="el-timeline-item"
       :listType="listType"
@@ -11,19 +10,18 @@
         style: 'margin-right: 68px'
       }"
     />
-
   </el-timeline>
 </template>
 
 <script setup>
+import { defineProps } from "vue";
 import SingleColumnCardList from "./SingleColumnCardList"
-import {defineProps} from "vue";
 
-const prop = defineProps({
+defineProps({
   listType: String,
 })
-
 </script>
 
 <style scoped>
+
 </style>

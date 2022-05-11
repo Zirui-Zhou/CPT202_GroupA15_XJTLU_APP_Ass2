@@ -5,7 +5,7 @@ const setting = {
             JSON.parse(localStorage.getItem("settings")) :
             {
                 isDarkMode: false,
-                lang: "en"
+                lang: "en-US"
             }
     },
     mutations: {

@@ -1,29 +1,20 @@
 <template>
-  <div v-loading="isLoading" class="space">
 
-    <div
-        class="spaceItem"
-        v-for="item in moduleList"
-        :key="item.resourceId"
-    >
-      <el-card shadow="hover" class="card" @click="clickCard(item.resourcePath)">
-        <template #header>
-          <div class="card-header">
-            {{ item.resourceName }}
-          </div>
-        </template>
-        <img :src="item.resourceImage">
-      </el-card>
-    </div>
+  <MultipleColumnCardList
+      :item-list="moduleList"
+      :click-card="clickCard"
+      :is-loading="isLoading"
+      :item-key-list="guideItemKeyList"
+  />
 
-  </div>
 </template>
 
 <script setup>
-import {getResourceListOfTags} from "@/scripts/api/handleResourceApi";
-import {computed, onMounted, reactive, ref, watch} from "vue";
-import {delay} from "@/scripts/utils/commonUtils";
-import {useStore} from "vuex";
+import { computed, onMounted, reactive, ref, watch } from "vue";
+import { useStore } from "vuex";
+import { getResourceListOfTags } from "@/scripts/api/handleResourceApi";
+import { delay } from "@/scripts/utils/commonUtils";
+import MultipleColumnCardList from "@/components/main_page/conmponents/multiple_card_list/MultipleColumnCardList"
 
 const store = useStore()
 
@@ -36,9 +27,14 @@ const isNothing = ref(false)
 const moduleList = reactive([])
 const selectedTags = computed(()=>store.getters.getSelectedTags)
 const selectedTagIds = []
+const guideItemKeyList = {
+  id: "resourceId",
+  path: "resourcePath",
+  name: "resourceName",
+  image: "resourceImage",
+}
 
 const loadResourceList = async () => {
-
   isLoading.value = true
   await delay(500)
 
@@ -52,9 +48,7 @@ const loadResourceList = async () => {
   if(result.length < sizePage) {
     isNothing.value = true
   }
-
 }
-
 
 const clickCard = (url) => {
   window.open(url)
@@ -82,45 +76,8 @@ window.onscroll = async () => {
 }
 
 onMounted(async () => await initiateResourceList())
-
 </script>
 
 <style scoped>
-
-img {
-  width: 100%;
-  height: 100px;
-  min-height: 160px;
-}
-
-.space {
-  display: flex;
-  flex-flow: row wrap;
-
-  /*Ensure the loading animation in the right position*/
-  min-height: 300px;
-}
-
-.spaceItem {
-  flex: 0 0 33.3%;
-}
-
-.card {
-  display: block;
-  margin: 10px
-}
-
-.card:hover {
-  transform: scale(1.05);
-  position: relative;
-  z-index: 1;
-  transition: 0.5s;
-
-  cursor: pointer;
-}
-
-.card-header {
-  text-align: center;
-}
 
 </style>

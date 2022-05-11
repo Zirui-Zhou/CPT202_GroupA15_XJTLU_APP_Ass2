@@ -6,8 +6,8 @@
 
 <script setup>
 import { defineProps } from "vue";
+import { linkToEditArticle } from "@/scripts/api/handleArticleApi";
 import EditArticleButton from "@/components/EditArticleButton";
-import {linkToEditArticle} from "@/scripts/api/handleArticleApi";
 
 const props = defineProps({
   id: Object

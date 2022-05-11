@@ -17,7 +17,7 @@ import {defineProps} from "vue";
 import {getFormattedTime} from "@/scripts/utils/commonUtils";
 import ArticleHeaderUserInfo from "@/components/article_page/ArticleHeaderUserInfo";
 
-const props = defineProps({
+defineProps({
   article: Object,
   editorInfo: Object,
 })
@@ -25,7 +25,5 @@ const props = defineProps({
 </script>
 
 <style scoped>
-
-
 
 </style>

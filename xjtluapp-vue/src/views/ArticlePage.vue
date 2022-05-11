@@ -8,7 +8,6 @@
 
 <script setup>
 import TopMenu from "@/components/TopMenu";
-import ArticleReader from "@/components/article_page/ArticleReader";
 import BackTopButton from "@/components/BackTopButton";
 </script>
 
