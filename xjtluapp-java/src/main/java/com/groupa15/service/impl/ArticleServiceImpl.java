@@ -106,6 +106,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Boolean result = false;
         if(!articleMapper.queryIsHistory(userId, articleId)) {
             result = articleMapper.insertHistoryArticle(userId, articleId);
+        } else {
+            result = articleMapper.updateHistoryArticle(userId, articleId);
         }
         return result;
     }

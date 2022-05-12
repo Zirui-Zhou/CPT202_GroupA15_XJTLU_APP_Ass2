@@ -51,6 +51,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
     @Delete("Delete FROM xjtlu_app.article_history WHERE user_id=#{userId} AND article_id=#{articleId}")
     Boolean deleteHistoryArticle(Long userId, Long articleId);
 
+    @Update("UPDATE xjtlu_app.article_history SET create_time = CURRENT_TIMESTAMP WHERE user_id=#{userId} AND article_id=#{articleId}")
+    Boolean updateHistoryArticle(Long userId, Long articleId);
+
     Boolean queryIsFavourite(@Param("viewerId") Long userId, @Param("articleId") Long articleId);
 
     Boolean queryIsHistory(@Param("viewerId") Long userId, @Param("articleId") Long articleId);

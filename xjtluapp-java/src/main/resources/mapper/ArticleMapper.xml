@@ -62,7 +62,7 @@
     </select>
 
     <sql id="selectArticle">
-        SELECT id, title, content, edit_time, create_time, a.editor_id as editor_id, image,
+        SELECT id, title, content, edit_time, ${alias}.create_time, a.editor_id as editor_id, image,
                editor_name, avatar, type_id, #{viewerId} as viewer_id
         FROM (
                 Select user_id as editor_id,
@@ -77,38 +77,38 @@
     </sql>
 
     <select id="selectArticlePageVo" resultMap="ArticleScreenshotMap">
-        <include refid="selectArticle"/>
+        <include refid="selectArticle"><property name="alias" value="a"/></include>
         ORDER BY a.create_time DESC
     </select>
 
     <select id="selectArticlePageVoOfFavourite" resultMap="ArticleScreenshotMap">
-        <include refid="selectArticle"/>
+        <include refid="selectArticle"><property name="alias" value="f"/></include>
         INNER JOIN xjtlu_app.article_favourite f
         ON a.id = f.article_id AND f.user_id = #{viewerId}
-        ORDER BY a.create_time DESC
+        ORDER BY f.create_time DESC
     </select>
 
     <select id="selectArticlePageVoOfHistory" resultMap="ArticleScreenshotMap">
-        <include refid="selectArticle"/>
+        <include refid="selectArticle"><property name="alias" value="h"/></include>
         INNER JOIN xjtlu_app.article_history h
         ON a.id = h.article_id AND h.user_id = #{viewerId}
-        ORDER BY a.create_time DESC
+        ORDER BY h.create_time DESC
     </select>
 
     <select id="selectArticlePageVoOfMine" resultMap="ArticleScreenshotMap">
-        <include refid="selectArticle"/>
+        <include refid="selectArticle"><property name="alias" value="a"/></include>
         WHERE a.editor_id = #{viewerId}
         ORDER BY a.create_time DESC
     </select>
 
     <select id="selectArticlePageVoOfType" resultMap="ArticleScreenshotMap">
-        <include refid="selectArticle"/>
+        <include refid="selectArticle"><property name="alias" value="a"/></include>
         WHERE t.type_id = #{typeId}
         ORDER BY a.create_time DESC
     </select>
 
     <select id="selectArticlePageVoOfKeyword" resultMap="ArticleScreenshotMap">
-        <include refid="selectArticle"/>
+        <include refid="selectArticle"><property name="alias" value="a"/></include>
         WHERE a.title LIKE '%${keyWord}%' OR u.editor_name LIKE '%${keyWord}%'
         ORDER BY a.create_time DESC
     </select>
