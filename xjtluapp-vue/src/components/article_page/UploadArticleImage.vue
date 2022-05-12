@@ -1,4 +1,5 @@
 <template>
+
   <el-upload
       class="article-uploader"
       :action="store.getters.getServerUrl + '/article/image/upload'"
@@ -16,10 +17,6 @@
       Drop file here or <em>click to upload</em>
     </div>
   </el-upload>
-
-  <el-dialog v-model="dialogVisible">
-    <img :src="dialogImageUrl" alt="Preview Image" style="width:100%; object-fit: contain"/>
-  </el-dialog>
 
 </template>
 
@@ -39,7 +36,8 @@ const isUploadShow = ref(true)
 
 const props = defineProps({
   item: Object,
-  handleImage: Function
+  handleImage: Function,
+  previewImage: Function,
 })
 
 const handleAvatarSuccess = (
@@ -62,12 +60,8 @@ const beforeAvatarUpload = async (rawFile) => {
   return true
 }
 
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
-
 const handlePictureCardPreview = (file) => {
-  dialogImageUrl.value = file.url
-  dialogVisible.value = true
+  props.previewImage(file.url)
 }
 
 const handleRemove = () => {

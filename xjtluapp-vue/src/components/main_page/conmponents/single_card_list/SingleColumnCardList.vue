@@ -4,7 +4,7 @@
       v-bind="attrs"
       v-for="item in articleList"
       :key="item.id"
-      :timestamp="getFormattedTime(item.createTime)"
+      :timestamp="getLabeledTime(item.createTime)"
   >
     <br/>
     <el-card
@@ -54,113 +54,123 @@
 </template>
 
 <script setup>
-  import { onMounted, reactive, ref, defineProps  } from "vue";
-  import {
-    getArticleList,
-    getArticleListOfFavourite,
-    getArticleListOfHistory,
-    getArticleListOfMine, getArticleListOfSearch,
-    getArticleListOfType,
-    linkToArticle
-  } from "@/scripts/api/handleArticleApi";
-  import { delay, getFormattedTime } from "@/scripts/utils/commonUtils";
-  import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
-  import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
-  import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
+import { onMounted, reactive, ref, defineProps  } from "vue";
+import {
+  getArticleList,
+  getArticleListOfFavourite,
+  getArticleListOfHistory,
+  getArticleListOfMine, getArticleListOfSearch,
+  getArticleListOfType,
+  linkToArticle
+} from "@/scripts/api/handleArticleApi";
+import { delay, getFormattedTime } from "@/scripts/utils/commonUtils";
+import CardIconList from "@/components/main_page/conmponents/single_card_list/CardIconList";
+import CardArticleInfo from "@/components/main_page/conmponents/single_card_list/CardArticleInfo";
+import CardUserInfo from "@/components/main_page/conmponents/single_card_list/CardUserInfo";
 
-  const articleList = reactive([])
-  const currentPage = ref(0)
-  const sizePage = 4
-  const isLoading = ref(false)
-  const isNothing = ref(false)
+const articleList = reactive([])
+const currentPage = ref(0)
+const sizePage = 4
+const isLoading = ref(false)
+const isNothing = ref(false)
 
-  const props = defineProps({
-    rootType: {
-      type: String,
-      default: "div",
-    },
-    listType: {
-      type: String,
-      default: "common",
-    },
-    listFuncParam: {
-      type: Object,
-      default: () => {return []}
-    },
-    cardScale: {
-      type: Number,
-      default: 1.05
-    },
-    attrs: {
-      type: Object,
-      default: () => {}
-    }
-  })
-
-  const listTypeList = {
-    common: {
-      func: getArticleList
-    },
-    mine: {
-      func: getArticleListOfMine
-    },
-    favourite: {
-      func: getArticleListOfFavourite
-    },
-    history: {
-      func: getArticleListOfHistory
-    },
-    type: {
-      func: getArticleListOfType
-    },
-    search: {
-      func: getArticleListOfSearch
-    }
+const props = defineProps({
+  rootType: {
+    type: String,
+    default: "div",
+  },
+  listType: {
+    type: String,
+    default: "common",
+  },
+  listFuncParam: {
+    type: Object,
+    default: () => {return []}
+  },
+  cardScale: {
+    type: Number,
+    default: 1.05
+  },
+  attrs: {
+    type: Object,
+    default: () => {}
   }
+})
 
-  const loadNewArticle = async () => {
-    isLoading.value = true
+const listTypeList = {
+  common: {
+    func: getArticleList
+  },
+  mine: {
+    func: getArticleListOfMine
+  },
+  favourite: {
+    func: getArticleListOfFavourite
+  },
+  history: {
+    func: getArticleListOfHistory
+  },
+  type: {
+    func: getArticleListOfType
+  },
+  search: {
+    func: getArticleListOfSearch
+  }
+}
 
-    await delay(500)
+const loadNewArticle = async () => {
+  isLoading.value = true
 
-    const result = await listTypeList[props.listType].func(currentPage.value + 1, sizePage, ...props.listFuncParam)
-    if(result.length === 0) {
-      isNothing.value = true
-      isLoading.value = false
-      return
-    }
-    currentPage.value++
-    result.forEach((item) => Object.assign(item, {isLoading: true, isRemoving: false}))
-    articleList.push(...result)
+  await delay(500)
+
+  const result = await listTypeList[props.listType].func(currentPage.value + 1, sizePage, ...props.listFuncParam)
+  if(result.length === 0) {
+    isNothing.value = true
     isLoading.value = false
-    if(result.length < sizePage) {
-      isNothing.value = true
-    }
+    return
   }
-
-  const removeArticle = async (item) => {
-    item.isRemoving = true
-    await delay(500)
-    articleList.splice(articleList.indexOf(item), 1)
+  currentPage.value++
+  result.forEach((item) => Object.assign(item, {isLoading: true, isRemoving: false}))
+  articleList.push(...result)
+  isLoading.value = false
+  if(result.length < sizePage) {
+    isNothing.value = true
   }
+}
 
-  const itemFunc = async (item, key, value) => {
-    item[key] = value
+const removeArticle = async (item) => {
+  item.isRemoving = true
+  await delay(500)
+  articleList.splice(articleList.indexOf(item), 1)
+}
+
+const getLabeledTime = (time) => {
+  let timeLabel = getFormattedTime(time)
+  if(props.listType === "history") {
+    timeLabel = "View at " + timeLabel
+  } else if (props.listType === "favourite") {
+    timeLabel = "Favourite at " + timeLabel
   }
+  return timeLabel
+}
 
-  const initiateArticleList = async () => {
-    do{
-      await loadNewArticle()
-    }while(document.body.scrollHeight <= window.innerHeight && !isLoading.value && !isNothing.value)
+const itemFunc = async (item, key, value) => {
+  item[key] = value
+}
+
+const initiateArticleList = async () => {
+  do{
+    await loadNewArticle()
+  }while(document.body.scrollHeight <= window.innerHeight && !isLoading.value && !isNothing.value)
+}
+
+window.onscroll = async () => {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
+    await loadNewArticle()
   }
+}
 
-  window.onscroll = async () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && !isLoading.value && !isNothing.value) {
-      await loadNewArticle()
-    }
-  }
-
-  onMounted(async () => initiateArticleList())
+onMounted(async () => initiateArticleList())
 </script>
 
 <style scoped>

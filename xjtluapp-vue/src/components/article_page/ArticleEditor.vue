@@ -67,6 +67,7 @@
         <UploadArticleImage
             :item="item"
             :handle-image="handleImage"
+            :preview-image="showImagePreview"
         />
       </template>
     </CardArticleInfo>
@@ -76,6 +77,13 @@
     />
 
   </el-card>
+
+  <el-dialog v-model="dialogVisible" :width="500">
+    <el-image
+        :src="dialogImageUrl"
+        style="width:100%; object-fit: contain"
+    />
+  </el-dialog>
 
   <div style="display: flex; justify-content: flex-end">
     <el-button
@@ -127,6 +135,8 @@ const store = useStore()
 
 const userInfo = computed(()=>store.getters.getUserInfo)
 const editTime = ref(new Date().getTime())
+const dialogVisible = ref(false)
+const dialogImageUrl = ref(null)
 
 const article = {
   id: ref(null),
@@ -223,6 +233,11 @@ function preHandleArticle() {
     article.typeId.value = props.rawArticle.typeId
     article.image.value = props.rawArticle.image
   }
+}
+
+const showImagePreview = (imageUrl) => {
+  dialogImageUrl.value = imageUrl
+  dialogVisible.value = true
 }
 
 onMounted(()=>{

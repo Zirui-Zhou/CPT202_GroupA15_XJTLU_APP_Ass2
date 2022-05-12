@@ -1,10 +1,10 @@
 <template>
 
-  <img
+  <el-image
       class="banner"
-      src="@/assets/xjtlu_name.svg"
-      @click="handleBannerClick()"
-  >
+      :src="require('@/assets/xjtlu_name.svg')"
+      @click="handleBannerClick"
+  />
 
   <el-menu
       :default-active="router.currentRoute.value.path"
