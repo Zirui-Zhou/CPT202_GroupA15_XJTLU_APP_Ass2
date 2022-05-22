@@ -52,6 +52,7 @@ import { logout } from "@/scripts/api/handleUserApi";
 import AboutDialog from "@/components/setting_box/AboutDialog"
 import ChangePasswordBox from "@/components/setting_box/ChangePasswordBox";
 import TranslationIcon from "@/components/icon/TranslationIcon"
+import GitHubIcon from "@/components/icon/GitHubIcon"
 
 const {t, locale, availableLocales} = useI18n()
 const store = useStore()
@@ -89,6 +90,10 @@ const changeLanguage = () => {
   store.commit("SET_LANG", availableLocales[nextIndex])
 }
 
+const linkToGitHub = () => {
+  window.open(store.getters.getGitHubUrl)
+}
+
 const settingTopList = reactive([
   [()=>t('message.setting_box.item_change_dark_mode'), changeDarkMode, false, defineDarkModeIcon],
   [()=>t('message.setting_box.item_language') + t('language'), changeLanguage, false, ()=>TranslationIcon],
@@ -97,7 +102,8 @@ const settingTopList = reactive([
 ])
 
 const settingBottomList = reactive([
-    [()=>t('message.setting_box.item_about'), ()=>AboutDialogRef.value.openDialog(), false, ()=>"InfoFilled"]
+  [()=>t('message.setting_box.item_github'), ()=>linkToGitHub(), false, ()=>GitHubIcon],
+  [()=>t('message.setting_box.item_about'), ()=>AboutDialogRef.value.openDialog(), false, ()=>"InfoFilled"]
 ])
 
 const getSettingList = (settingList) => {

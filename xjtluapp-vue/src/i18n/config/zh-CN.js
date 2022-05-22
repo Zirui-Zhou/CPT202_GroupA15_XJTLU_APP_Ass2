@@ -16,6 +16,7 @@ const zhCN = {
             item_change_password: "更改密码",
             item_logout: "登出",
             item_language: "语言：",
+            item_github: "GitHub",
             item_about: "关于",
         },
         change_password_box: {

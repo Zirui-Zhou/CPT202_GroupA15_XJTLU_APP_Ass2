@@ -1,4 +1,4 @@
-const zh = {
+const jaJP = {
     language: "日本語",
     localization_acknowledgement: "日本語のローカリゼーションは Google翻訳 によって提供されます",
     message: {
@@ -16,6 +16,7 @@ const zh = {
             item_change_password: "パスワードを変更する",
             item_logout: "ログアウト",
             item_language: "言語：",
+            item_github: "GitHub",
             item_about: "ついて",
         },
         change_password_box: {
@@ -160,4 +161,4 @@ const zh = {
     }
 }
 
-export default zh
+export default jaJP

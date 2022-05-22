@@ -16,6 +16,7 @@ const enUS = {
             item_change_password: "Change Password",
             item_logout: "Logout",
             item_language: "Language: ",
+            item_github: "GitHub",
             item_about: "About",
         },
         change_password_box: {

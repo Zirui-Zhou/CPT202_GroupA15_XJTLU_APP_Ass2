@@ -16,6 +16,7 @@ const frFR = {
             item_change_password: "Remplacez le mode nuit",
             item_logout: "Quitter",
             item_language: "Langue: ",
+            item_github: "GitHub",
             item_about: "à propos",
         },
         change_password_box: {

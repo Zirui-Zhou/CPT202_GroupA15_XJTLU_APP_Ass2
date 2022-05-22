@@ -16,6 +16,7 @@ const esES = {
             item_change_password: "Cambiar la contraseña",
             item_logout: "Cerrar sesión",
             item_language: "Idioma: ",
+            item_github: "GitHub",
             item_about: "Acerca de",
         },
         change_password_box: {
