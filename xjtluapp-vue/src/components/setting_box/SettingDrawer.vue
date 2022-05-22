@@ -20,7 +20,10 @@
             @click="item[1]"
         >
           <el-icon v-if="item[3]">
-            <component :is="item[3]()"/>
+            <component
+                :is="item[3]()"
+                style="width: 1em; height: 1em; margin-right: 8px"
+            />
           </el-icon>
           <span>
             {{ item[0]() }}
@@ -37,6 +40,10 @@
 
 </template>
 
+<script>
+
+</script>
+
 <script setup>
 import { defineExpose, reactive, ref, computed } from "vue";
 import { useI18n } from "vue-i18n"
@@ -44,6 +51,7 @@ import { useStore } from "vuex";
 import { logout } from "@/scripts/api/handleUserApi";
 import AboutDialog from "@/components/setting_box/AboutDialog"
 import ChangePasswordBox from "@/components/setting_box/ChangePasswordBox";
+import TranslationIcon from "@/components/icon/TranslationIcon"
 
 const {t, locale, availableLocales} = useI18n()
 const store = useStore()
@@ -83,7 +91,7 @@ const changeLanguage = () => {
 
 const settingTopList = reactive([
   [()=>t('message.setting_box.item_change_dark_mode'), changeDarkMode, false, defineDarkModeIcon],
-  [()=>t('message.setting_box.item_language') + t('language'), changeLanguage, false],
+  [()=>t('message.setting_box.item_language') + t('language'), changeLanguage, false, ()=>TranslationIcon],
   [()=>t('message.setting_box.item_change_password'), ()=>ChangePasswordDialogRef.value.openDialog(), true],
   [()=>t('message.setting_box.item_logout'), logoutUser, true],
 ])

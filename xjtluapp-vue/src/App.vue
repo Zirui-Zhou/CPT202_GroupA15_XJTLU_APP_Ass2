@@ -3,15 +3,15 @@
 </template>
 
 <script setup>
+import { onBeforeMount, watch } from "vue";
+import { useStore } from "vuex"
+import { useI18n } from "vue-i18n"
 import {
   enable as enableDarkMode,
   disable as disableDarkMode,
 } from 'darkreader';
-import {onBeforeMount, watch} from "vue";
-import {useStore} from "vuex"
-import {useI18n} from "vue-i18n"
-import {getAllArticleTypes} from "@/scripts/api/handleArticleApi";
-import {getUserInfo} from "@/scripts/api/handleUserApi";
+import { getAllArticleTypes } from "@/scripts/api/handleArticleApi";
+import { getUserInfo } from "@/scripts/api/handleUserApi";
 import VMdEditor from '@kangc/v-md-editor';
 
 const store = useStore()

@@ -51,42 +51,52 @@ function transformBigint(data) {
 }
 
 async function commonGet(url, func, isAuth=false, extraConfig={}) {
+    let result = {code: null, msg: null, data: null}
     if(isAuth && !getToken()) {
-        return
+        return result
     }
     await axios.get(getServerUrl() + url,
         getDefaultConfig(isAuth, extraConfig)
     ).then(
-        func
+        (res)=>{
+            func(res)
+            result = res.data
+        }
     ).catch(
         handleError
     )
+    return result
 }
 
 async function commonPost(url, data, func, isAuth=false, extraConfig={}) {
+    let result = {code: null, msg: null, data: null}
     if(isAuth && !getToken()) {
-        return
+        return result
     }
     await axios.post(getServerUrl() + url,
         data,
         getDefaultConfig(isAuth, extraConfig)
     ).then(
-        func
+        (res)=>{
+            func(res)
+            result = res.data
+        }
     ).catch(
         handleError
     )
+    return result
 }
 
 async function commonGetData(url, isAuth=false, extraConfig={}) {
-    let result = {data: null, msg: null}
-    await commonGet(url, (res)=>result={data: res.data.data, msg: res.data.msg}, isAuth, extraConfig)
-    return result
+
+    return await commonGet(url, function(){}, isAuth, extraConfig)
+
 }
 
 async function commonPostData(url, data, isAuth=false, extraConfig={}) {
-    let result = {data: null, msg: null}
-    await commonPost(url, data, (res)=>result={data: res.data.data, msg: res.data.msg}, isAuth, extraConfig)
-    return result
+
+    return await commonPost(url, data, function(){}, isAuth, extraConfig)
+
 }
 
 export {

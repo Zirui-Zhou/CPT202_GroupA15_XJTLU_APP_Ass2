@@ -68,7 +68,7 @@
 
       <el-icon
           class="align-right moreIcon"
-          @click="handleMoreIconClick"
+          @click="handleSettingClick"
       >
         <MoreFilled/>
       </el-icon>
@@ -77,6 +77,10 @@
 
   <SettingDrawer
       ref="SettingDrawerRef"
+  />
+
+  <SettingButton
+      :handle-click="handleSettingClick"
   />
 
 </template>
@@ -91,6 +95,7 @@ import { addMessage } from "@/scripts/utils/messageUtils";
 import { logout, needLogin } from "@/scripts/api/handleUserApi";
 import AvatarWithCard from "@/components/AvatarWithCard";
 import SettingDrawer from "@/components/setting_box/SettingDrawer";
+import SettingButton from "@/components/SettingButton";
 
 const {t} = useI18n()
 const router = useRouter()
@@ -113,7 +118,7 @@ const handleBannerClick = ()=>{
   router.push("/guide")
 }
 
-const handleMoreIconClick = () => {
+const handleSettingClick = () => {
   SettingDrawerRef.value.openSetting()
 }
 

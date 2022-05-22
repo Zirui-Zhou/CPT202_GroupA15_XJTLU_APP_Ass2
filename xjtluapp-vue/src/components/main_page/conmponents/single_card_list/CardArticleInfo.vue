@@ -30,7 +30,7 @@
 
 <script setup>
 import { computed, defineProps, onBeforeMount, ref } from "vue";
-import { useStore  } from "vuex";
+import { useStore } from "vuex";
 import { getAllArticleTypes } from "@/scripts/api/handleArticleApi";
 
 const store = useStore()

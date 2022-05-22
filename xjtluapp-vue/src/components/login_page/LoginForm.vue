@@ -94,13 +94,13 @@
 </template>
 
 <script setup>
-import {ref, unref, reactive} from 'vue'
-import {useRouter} from "vue-router";
-import {useI18n} from "vue-i18n"
-import {Avatar, Key, ArrowLeft} from "@element-plus/icons-vue"
-import {login} from "@/scripts/api/handleUserApi";
-import {delay} from "@/scripts/utils/commonUtils";
-import {addMessage} from "@/scripts/utils/messageUtils";
+import { ref, unref, reactive } from 'vue'
+import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n"
+import { Avatar, Key, ArrowLeft } from "@element-plus/icons-vue"
+import { login } from "@/scripts/api/handleUserApi";
+import { delay } from "@/scripts/utils/commonUtils";
+import { addMessage } from "@/scripts/utils/messageUtils";
 import NoRegisterDialog from "@/components/login_page/NoRegisterDialog"
 
 const {t} = useI18n()
@@ -140,9 +140,10 @@ const submitForm = () => {
       )
       return false;
     }
-    await login(ruleForm)
-    await delay(500)
-    await router.replace('/home')
+    if(await login(ruleForm)) {
+      await delay(500)
+      await router.replace('/home')
+    }
   })
 }
 

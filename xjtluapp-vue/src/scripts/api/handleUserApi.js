@@ -21,7 +21,7 @@ async function getEditorInfo(userId) {
 }
 
 async function login(loginForm) {
-    await commonPost("/login",
+    const result = await commonPost("/login",
         loginForm,
         res => {
             if(loginForm.isRemember) {
@@ -34,6 +34,8 @@ async function login(loginForm) {
             addMessage(res.data.msg, "success")
         },
     )
+    console.log(result)
+    return result.code === 200
 }
 
 async function logout() {

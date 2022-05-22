@@ -1,7 +1,7 @@
 <template>
   <el-backtop
       class="topButton"
-      :bottom="100"
+      :bottom="40"
       :right="120"
       :visibility-height="100"
   >

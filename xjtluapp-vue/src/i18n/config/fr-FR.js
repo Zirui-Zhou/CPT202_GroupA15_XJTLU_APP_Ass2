@@ -1,6 +1,6 @@
 const frFR = {
     language: "Français",
-    localization_acknowledgement: "La localisation française est fournie par Yi Shen",
+    localization_acknowledgement: "Traduction localisée en français par Berthier.",
     message: {
         top_menu: {
             menu_item_student: "Étudiant",
@@ -12,8 +12,8 @@ const frFR = {
         },
         setting_box: {
             box_title: "Option",
-            item_change_dark_mode: "Remplacez le mode nuit.",
-            item_change_password: "Remplacez le mode nuit.",
+            item_change_dark_mode: "Remplacez le mode nuit",
+            item_change_password: "Remplacez le mode nuit",
             item_logout: "Quitter",
             item_language: "Langue: ",
             item_about: "à propos",

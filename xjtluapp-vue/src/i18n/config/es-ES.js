@@ -1,6 +1,6 @@
 const esES = {
     language: "Español",
-    localization_acknowledgement: "Qianchao Sun contribuye a la localización en español",
+    localization_acknowledgement: "Traducción al español aportada por Qianchao Sum",
     message: {
         top_menu: {
             menu_item_student: "Estudiante",
