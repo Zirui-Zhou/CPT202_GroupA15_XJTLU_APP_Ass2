@@ -9,7 +9,7 @@ This project aims at providing various website services for students in the XJTL
 Firstly, installment and configuration of [Git](https://git-scm.com/) is essential to clone the project. Here provides the Git command to close the project.
 
 ```
-git clone https://github.com/Zirui-Zhou/CPT202_GroupA15_XJTLU_APP.git
+git clone https://github.com/Zirui-Zhou/CPT202_GroupA15_XJTLU_APP_Ass2.git
 ```
 
 When the clone process completes, the project file structure should be like below.
