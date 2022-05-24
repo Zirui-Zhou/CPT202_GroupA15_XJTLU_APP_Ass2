@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `xjtlu_app` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `xjtlu_app`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: xjtlu_app
@@ -44,7 +46,8 @@ DROP TABLE IF EXISTS `article_favourite`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `article_favourite` (
   `article_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL
+  `user_id` bigint NOT NULL,
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -57,7 +60,8 @@ DROP TABLE IF EXISTS `article_history`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `article_history` (
   `article_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL
+  `user_id` bigint NOT NULL,
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -232,4 +236,4 @@ CREATE TABLE `user_info` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-09 19:31:22
+-- Dump completed on 2022-05-20 19:58:36
