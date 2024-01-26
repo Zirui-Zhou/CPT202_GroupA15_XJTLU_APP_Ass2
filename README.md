@@ -110,3 +110,41 @@ It needs to mention that the relative path should be correct.
 ### Database
 
 The database can be deployed in the current remote server. This project is depended on MySQL. Thus, the server-version MySQL is required to install and deploy. Then, the database connector should be edited in `application.yml` in Java package. The SQL structure file is included in the Java folder.
+
+## Screenshots
+
+### Login Page
+
+![login_page](resource/screenshot/login_page.jpg)
+
+### Module Page
+
+![module_page](resource/screenshot/module_page.jpg)
+
+### Home Page
+
+![home_page](resource/screenshot/home_page.jpg)
+
+### Guide Page
+
+![guide_page](resource/screenshot/guide_page.jpg)
+
+### Student Page
+
+![student_page](resource/screenshot/student_page.jpg)
+
+### Article Page
+
+![article_page](resource/screenshot/article_page.jpg)
+
+### Light Spanish About Dialogue
+
+![light_spanish_about](resource/screenshot/light_spanish_about.jpg)
+
+### Dark French About Dialogue
+
+![dark_french_about](resource/screenshot/dark_french_about.jpg)
+
+### Dark Edit Page
+
+![dark_edit_page](resource/screenshot/dark_edit_page.jpg)
